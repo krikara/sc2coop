@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+<link rel='shortcut icon' href='../images/favicon.ico' type='image/x-icon' />
+<link rel="stylesheet"  media="all" type="text/css" href="../styles/mainstyle.css%3Fv=1.28.css">
+<link href='https://fonts.googleapis.com/css?family=Convergence' rel='stylesheet' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-165288360-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-165288360-1');
+</script>
+<script>
+    grecaptcha.ready(function() {
+        $(".captchaForm").each(function(){
+            currentID = $(this).attr('id');
+            if(currentID=="reportForm"){
+                $(this).submit(function(event){
+                    $("#submitbtn").attr("disabled", true);
+                    grecaptcha.execute('6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd', { action: currentID }).then(function (token) {
+                        $("#reportFormRecaptchaResponse").val(token);
+                        var path = window.location.pathname;
+                        var page = path.split("/").pop();
+                        var x = document.forms["errorReport"]["comment"].value;
+            		    var y = document.forms["errorReport"]["url"].value;
+            			var z = $("#reportFormRecaptchaResponse").val();
+            			$.ajax({  
+                            type: 'POST',
+                            url: '/scripts/addreport.php', 
+                            data: { 
+                                comment: x,
+                                errorpage: page,
+                                url:y, 
+                                recaptcha_response:z},
+                            success: function(data) {
+                                $("#reportForm").hide();
+                                $("#errorReport").append(data);
+                                return false;
+                            }
+                        });
+                        return false;
+                        $("#submitbtn").attr("disabled", false);
+                    });
+                    
+                })
+            }
+            else{
+                $(this).submit(function(event){
+                    var currentID = $(this).attr('id');
+                    var currentForm = $(this);
+                    event.preventDefault();
+                    grecaptcha.execute('6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd', { action: currentID }).then(function (token) {
+                        $("#" + currentID + "RecaptchaResponse").val(token);
+                        currentForm.off("submit");
+                        currentForm.submit();
+                    });
+                })
+            }
+            
+        })
+    },false)
+</script>  <title>Starcraft 2 Co-op - Mission Guide - Chain of Ascension</title>
+  <meta name="description" content="Starcraft 2 Co-op Mission Guide Chain of Ascension">
+  <meta name="keywords" content="Starcraft co-op guides chain ascension mission">
+  <link rel="stylesheet"  media="all" type="text/css" href="../styles/missionstyle.css%3Fv=1.00.css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link rel="canonical" href="chainofascension.html">
+  <script src="../scripts/preload.js"></script>
+  </head>
+<body>
+<div id="header"><img src="../images/mainpageheader.png" alt="Starcraft II Co-op Logo">
+</div>
+<div id="menu">
+<ul>
+    <li class="normal"><a href="../index.html">&#127968;</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'commanders');">Commanders</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'community');">Community</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'guides');">Guides</a></li>
+    <li class="highlight"><a href="../index.html" onclick="javascript:openSubmenu(event,'missions');">Missions</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'resources');">Resources</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'tools');">Tools</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'about');">About</a></li>
+    <li class="normal"><a href="../account.html">My&nbsp;Account</a></li>
+</ul>
+<div id="container">
+    <div id="commanderList" class="submenu">
+        <a href="../commanders/raynor.html"><img src="../images/commanderportraits/raynorportrait.png" alt="Raynor Portrait"></a>
+        <a href="../commanders/kerrigan.html"><img src="../images/commanderportraits/kerriganportrait.png" alt="Kerrigan Portrait"></a>
+        <a href="../commanders/artanis.html"><img src="../images/commanderportraits/artanisportrait.png" alt="Artanis Portrait"></a>
+        <a href="../commanders/swann.html"><img src="../images/commanderportraits/swannportrait.png" alt="Swann Portrait"></a>
+        <a href="../commanders/zagara.html"><img src="../images/commanderportraits/zagaraportrait.png" alt="Zagara Portrait"></a>
+        <a href="../commanders/vorazun.html"><img src="../images/commanderportraits/vorazunportrait.png" alt="Vorazun Portrait"></a>
+        <a href="../commanders/karax.html"><img src="../images/commanderportraits/karaxportrait.png" alt="Karax Portrait"></a>
+        <a href="../commanders/abathur.html"><img src="../images/commanderportraits/abathurportrait.png" alt="Abathur Portrait"></a>
+        <a href="../commanders/alarak.html"><img src="../images/commanderportraits/alarakportrait.png" alt="Alarak Portrait"></a>
+        <a href="../commanders/nova.html"><img src="../images/commanderportraits/novaportrait.png" alt="Nova Portrait"></a>
+        <a href="../commanders/stukov.html"><img src="../images/commanderportraits/stukovportrait.png" alt="Stukov Portrait"></a>
+        <a href="../commanders/fenix.html"><img src="../images/commanderportraits/fenixportrait.png" alt="Fenix Portrait"></a>
+        <a href="../commanders/dehaka.html"><img src="../images/commanderportraits/dehakaportrait.png" alt="Dehaka Portrait"></a>
+        <a href="../commanders/horner.html"><img src="../images/commanderportraits/hornerportrait.png" alt="Han & Horner Portrait"></a>
+        <a href="../commanders/tychus.html"><img src="../images/commanderportraits/tychusportrait.png" alt="Tychus Portrait"></a>
+        <a href="../commanders/zeratul.html"><img src="../images/commanderportraits/zeratulportrait.png" alt="Zeratul Portrait"></a>
+        <a href="../commanders/stetmann.html"><img src="../images/commanderportraits/stetmannportrait.png" alt="Stetmann Portrait"></a>
+        <a href="../commanders/mengsk.html"><img src="../images/commanderportraits/mengskportrait.png" alt="Mengsk Portrait"></a>
+    </div>
+    <div id="missionList" class="submenu">
+        <a href="chainofascension.html"><img src="../images/missionthumbnails/chainofascension.png" alt="Chain of Ascension Thumbnail"></a>
+        <a href="cradleofdeath.html"><img src="../images/missionthumbnails/cradleofdeath.png" alt="Cradle of Death Thumbnail"></a>
+        <a href="deadofnight.html"><img src="../images/missionthumbnails/deadofnight.png" alt="Dead of Night Thumbnail"></a>
+        <a href="lockload.html"><img src="../images/missionthumbnails/lockload.png" alt="Lock & Load Thumbnail"></a>
+        <a href="malwarfare.html"><img src="../images/missionthumbnails/malwarfare.png" alt="Malwarfare Thumbnail"></a>
+        <a href="minerevacuation.html"><img src="../images/missionthumbnails/minerevacuation.png" alt="Miner Evacuation Thumbnail"></a>
+        <a href="mistopportunities.html"><img src="../images/missionthumbnails/mistopportunities.png" alt="Mist Opportunities Thumbnail"></a>
+        <a href="oblivionexpress.html"><img src="../images/missionthumbnails/oblivionexpress.png" alt="Oblivion Express Thumbnail"></a>
+        <a href="partparcel.html"><img src="../images/missionthumbnails/partparcel.png" alt="Part & Parcel Thumbnail"></a>
+        <a href="riftstokorhal.html"><img src="../images/missionthumbnails/riftstokorhal.png" alt="Rifts to Korhal Thumbnail"></a>
+        <a href="scytheofamon.html"><img src="../images/missionthumbnails/scytheofamon.png" alt="Scythe Of Amon Thumbnail"></a>
+        <a href="templeofthepast.html"><img src="../images/missionthumbnails/templeofthepast.png" alt="Temple of the Past Thumbnail"></a>
+        <a href="thevermillionproblem.html"><img src="../images/missionthumbnails/thevermillionproblem.png" alt="The Vermillion Problem Thumbnail"></a>
+        <a href="voidlaunch.html"><img src="../images/missionthumbnails/voidlaunch.png" alt="Void Launch Thumbnail"></a>
+        <a href="voidthrashing.html"><img src="../images/missionthumbnails/voidthrashing.png" alt="Void Thrashing Thumbnail"></a>
+    </div>
+    <div id="guideList" class="submenu">
+        <ul>
+            <li class="normal"><a href="../guides/buildordertheory.html">Build&nbsp;Order&nbsp;Theory</a></li>
+            <li class="normal"><a href="../guides/enemycomps.html">Enemy&nbsp;Compositions</a></li>
+            <li class="normal"><a href="../guides/generaltips.html">General&nbsp;Tips</a></li>
+            <li class="normal"><a href="../guides/newplayer.html">New&nbsp;Players&nbsp;</a></li>
+        </ul>
+    </div>
+    <div id="resources" class="submenu">
+        <ul>
+            <li class="normal"><a href="../resources/achievements.html">Achievements</a></li>
+            <li class="normal"><a href="../resources/ailogic.html">AI&nbsp;Logic</a></li>
+            <li class="normal"><a href="../resources/bugs.html">Bugs</a></li>
+            <li class="normal"><a href="../resources/brutal.html">Brutal+</a></li>
+            <li class="normal"><a href="../resources/deathprevention.html">Death&nbsp;Prevent&nbsp;Effects</a></li>
+            <li class="normal"><a href="../resources/eastereggs.html">Easter&nbsp;Eggs</a></li>
+            <li class="normal"><a href="../resources/levels.html">Levels</a></li>
+            <li class="normal"><a href="../resources/mutators.html">Mutators</a></li>
+            <li class="normal"><a href="../resources/patchdata.html">Patch&nbsp;Data</a></li>
+            <li class="normal"><a href="../resources/stats.html">Stats</a></li>
+            <li class="normal"><a href="../resources/weeklymutations.html">Weekly&nbsp;Mutations</a></li>
+            
+        </ul>
+    </div>
+    <div id="tools" class="submenu">
+        <ul>
+            <li class="normal"><a href="../tools/downloads.html">Downloads</a></li>
+            <li class="normal"><a href="../tools/masterybreakpoints.html">Mastery&nbsp;Breakpoints</a></li>
+            <li class="normal"><a href="../tools/replayanalyzer.html">Replay&nbsp;Analyzer</a></li>
+            <li class="normal"><a href="../tools/unitstats.html">Unit&nbsp;Stats</a></li>
+        </ul>
+    </div>
+    <div id="community" class="submenu">
+        <ul>
+            <li class="normal"><a href="../community/tournament/main.html">Co&#8209;op&nbsp;Tournament</a></li>
+            <li class="normal"><a href="../community/gamespotlight.html">Game&nbsp;Spotlight</a></li>
+            <li class="normal"><a href="../community/mythbusters.html">Mythbusters</a></li>
+            <li class="normal"><a href="../community/rockslappingchampions.html">Rockslapping&nbsp;Champions</a></li>
+            <li class="normal"><a href="../youtube.html">Youtube</a></li>
+        </ul>
+    </div>
+    <div id="about" class="submenu">
+        <ul>
+            <!--<li class="normal"><a href="/about/contact">Contact</a></li>-->
+            <li class="normal"><a href="../about/faq.html">FAQ</a></li>
+            <li class="normal"><a href="../about/links.html">Links</a></li>
+            <li class="normal"><a href="https://www.youtube.com/c/Starcraft2Coop" rel="nofollow">Youtube</a></li>
+        </ul>
+    </div>
+    <!--<div id="imgs">
+        <a href="https://www.youtube.com/c/Starcraft2Coop" rel="nofollow"><img src="/images/links/yt.png" alt="Youtube"></a>
+        <a href="https://www.patreon.com/starcraft2coop" rel="nofollow"><img src="/images/links/patreon.png" alt="Patreon"></a>
+        <a href="https://www.twitch.tv/aommaster" rel="nofollow"><img src="/images/links/twitch.png" alt="Twitch"></a>
+        <a href="https://discord.gg/AbFXRAB" rel="nofollow"><img src="/images/links/discord.png" alt="Discord"></a>
+    </div>-->
+</div>
+<script>
+    function openSubmenu(event, selection){
+        event.preventDefault();
+        
+        switch (selection){
+            case "commanders":
+                $(".submenu").not("#commanderList").hide();
+                $("#commanderList").fadeToggle();
+                break;
+            case "missions":
+                $(".submenu").not("#missionList").hide();
+                $("#missionList").fadeToggle();
+                break;
+            case "community":
+                $(".submenu").not("#community").hide();
+                $("#community").fadeToggle();
+                break;
+            case "guides":
+                $(".submenu").not("#guideList").hide();
+                $("#guideList").fadeToggle();
+                break;
+            case "resources":
+                $(".submenu").not("#resources").hide();
+                $("#resources").fadeToggle();
+                break;
+            case "tools":
+                $(".submenu").not("#tools").hide();
+                $("#tools").fadeToggle();
+                break;
+            case "about":
+                $(".submenu").not("#about").hide();
+                $("#about").fadeToggle();
+                break;
+        }
+    }
+</script></div>
+<div id="content">
+    <h1>Co-op Mission Guide: Chain of Ascension</h1>
+    <p id="missionPlace">Slayn</p>
+        <h2>Sections on this Page</h2>
+    <div id="links">
+        <p><a href="chainofascension.html#misSum">Mission Summary</a></p>
+        <p><a href="chainofascension.html#objectives">Objectives</a></p>
+        <p><a href="chainofascension.html#baseAnalysis">Enemy Base Analysis</a></p>
+        <p><a href="chainofascension.html#bonus">Completing the Bonus Objective</a></p>
+        <p><a href="chainofascension.html#timings">Timings</a></p>
+        <p><a href="chainofascension.html#spawnPoints">Spawn Points</a></p>
+        <p><a href="chainofascension.html#misTips">Mission Tips</a></p>
+        <p><a href="chainofascension.html#comTips">Commander-Specific Tips</a></p>
+    </div>
+    <a id="misSum"></a><h2>Mission Summary</h2>
+    <p>Amon seeks to regain control of the Tal'darim by climbing the Chain of Ascension. Assist First Ascendant Ji'nara in the rite of Rak'Shir so she can defeat Amon's champion.</p>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="objectives"></a><h2>Objectives</h2>
+    <h3>Primary Objective</h3>
+        <ul>
+            <li>Push Amon's champion into the Pit of Sacrifice.</li>
+            <li>Ji'nara must not be defeated.</li>
+        </ul>
+    <h3>Secondary Objective</h3>
+        <ul>
+            <li>Kill Slayn elementals (2)</li>
+        </ul>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="baseAnalysis"></a><h2>Enemy Base Analysis</h2>
+    <div id="globalRaceSelect">
+        <p>Change all base analysis pictures to race:</p>
+        <form action="chainofascension.html#">
+            <label><input type="radio" name="globalRace" value="protoss" checked>Protoss</label><br>
+            <label><input type="radio" name="globalRace" value="terran">Terran</label><br>
+            <label><input type="radio" name="globalRace" value="zerg">Zerg</label><br>
+        </form>
+        <script>
+            $("input[name='globalRace']").change(function(){
+                var race= $(this).val();
+                $('input:radio[value="' + race + '"]').each(function () {
+                    if($(this).attr('name')!=="globalRace"){
+                        $(this).prop('checked', true).trigger('change');
+                    }
+                })
+                return false;
+            })
+        </script>
+    </div>
+        <p>The first camp you will have to take is positioned over your expansion. The expansions for both players are defended by static defense and a few units. Note the burrowed Ultralisk when facing Zerg compositions.</p>
+    <div class='switcher'><div class='p1Expo'><img id ='p1Expo' src='../images/missiondata/chainofascension/p1expo_protoss.jpg' alt='Player 1 Expo'></div><div class = 'expoMinimap'><form action='chainofascension.html#'><label><input type='radio' name='expo' value='protoss' checked>Protoss</label><br><label><input type='radio' name='expo' value='terran'>Terran</label><br><label><input type='radio' name='expo' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/chainofascension/expominimap.jpg' alt='Expansion Minimap'></div></div><div class='p2Expo'><img id='p2Expo' src='../images/missiondata/chainofascension/p2expo_protoss.jpg' alt='Player 2 Expo'></div></div><script>$("input[name='expo']").change(function(){var race= $(this).val();var oldImg = $('#p1Expo');var img = new Image();img.src = '/images/missiondata/chainofascension/p1expo_'+ race + '.jpg';var newImg = $(img).hide();$('.p1Expo').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'p1Expo');var oldImg = $('#p2Expo');var img = new Image();img.src = '/images/missiondata/chainofascension/p2expo_'+ race + '.jpg';var newImg = $(img).hide();$('.p2Expo').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'p2Expo');return false;});var imgList=[];imgList.push('/images/missiondata/chainofascension/p1expo_protoss.jpg');imgList.push('/images/missiondata/chainofascension/p1expo_terran.jpg');imgList.push('/images/missiondata/chainofascension/p1expo_zerg.jpg');imgList.push('/images/missiondata/chainofascension/p2expo_protoss.jpg');imgList.push('/images/missiondata/chainofascension/p2expo_terran.jpg');imgList.push('/images/missiondata/chainofascension/p2expo_zerg.jpg');preload(imgList);</script>    <p>The next camp that will be captured lies in between the two expansions. This is lightly defended by some static defense and ground units.</p>
+    <div class='switcher'><div class='basePic' id='camp1div'><img id ='camp1' src='../images/missiondata/chainofascension/camp1_protoss.jpg' alt='camp1 Picture'></div><div class = 'baseMinimap'><form action='chainofascension.html#'><label><input type='radio' name='camp1' value='protoss' checked>Protoss</label><br><label><input type='radio' name='camp1' value='terran'>Terran</label><br><label><input type='radio' name='camp1' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/chainofascension/camp1minimap.jpg' alt='camp1 Minimap'></div></div></div><script>$("input[name='camp1']").change(function(){var race= $(this).val();var oldImg = $('#camp1');var img = new Image();img.src = '/images/missiondata/chainofascension/camp1_'+ race + '.jpg';var newImg = $(img).hide();$('#camp1div').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'camp1');return false;});var imgList=[];imgList.push('/images/missiondata/chainofascension/camp1_protoss.jpg');imgList.push('/images/missiondata/chainofascension/camp1_terran.jpg');imgList.push('/images/missiondata/chainofascension/camp1_zerg.jpg');preload(imgList);</script>    <p>Soon after this camp is captured, the 1st set of Hybrids will spawn. The base itself is weakly defended. However, the Hybrids will spawn with a protection detail. It is usually recommended to clear this base out <i>before</i> the hybrid wave spawns.</p>
+    <div class='switcher'><div class='basePic' id='hybrid1div'><img id ='hybrid1' src='../images/missiondata/chainofascension/hybrid1_protoss.jpg' alt='hybrid1 Picture'></div><div class = 'baseMinimap'><form action='chainofascension.html#'><label><input type='radio' name='hybrid1' value='protoss' checked>Protoss</label><br><label><input type='radio' name='hybrid1' value='terran'>Terran</label><br><label><input type='radio' name='hybrid1' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/chainofascension/hybrid1minimap.jpg' alt='hybrid1 Minimap'></div></div></div><script>$("input[name='hybrid1']").change(function(){var race= $(this).val();var oldImg = $('#hybrid1');var img = new Image();img.src = '/images/missiondata/chainofascension/hybrid1_'+ race + '.jpg';var newImg = $(img).hide();$('#hybrid1div').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'hybrid1');return false;});var imgList=[];imgList.push('/images/missiondata/chainofascension/hybrid1_protoss.jpg');imgList.push('/images/missiondata/chainofascension/hybrid1_terran.jpg');imgList.push('/images/missiondata/chainofascension/hybrid1_zerg.jpg');preload(imgList);</script>    <p>As Ji'Nara moves forward, the second set of Hybrids will spawn. The base has static defense guarding the front and some at the back (however, those are not relevant to clearing the hybrid spawn). The middle is mostly empty. However, the Hybrids will spawn with a protection detail as usual.</p>
+    <div class='switcher'><div class='basePic' id='hybrid2div'><img id ='hybrid2' src='../images/missiondata/chainofascension/hybrid2_protoss.jpg' alt='hybrid2 Picture'></div><div class = 'baseMinimap'><form action='chainofascension.html#'><label><input type='radio' name='hybrid2' value='protoss' checked>Protoss</label><br><label><input type='radio' name='hybrid2' value='terran'>Terran</label><br><label><input type='radio' name='hybrid2' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/chainofascension/hybrid2minimap.jpg' alt='hybrid2 Minimap'></div></div></div><script>$("input[name='hybrid2']").change(function(){var race= $(this).val();var oldImg = $('#hybrid2');var img = new Image();img.src = '/images/missiondata/chainofascension/hybrid2_'+ race + '.jpg';var newImg = $(img).hide();$('#hybrid2div').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'hybrid2');return false;});var imgList=[];imgList.push('/images/missiondata/chainofascension/hybrid2_protoss.jpg');imgList.push('/images/missiondata/chainofascension/hybrid2_terran.jpg');imgList.push('/images/missiondata/chainofascension/hybrid2_zerg.jpg');preload(imgList);</script>    <p>The next camp that will have to be cleared is a heavily fortified camp in the middle of the map. This area is filled with spell-casters and high-HP units.</p>
+    <div class='switcher'><div class='basePic' id='camp2div'><img id ='camp2' src='../images/missiondata/chainofascension/camp2_protoss.jpg' alt='camp2 Picture'></div><div class = 'baseMinimap'><form action='chainofascension.html#'><label><input type='radio' name='camp2' value='protoss' checked>Protoss</label><br><label><input type='radio' name='camp2' value='terran'>Terran</label><br><label><input type='radio' name='camp2' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/chainofascension/camp2minimap.jpg' alt='camp2 Minimap'></div></div></div><script>$("input[name='camp2']").change(function(){var race= $(this).val();var oldImg = $('#camp2');var img = new Image();img.src = '/images/missiondata/chainofascension/camp2_'+ race + '.jpg';var newImg = $(img).hide();$('#camp2div').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'camp2');return false;});var imgList=[];imgList.push('/images/missiondata/chainofascension/camp2_protoss.jpg');imgList.push('/images/missiondata/chainofascension/camp2_terran.jpg');imgList.push('/images/missiondata/chainofascension/camp2_zerg.jpg');preload(imgList);</script>    <p>Once Ji'Nara is pushed past the camp's center, the third wave of Hybrids will spawn. The base itself is not heavily defended. However, the protection detail that the Hybrids come with is strong. A well-placed AoE can make short work of this area.</p>
+    <div class='switcher'><div class='basePic' id='hybrid3div'><img id ='hybrid3' src='../images/missiondata/chainofascension/hybrid3_protoss.jpg' alt='hybrid3 Picture'></div><div class = 'baseMinimap'><form action='chainofascension.html#'><label><input type='radio' name='hybrid3' value='protoss' checked>Protoss</label><br><label><input type='radio' name='hybrid3' value='terran'>Terran</label><br><label><input type='radio' name='hybrid3' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/chainofascension/hybrid3minimap.jpg' alt='hybrid3 Minimap'></div></div></div><script>$("input[name='hybrid3']").change(function(){var race= $(this).val();var oldImg = $('#hybrid3');var img = new Image();img.src = '/images/missiondata/chainofascension/hybrid3_'+ race + '.jpg';var newImg = $(img).hide();$('#hybrid3div').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'hybrid3');return false;});var imgList=[];imgList.push('/images/missiondata/chainofascension/hybrid3_protoss.jpg');imgList.push('/images/missiondata/chainofascension/hybrid3_terran.jpg');imgList.push('/images/missiondata/chainofascension/hybrid3_zerg.jpg');preload(imgList);</script>    <p>The last camp that will need to be dealt with contains high-tech units. However, it is usually easier to engage, due to both players having strong armies.</p>
+    <div class='switcher'><div class='basePic' id='camp3div'><img id ='camp3' src='../images/missiondata/chainofascension/camp3_protoss.jpg' alt='camp3 Picture'></div><div class = 'baseMinimap'><form action='chainofascension.html#'><label><input type='radio' name='camp3' value='protoss' checked>Protoss</label><br><label><input type='radio' name='camp3' value='terran'>Terran</label><br><label><input type='radio' name='camp3' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/chainofascension/camp3minimap.jpg' alt='camp3 Minimap'></div></div></div><script>$("input[name='camp3']").change(function(){var race= $(this).val();var oldImg = $('#camp3');var img = new Image();img.src = '/images/missiondata/chainofascension/camp3_'+ race + '.jpg';var newImg = $(img).hide();$('#camp3div').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'camp3');return false;});var imgList=[];imgList.push('/images/missiondata/chainofascension/camp3_protoss.jpg');imgList.push('/images/missiondata/chainofascension/camp3_terran.jpg');imgList.push('/images/missiondata/chainofascension/camp3_zerg.jpg');preload(imgList);</script>    <p>Once this camp is cleared, the last set of Hybrids spawn behind the Pit of Sacrifice once Ji'Nara reaches the trigger location. There is no static defense or guards there, which means it can't be cleared ahead of time. The protection detail, however, is crammed in that area, making it relatively difficult to engage.</p>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="bonus"></a><h2>Completing the Bonus Objective</h2>
+    <div id="objectiveImages">
+        <img src="../images/missiondata/chainofascension/slaynelemental.jpg" alt="Slayn Elemental">
+        <img src="../images/missiondata/chainofascension/slaynelemental.jpg" alt="Slayn Elemental">
+    </div>
+    <p>The bonus objective requires you to kill two Slayn Elementals that will appear on the minimap. The first one will always spawn in the green-marked location. The second will spawn in either of the blue-marked locations. The spawn points are shown below:</p>
+    <img src="../images/missiondata/chainofascension/slaynelementalminimap.jpg" alt="Minimap of Slayn Elemental spawn locations">
+    <p>The Slayn Elementals are flying units. Hence, they can only be hit by units that can target air. The Slayn Elementals cast a skill (with an AoE marker on the ground). This skill can encase your army in a Solarite Cocoon. The cocoon will slowly damage units encased within them but can be destroyed by other forces. </p>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="timings"></a><h2>Timings</h2>
+    <p>Note: Information on Tech and Strength levels can be found on the <a href="../guides/enemycomps.html">Enemy Compositions</a> page.</p>
+    <p>As Ji'Nara gets pushed forward, Hybrids will spawn with a protection detail throughout the map. Hybrids will spawn when Ji'Nara reaches a certain location on the map, as shown below:</p>
+    <img src="../images/missiondata/chainofascension/hybridtriggerlocations.jpg" alt="Hybrid Trigger Locations">
+    <p>However, if players choose to delay pushing Ji'Nara, Hybrid waves will automatically spawn at certain times, regardless of her position on the map. These times are:</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Wave</th>
+                <th>Spawn Time (Minutes)</th>
+                <th>Protective Detail Tech Level</th>
+                <th>Protective Detail Strength Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>9</td>
+                <td>3</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>15</td>
+                <td>4</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>23</td>
+                <td>6</td>
+                <td>6</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>30</td>
+                <td>6</td>
+                <td>6</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>At the start of the game, the possible combinations Hybrids that will spawn to push for Amon's Champion are shown below:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Boss</th>
+                <th>Enforcer 1</th>
+                <th>Enforcer 2</th>
+                <th>Chance</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Hybrid Dominator</td>
+                <td>Hybrid Reaver</td>
+                <td>Hybrid Reaver</td>
+                <td>11%</td>
+            </tr>
+            <tr>
+                <td>Hybrid Dominator</td>
+                <td>Hybrid Reaver</td>
+                <td>Hybrid Nemesis</td>
+                <td>11%</td>
+            </tr>
+            <tr>
+                <td>Hybrid Dominator</td>
+                <td>Hybrid Nemesis</td>
+                <td>Hybrid Nemesis</td>
+                <td>11%</td>
+            </tr>
+            <tr>
+                <td>Hybrid Behemoth</td>
+                <td>Hybrid Destroyer</td>
+                <td>Hybrid Destroyer</td>
+                <td>22%</td>
+            </tr>
+            <tr>
+                <td>Hybrid Behemoth</td>
+                <td>Hybrid Destroyer</td>
+                <td>Hybrid Nemesis</td>
+                <td>22%</td>
+            </tr>
+            <tr>
+                <td>Hybrid Behemoth</td>
+                <td>Hybrid Nemesis</td>
+                <td>Hybrid Nemesis</td>
+                <td>22%</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The number of hybrids of each type spawned during the Hybrid Waves is shown below:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Wave</th>
+                <th>Boss</th>
+                <th>Enforcer 1</th>
+                <th>Enforcer 2</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>1</td>
+                <td>2</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>1</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>2</td>
+                <td style="text-align:center" colspan="2">5*</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>3</td>
+                <td style="text-align:center" colspan="2">2/1/4**</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>* 5 Hybrid Enforcers will be selected one by one, with a 33% chance of selecting Enforcer 2 and a 66% chance of selecting Enforcer 1.</p>
+    <p>**2 Hybrid Encforcer 1's and 1 Hybrid Enforcer 2 will be added. Then, an additional four will be selected one by one, with a 33% chance of selecting Enforcer 2 and a 66% chance of selecting Enforcer 1.</p>
+    <p>If the mission is still not completed after the 4th Hybrid wave, more Hybrid waves will spawn (in the same location) every 5 minutes.</p>
+    <p>Due to the nature of this map, there are two types of waves on this map:</p>
+    <ul>
+        <li><b>Attack Waves</b>: These are strong forces that target player bases. They occur infrequently throughout the mission.</li>
+        <li><b>Escort Waves</b>: These are smaller forces that are used to push Ji'Nara back. They occur frequently throughout the mission.</li>
+    </ul>
+    <p>Attack waves will target a random player (or the player playing on a harder difficulty) and attack them first from their side. Then, the players will alternate in getting attacked until double waves start spawning.</p>
+    <p>The Attack Wave Timings for this mission are:</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Wave</th>
+                <th>Time</th>
+                <th>Tech Level</th>
+                <th>Strength Level</th>
+                <th>Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>3:30</td>
+                <td>2</td>
+                <td>2</td>
+                <td>Single</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>7:00</td>
+                <td>5</td>
+                <td>5</td>
+                <td>Single</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>11:00</td>
+                <td>4</td>
+                <td>4</td>
+                <td>Single</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>14:00</td>
+                <td>5</td>
+                <td>5</td>
+                <td>Single</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>18:00</td>
+                <td>4</td>
+                <td>4</td>
+                <td>Double</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>21:30</td>
+                <td>7</td>
+                <td>5</td>
+                <td>Double</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>25:30</td>
+                <td>7</td>
+                <td>6</td>
+                <td>Double</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Note: Every Hybrid spawn will delay all future attack waves by 2 minutes.</p>
+    <p>The Escort Wave Timings for this mission are:</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Wave</th>
+                <th>Time</th>
+                <th>Tech Level</th>
+                <th>Strength Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>3:30</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>5:00</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>7:00</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>9:00</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>11:00</td>
+                <td>2</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>12:00</td>
+                <td>2</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>13:00</td>
+                <td>3</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>15:00</td>
+                <td>2</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>16:00</td>
+                <td>3</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>16:30</td>
+                <td>3</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>17:30</td>
+                <td>4</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td>18:30</td>
+                <td>4</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td>19:00</td>
+                <td>5</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td>20:00</td>
+                <td>5</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td>20:30</td>
+                <td>4</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>16</td>
+                <td>21:30</td>
+                <td>3</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>17</td>
+                <td>22:00</td>
+                <td>3</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>18</td>
+                <td>23:00</td>
+                <td>4</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>19</td>
+                <td>24:00</td>
+                <td>4</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>20</td>
+                <td>25:00</td>
+                <td>4</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>21</td>
+                <td>25:30</td>
+                <td>4</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>22</td>
+                <td>26:00</td>
+                <td>5</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>23</td>
+                <td>27:00</td>
+                <td>5</td>
+                <td>5</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Note: Every Hybrid spawn will delay all future escort waves by 2 minutes.</p>
+    <p>If you choose to prolong the mission past the 28:30 mark, the following pattern will occur and repeat for the rest of the game:</p>
+    <ul>
+        <li>Escort Wave #20</li>
+        <li>Escort Wave #21</li>
+        <li>Hybrid Spawn</li>
+        <li>Escort Wave #22</li>
+        <li>Escort Wave #23</li>
+        <li>Attack Wave #7</li>
+    </ul>
+    <p>The timings for the Slayn Elementals are as follows:</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Elemental</th>
+                <th>Spawn Time (Minutes)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Elemental 1</td>
+                <td>10:00</td>
+            </tr>
+            <tr>
+                <td>Elemental 2</td>
+                <td>16:00</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="spawnPoints"></a><h2>Spawn Points</h2>
+    <p>The spawn points for attack waves and escort waves are different.</p>
+    <p>For single attack waves, a player is chosen at random and then attacked. Note, if you are playing on a harder difficulty than your ally, you will be attacked first. Then, the other player will be attacked on the next wave, and the players will alternate until double waves start appearing, in which both players will be attacked at the same time. Attack waves will spawn from a player's side (spawn point #1 or #2, below) as long as Amon has a unit or a building there. If he does not, attack waves will spawn in spawn point #3.</p>
+    <p>The spawn locations for attack waves are shown below.</p>
+    <p>Attack Wave Spawn Location 1:</p>
+    <img src="../images/missiondata/chainofascension/atkwavespawn1.jpg" alt="Attack Wave Spawn Location 1">
+    <p>Attack Wave Spawn Location 2:</p>
+    <img src="../images/missiondata/chainofascension/atkwavespawn2.jpg" alt="Attack Wave Spawn Location 2">
+    <p>Attack Wave Spawn Location 3:</p>
+    <img src="../images/missiondata/chainofascension/atkwavespawn3.jpg" alt="Attack Wave Spawn Location 3">
+    <p>Spawn points for escort waves depending on Ji'Nara's farthest position in the mission. Escort waves will start spawning from location #1 below, then start spawning from location #2, and then to #3 when the respectful changeover point has been reached. The changeover points are shown below:</p>
+    <img src="../images/missiondata/chainofascension/escortchangeover.jpg" alt="Escort Wave Changeover locations">
+    <p>The spawn locations for escort waves are shown below.</p>
+    <p>Escort Wave Spawn Location 1:</p>
+    <img src="../images/missiondata/chainofascension/escortwavespawn1.jpg" alt="Escort Wave Spawn Location 1">
+    <p>Escort Wave Spawn Location 2:</p>
+    <img src="../images/missiondata/chainofascension/escortwavespawn2.jpg" alt="Escort Wave Spawn Location 2">
+    <p>Escort Wave Spawn Location 3:</p>
+    <img src="../images/missiondata/chainofascension/escortwavespawn3.jpg" alt="Escort Wave Spawn Location 3">
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="misTips"></a><h2>Mission Tips</h2>
+    <ul>
+        <li>Use a drone/probe/SCV to push Ji'Nara forward, while your army clears out bases ahead of time and deals with attack waves/escort waves.</li>
+        <li>The second attack wave in the mission is extremely strong given the early game. Save calldowns for that wave.</li>
+        <li>Spawn the first Hybrid Superpusher spawn early to delay the deadly second attack wave.</li>
+        <li>All waves after the fourth attack wave are double waves which attack both players' bases.</li>
+        <li>Protoss units gain increased Shield regeneration when near Ji'Nara.</li>
+    </ul>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="comTips"></a><h2>Commander-specific Tips</h2>
+    <ul>
+        <li><a href="../commanders/abathur.html">Abathur</a>: Place Toxic Nests on hybrid spawn locations before spawning the Hybrid to weaken the protection detail.</li>
+        <li><a href="../commanders/horner.html">Han & Horner</a>: Place Mag Mines on hybrid spawn locations before spawning the Hybrid to weaken the protection detail.</li>
+        <li><a href="../commanders/nova.html">Nova</a>: If you use Siege Tanks, place Spider-mines ahead of Hybrid spawns to weaken the protection detail.</li>
+        <li><a href="../commanders/raynor.html">Raynor</a>: If you use Vultures, place Spider-mines ahead of Hybrid spawns to weaken the protection detail.</li>
+        <li><a href="../commanders/stukov.html">Stukov</a>: Keep your Infested Colonist Compound a few spaces away from Ji'nara to maximize utility of your infested.</li>
+        <li><a href="../commanders/vorazun.html">Vorazun</a>: Time Stop can be used just before the last Hybrid trigger location to skip the fourth spawn entirely and complete the mission. See the video below.</li>
+        <iframe width="475" height="268" src="https://www.youtube.com/embed/__D3Y5DliVM" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <li><a href="../commanders/zagara.html">Zagara</a>: Build a single corruptor to apply Corruption to the Slayn Elemental before you run your Scourge into it.</li>
+        <li><a href="../commanders/zagara.html">Zagara</a>: Build your macro hatcheries at your expansion for quick reinforcements.</li>
+    </ul>
+</div>
+<div id="footer">
+    <p>Note: All data generated on this site is based on Brutal difficulty. Timings, compositions and other elements may differ on easier difficulty levels.</p>
+    <p>© Blizzard Entertainment, Inc. All rights reserved. Wings of Liberty, Heart of the Swarm, Legacy of the Void, and StarCraft are trademarks or registered trademarks of Blizzard Entertainment, Inc. in the U.S. and/or other countries.</p>
+</div></body>
+</html>

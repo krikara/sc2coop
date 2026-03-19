@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+<link rel='shortcut icon' href='../images/favicon.ico' type='image/x-icon' />
+<link rel="stylesheet"  media="all" type="text/css" href="../styles/mainstyle.css%3Fv=1.28.css">
+<link href='https://fonts.googleapis.com/css?family=Convergence' rel='stylesheet' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-165288360-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-165288360-1');
+</script>
+<script>
+    grecaptcha.ready(function() {
+        $(".captchaForm").each(function(){
+            currentID = $(this).attr('id');
+            if(currentID=="reportForm"){
+                $(this).submit(function(event){
+                    $("#submitbtn").attr("disabled", true);
+                    grecaptcha.execute('6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd', { action: currentID }).then(function (token) {
+                        $("#reportFormRecaptchaResponse").val(token);
+                        var path = window.location.pathname;
+                        var page = path.split("/").pop();
+                        var x = document.forms["errorReport"]["comment"].value;
+            		    var y = document.forms["errorReport"]["url"].value;
+            			var z = $("#reportFormRecaptchaResponse").val();
+            			$.ajax({  
+                            type: 'POST',
+                            url: '/scripts/addreport.php', 
+                            data: { 
+                                comment: x,
+                                errorpage: page,
+                                url:y, 
+                                recaptcha_response:z},
+                            success: function(data) {
+                                $("#reportForm").hide();
+                                $("#errorReport").append(data);
+                                return false;
+                            }
+                        });
+                        return false;
+                        $("#submitbtn").attr("disabled", false);
+                    });
+                    
+                })
+            }
+            else{
+                $(this).submit(function(event){
+                    var currentID = $(this).attr('id');
+                    var currentForm = $(this);
+                    event.preventDefault();
+                    grecaptcha.execute('6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd', { action: currentID }).then(function (token) {
+                        $("#" + currentID + "RecaptchaResponse").val(token);
+                        currentForm.off("submit");
+                        currentForm.submit();
+                    });
+                })
+            }
+            
+        })
+    },false)
+</script>  <title>Starcraft 2 Co-op - Mission Guide - Malwarfare</title>
+  <meta name="description" content="Starcraft 2 Co-op Mission Guide Malwarfare">
+  <meta name="keywords" content="Starcraft co-op guides malwarfare mission">
+  <link rel="stylesheet"  media="all" type="text/css" href="../styles/missionstyle.css%3Fv=1.00.css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link rel="canonical" href="malwarfare.html">
+  <script src="../scripts/preload.js"></script>
+  </head>
+<body>
+<div id="header"><img src="../images/mainpageheader.png" alt="Starcraft II Co-op Logo">
+</div>
+<div id="menu">
+<ul>
+    <li class="normal"><a href="../index.html">&#127968;</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'commanders');">Commanders</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'community');">Community</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'guides');">Guides</a></li>
+    <li class="highlight"><a href="../index.html" onclick="javascript:openSubmenu(event,'missions');">Missions</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'resources');">Resources</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'tools');">Tools</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'about');">About</a></li>
+    <li class="normal"><a href="../account.html">My&nbsp;Account</a></li>
+</ul>
+<div id="container">
+    <div id="commanderList" class="submenu">
+        <a href="../commanders/raynor.html"><img src="../images/commanderportraits/raynorportrait.png" alt="Raynor Portrait"></a>
+        <a href="../commanders/kerrigan.html"><img src="../images/commanderportraits/kerriganportrait.png" alt="Kerrigan Portrait"></a>
+        <a href="../commanders/artanis.html"><img src="../images/commanderportraits/artanisportrait.png" alt="Artanis Portrait"></a>
+        <a href="../commanders/swann.html"><img src="../images/commanderportraits/swannportrait.png" alt="Swann Portrait"></a>
+        <a href="../commanders/zagara.html"><img src="../images/commanderportraits/zagaraportrait.png" alt="Zagara Portrait"></a>
+        <a href="../commanders/vorazun.html"><img src="../images/commanderportraits/vorazunportrait.png" alt="Vorazun Portrait"></a>
+        <a href="../commanders/karax.html"><img src="../images/commanderportraits/karaxportrait.png" alt="Karax Portrait"></a>
+        <a href="../commanders/abathur.html"><img src="../images/commanderportraits/abathurportrait.png" alt="Abathur Portrait"></a>
+        <a href="../commanders/alarak.html"><img src="../images/commanderportraits/alarakportrait.png" alt="Alarak Portrait"></a>
+        <a href="../commanders/nova.html"><img src="../images/commanderportraits/novaportrait.png" alt="Nova Portrait"></a>
+        <a href="../commanders/stukov.html"><img src="../images/commanderportraits/stukovportrait.png" alt="Stukov Portrait"></a>
+        <a href="../commanders/fenix.html"><img src="../images/commanderportraits/fenixportrait.png" alt="Fenix Portrait"></a>
+        <a href="../commanders/dehaka.html"><img src="../images/commanderportraits/dehakaportrait.png" alt="Dehaka Portrait"></a>
+        <a href="../commanders/horner.html"><img src="../images/commanderportraits/hornerportrait.png" alt="Han & Horner Portrait"></a>
+        <a href="../commanders/tychus.html"><img src="../images/commanderportraits/tychusportrait.png" alt="Tychus Portrait"></a>
+        <a href="../commanders/zeratul.html"><img src="../images/commanderportraits/zeratulportrait.png" alt="Zeratul Portrait"></a>
+        <a href="../commanders/stetmann.html"><img src="../images/commanderportraits/stetmannportrait.png" alt="Stetmann Portrait"></a>
+        <a href="../commanders/mengsk.html"><img src="../images/commanderportraits/mengskportrait.png" alt="Mengsk Portrait"></a>
+    </div>
+    <div id="missionList" class="submenu">
+        <a href="chainofascension.html"><img src="../images/missionthumbnails/chainofascension.png" alt="Chain of Ascension Thumbnail"></a>
+        <a href="cradleofdeath.html"><img src="../images/missionthumbnails/cradleofdeath.png" alt="Cradle of Death Thumbnail"></a>
+        <a href="deadofnight.html"><img src="../images/missionthumbnails/deadofnight.png" alt="Dead of Night Thumbnail"></a>
+        <a href="lockload.html"><img src="../images/missionthumbnails/lockload.png" alt="Lock & Load Thumbnail"></a>
+        <a href="malwarfare.html"><img src="../images/missionthumbnails/malwarfare.png" alt="Malwarfare Thumbnail"></a>
+        <a href="minerevacuation.html"><img src="../images/missionthumbnails/minerevacuation.png" alt="Miner Evacuation Thumbnail"></a>
+        <a href="mistopportunities.html"><img src="../images/missionthumbnails/mistopportunities.png" alt="Mist Opportunities Thumbnail"></a>
+        <a href="oblivionexpress.html"><img src="../images/missionthumbnails/oblivionexpress.png" alt="Oblivion Express Thumbnail"></a>
+        <a href="partparcel.html"><img src="../images/missionthumbnails/partparcel.png" alt="Part & Parcel Thumbnail"></a>
+        <a href="riftstokorhal.html"><img src="../images/missionthumbnails/riftstokorhal.png" alt="Rifts to Korhal Thumbnail"></a>
+        <a href="scytheofamon.html"><img src="../images/missionthumbnails/scytheofamon.png" alt="Scythe Of Amon Thumbnail"></a>
+        <a href="templeofthepast.html"><img src="../images/missionthumbnails/templeofthepast.png" alt="Temple of the Past Thumbnail"></a>
+        <a href="thevermillionproblem.html"><img src="../images/missionthumbnails/thevermillionproblem.png" alt="The Vermillion Problem Thumbnail"></a>
+        <a href="voidlaunch.html"><img src="../images/missionthumbnails/voidlaunch.png" alt="Void Launch Thumbnail"></a>
+        <a href="voidthrashing.html"><img src="../images/missionthumbnails/voidthrashing.png" alt="Void Thrashing Thumbnail"></a>
+    </div>
+    <div id="guideList" class="submenu">
+        <ul>
+            <li class="normal"><a href="../guides/buildordertheory.html">Build&nbsp;Order&nbsp;Theory</a></li>
+            <li class="normal"><a href="../guides/enemycomps.html">Enemy&nbsp;Compositions</a></li>
+            <li class="normal"><a href="../guides/generaltips.html">General&nbsp;Tips</a></li>
+            <li class="normal"><a href="../guides/newplayer.html">New&nbsp;Players&nbsp;</a></li>
+        </ul>
+    </div>
+    <div id="resources" class="submenu">
+        <ul>
+            <li class="normal"><a href="../resources/achievements.html">Achievements</a></li>
+            <li class="normal"><a href="../resources/ailogic.html">AI&nbsp;Logic</a></li>
+            <li class="normal"><a href="../resources/bugs.html">Bugs</a></li>
+            <li class="normal"><a href="../resources/brutal.html">Brutal+</a></li>
+            <li class="normal"><a href="../resources/deathprevention.html">Death&nbsp;Prevent&nbsp;Effects</a></li>
+            <li class="normal"><a href="../resources/eastereggs.html">Easter&nbsp;Eggs</a></li>
+            <li class="normal"><a href="../resources/levels.html">Levels</a></li>
+            <li class="normal"><a href="../resources/mutators.html">Mutators</a></li>
+            <li class="normal"><a href="../resources/patchdata.html">Patch&nbsp;Data</a></li>
+            <li class="normal"><a href="../resources/stats.html">Stats</a></li>
+            <li class="normal"><a href="../resources/weeklymutations.html">Weekly&nbsp;Mutations</a></li>
+            
+        </ul>
+    </div>
+    <div id="tools" class="submenu">
+        <ul>
+            <li class="normal"><a href="../tools/downloads.html">Downloads</a></li>
+            <li class="normal"><a href="../tools/masterybreakpoints.html">Mastery&nbsp;Breakpoints</a></li>
+            <li class="normal"><a href="../tools/replayanalyzer.html">Replay&nbsp;Analyzer</a></li>
+            <li class="normal"><a href="../tools/unitstats.html">Unit&nbsp;Stats</a></li>
+        </ul>
+    </div>
+    <div id="community" class="submenu">
+        <ul>
+            <li class="normal"><a href="../community/tournament/main.html">Co&#8209;op&nbsp;Tournament</a></li>
+            <li class="normal"><a href="../community/gamespotlight.html">Game&nbsp;Spotlight</a></li>
+            <li class="normal"><a href="../community/mythbusters.html">Mythbusters</a></li>
+            <li class="normal"><a href="../community/rockslappingchampions.html">Rockslapping&nbsp;Champions</a></li>
+            <li class="normal"><a href="../youtube.html">Youtube</a></li>
+        </ul>
+    </div>
+    <div id="about" class="submenu">
+        <ul>
+            <!--<li class="normal"><a href="/about/contact">Contact</a></li>-->
+            <li class="normal"><a href="../about/faq.html">FAQ</a></li>
+            <li class="normal"><a href="../about/links.html">Links</a></li>
+            <li class="normal"><a href="https://www.youtube.com/c/Starcraft2Coop" rel="nofollow">Youtube</a></li>
+        </ul>
+    </div>
+    <!--<div id="imgs">
+        <a href="https://www.youtube.com/c/Starcraft2Coop" rel="nofollow"><img src="/images/links/yt.png" alt="Youtube"></a>
+        <a href="https://www.patreon.com/starcraft2coop" rel="nofollow"><img src="/images/links/patreon.png" alt="Patreon"></a>
+        <a href="https://www.twitch.tv/aommaster" rel="nofollow"><img src="/images/links/twitch.png" alt="Twitch"></a>
+        <a href="https://discord.gg/AbFXRAB" rel="nofollow"><img src="/images/links/discord.png" alt="Discord"></a>
+    </div>-->
+</div>
+<script>
+    function openSubmenu(event, selection){
+        event.preventDefault();
+        
+        switch (selection){
+            case "commanders":
+                $(".submenu").not("#commanderList").hide();
+                $("#commanderList").fadeToggle();
+                break;
+            case "missions":
+                $(".submenu").not("#missionList").hide();
+                $("#missionList").fadeToggle();
+                break;
+            case "community":
+                $(".submenu").not("#community").hide();
+                $("#community").fadeToggle();
+                break;
+            case "guides":
+                $(".submenu").not("#guideList").hide();
+                $("#guideList").fadeToggle();
+                break;
+            case "resources":
+                $(".submenu").not("#resources").hide();
+                $("#resources").fadeToggle();
+                break;
+            case "tools":
+                $(".submenu").not("#tools").hide();
+                $("#tools").fadeToggle();
+                break;
+            case "about":
+                $(".submenu").not("#about").hide();
+                $("#about").fadeToggle();
+                break;
+        }
+    }
+</script></div>
+<div id="content">
+    <h1>Co-op Mission Guide: Malwarfare</h1>
+    <p id="missionPlace">Purifer Facility</p>
+        <h2>Sections on this Page</h2>
+    <div id="links">
+        <p><a href="malwarfare.html#misSum">Mission Summary</a></p>
+        <p><a href="malwarfare.html#objectives">Objectives</a></p>
+        <p><a href="malwarfare.html#towerOrder">Suppression Tower Order</a></p>
+        <p><a href="malwarfare.html#bonus">Completing the Bonus Objective</a></p>
+        <p><a href="malwarfare.html#timings">Timings</a></p>
+        <p><a href="malwarfare.html#spawnPoints">Spawn Points</a></p>
+        <p><a href="malwarfare.html#misTips">Mission Tips</a></p>
+        <p><a href="malwarfare.html#comTips">Commander-Specific Tips</a></p>
+    </div>
+    <a id="misSum"></a><h2>Mission Summary</h2>
+    <p>Long ago, this protoss facility was used to convert the personalities of great warriors into AI known as the Purifiers. Researchers tested the process on a Tal'darim prisoner, whose rogue personality began to attack the facility. Now the Purifier guardian Aurana is attempting to regain control.</p>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="objectives"></a><h2>Objectives</h2>
+    <h3>Primary Objective</h3>
+        <ul>
+            <li>Do not let Aurana's Transport be destroyed</li>
+            <li>Purify Security Terminals (5)</li>
+        </ul>
+    <h3>Secondary Objective</h3>
+        <ul>
+            <li>Download AI Personalities (6)</li>
+        </ul>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="towerOrder"></a><h2>Suppression Tower Order</h2>
+    <div id="globalRaceSelect">
+        <p>Change all base analysis pictures to race:</p>
+        <form action="malwarfare.html#">
+            <label><input type="radio" name="globalRace" value="protoss" checked>Protoss</label><br>
+            <label><input type="radio" name="globalRace" value="terran">Terran</label><br>
+            <label><input type="radio" name="globalRace" value="zerg">Zerg</label><br>
+        </form>
+        <script>
+            $("input[name='globalRace']").change(function(){
+                var race= $(this).val();
+                $('input:radio[value="' + race + '"]').each(function () {
+                    if($(this).attr('name')!=="globalRace"){
+                        $(this).prop('checked', true).trigger('change');
+                    }
+                })
+                return false;
+            })
+        </script>
+    </div>
+        <p>The first camp you will have to take is positioned over your expansion. The expansions on Malwarfare for both players are defended by static defense and a few units.</p>
+    <div class='switcher'><div class='p1Expo'><img id ='p1Expo' src='../images/missiondata/malwarfare/p1expo_protoss.jpg' alt='Player 1 Expo'></div><div class = 'expoMinimap'><form action='malwarfare.html#'><label><input type='radio' name='expo' value='protoss' checked>Protoss</label><br><label><input type='radio' name='expo' value='terran'>Terran</label><br><label><input type='radio' name='expo' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/malwarfare/expominimap.jpg' alt='Expansion Minimap'></div></div><div class='p2Expo'><img id='p2Expo' src='../images/missiondata/malwarfare/p2expo_protoss.jpg' alt='Player 2 Expo'></div></div><script>$("input[name='expo']").change(function(){var race= $(this).val();var oldImg = $('#p1Expo');var img = new Image();img.src = '/images/missiondata/malwarfare/p1expo_'+ race + '.jpg';var newImg = $(img).hide();$('.p1Expo').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'p1Expo');var oldImg = $('#p2Expo');var img = new Image();img.src = '/images/missiondata/malwarfare/p2expo_'+ race + '.jpg';var newImg = $(img).hide();$('.p2Expo').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'p2Expo');return false;});var imgList=[];imgList.push('/images/missiondata/malwarfare/p1expo_protoss.jpg');imgList.push('/images/missiondata/malwarfare/p1expo_terran.jpg');imgList.push('/images/missiondata/malwarfare/p1expo_zerg.jpg');imgList.push('/images/missiondata/malwarfare/p2expo_protoss.jpg');imgList.push('/images/missiondata/malwarfare/p2expo_terran.jpg');imgList.push('/images/missiondata/malwarfare/p2expo_zerg.jpg');preload(imgList);</script>    <p>Aurana's Transport will move from Terminal to Terminal and she will purify each one. It takes 2:45 to purify the Terminals. Your goal is to defend her transport from attack waves and Suppression Towers. After every terminal has been purified, she heals any damage taken up to 5,000HP.</p>
+    <p>Suppression Towers deal 240 damage per volley to Aurana's Transport. That ability has a cooldown of 6 seconds.</p>
+    <p>However, there are two additional timers involved as well. When players engage a Suppression Tower, it stops attacking Aurana for 30 seconds before resuming attacks again. Additionally, if players have not destroyed the tower within three minutes of it spawning, it will attack Aurana's transport every 2 seconds.</p>
+    <p>The first Terminal is where Aurana starts when you start the mission. No Suppression Towers will spawn to attack.</p>
+    <p>For the second Terminal, one Suppression Tower will spawn. The image below shows the potential spawn points of the Suppression Tower. The Suppression Tower spawn locations are defended very lightly by units and static defense.</p>
+    <img src="../images/missiondata/malwarfare/sec2towers.jpg" alt="Terminal 2 Tower Locations">
+    <p>For the third Terminal, two Suppression Towers will spawn. There are two possible patterns for the spawn points of these towers (shown in different colors). Filled areas indicate the first tower spawned, while lines indicate which tower spawns next.</p>
+    <img src="../images/missiondata/malwarfare/sec3towers.jpg" alt="Terminal 3 Tower Locations">
+    <p>For the fourth Terminal, three Suppression Towers will spawn. There are two possible patterns for the spawn points of these towers (shown in different colors). Filled areas indicate the first tower spawned, while lines indicate which tower spawns next.</p>
+    <img src="../images/missiondata/malwarfare/sec4towers.jpg" alt="Terminal 4 Tower Locations">
+    <p>For the fifth Terminal, four Suppression Towers will spawn. There are two possible patterns for the spawn points of these towers (shown in different colors). Filled areas indicate the first tower spawned, while lines indicate which tower spawns next.</p>
+    <img src="../images/missiondata/malwarfare/sec5towers.jpg" alt="Terminal 5 Tower Locations">
+    <p>A video for the order of Suppression Tower spawn patterns is below:</p>
+    <iframe width="475" height="268" src="https://www.youtube.com/embed/D8lznL2PorU" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <p>Suppression Towers have two abilities:</p>
+    <ul>
+        <li>Multi-Target Lock On: Deals 40 damage to all enemy units in the targeting circles and slows their attack speed and movement speed by 50% for 4 seconds</li>
+        <li>Single-Target Lock On: Deals 150 damage to all enemy units in the targeting circle</li>
+    </ul>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="bonus"></a><h2>Completing the Bonus Objective</h2>
+    <p>The bonus objective requires you to download three AI Personalities each from two beacons on the map. This is the only bonus objective that requires resources to complete. Each AI personality costs 350 Minerals/100 Gas to download. Therefore, you will require 1050 minerals/300 Gas to download all personalities for a single objective. The objective will expire exactly 4 minutes after it starts. Each beacon is defended by a force of enemy units and static defense.</p>
+    <p>The first beacon is shown below.</p>
+    <div class='switcher'><div class='basePic' id='beacon1div'><img id ='beacon1' src='../images/missiondata/malwarfare/beacon1_protoss.jpg' alt='beacon1 Picture'></div><div class = 'baseMinimap'><form action='malwarfare.html#'><label><input type='radio' name='beacon1' value='protoss' checked>Protoss</label><br><label><input type='radio' name='beacon1' value='terran'>Terran</label><br><label><input type='radio' name='beacon1' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/malwarfare/beacon1minimap.jpg' alt='beacon1 Minimap'></div></div></div><script>$("input[name='beacon1']").change(function(){var race= $(this).val();var oldImg = $('#beacon1');var img = new Image();img.src = '/images/missiondata/malwarfare/beacon1_'+ race + '.jpg';var newImg = $(img).hide();$('#beacon1div').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'beacon1');return false;});var imgList=[];imgList.push('/images/missiondata/malwarfare/beacon1_protoss.jpg');imgList.push('/images/missiondata/malwarfare/beacon1_terran.jpg');imgList.push('/images/missiondata/malwarfare/beacon1_zerg.jpg');preload(imgList);</script>    <p>The second beacon is shown below.</p>
+    <div class='switcher'><div class='basePic' id='beacon2div'><img id ='beacon2' src='../images/missiondata/malwarfare/beacon2_protoss.jpg' alt='beacon2 Picture'></div><div class = 'baseMinimap'><form action='malwarfare.html#'><label><input type='radio' name='beacon2' value='protoss' checked>Protoss</label><br><label><input type='radio' name='beacon2' value='terran'>Terran</label><br><label><input type='radio' name='beacon2' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/malwarfare/beacon2minimap.jpg' alt='beacon2 Minimap'></div></div></div><script>$("input[name='beacon2']").change(function(){var race= $(this).val();var oldImg = $('#beacon2');var img = new Image();img.src = '/images/missiondata/malwarfare/beacon2_'+ race + '.jpg';var newImg = $(img).hide();$('#beacon2div').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'beacon2');return false;});var imgList=[];imgList.push('/images/missiondata/malwarfare/beacon2_protoss.jpg');imgList.push('/images/missiondata/malwarfare/beacon2_terran.jpg');imgList.push('/images/missiondata/malwarfare/beacon2_zerg.jpg');preload(imgList);</script>    <p>Note that when the first A.I. Personality download has been initiated, three attack waves will spawn to attack and destroy the objective. Once these are cleared, you only require vision in order to complete the rest of the downloads.</p>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="timings"></a><h2>Timings</h2>
+    <p>Note: Information on Tech and Strength levels can be found on the <a href="../guides/enemycomps.html">Enemy Compositions</a> page.</p>
+    <p>There are three different timings that will be listed in this section. These are:</p>
+    <ul>
+        <li><b>Suppression Tower Timings:</b> The are the timings for each Suppression Tower spawn.</li>
+        <li><b>Harass Wave Timings:</b> These are smaller waves that attack Aurana's Transport while she is purifying each terminal.</li>
+        <li><b>Attack Wave Timings:</b> These are attack waves that target your base.</li>
+    </ul>
+    <p>The Suppression Tower Spawn Timings are shown below. All times are shown as time left on the clock to completion of the terminal.</p>
+    <p>Terminal 2:</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Tower</th>
+                <th>Time Left</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>1:00</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Terminal 3:</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Tower</th>
+                <th>Time Left</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>1:55</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>1:20</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Terminal 4:</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Tower</th>
+                <th>Time Left</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>2:20</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>1:15</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>0:33</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Terminal 5:</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Tower</th>
+                <th>Time Left</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>2:10</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>1:35</td>
+            </tr>
+            <tr>
+                <td>3+4</td>
+                <td>0:55</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The Harass Wave Spawn Timings are shown below. All times are shown as time left on the clock to completion of the terminal.</p>
+    <p>Terminal 2:</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Wave</th>
+                <th>Time Left</th>
+                <th>Tech Level</th>
+                <th>Stength Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>2:25</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2:00</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>1:35</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>1:00</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>0:20</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Terminal 3:</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Wave</th>
+                <th>Time Left</th>
+                <th>Tech Level</th>
+                <th>Stength Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>2:30</td>
+                <td>2</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2:15</td>
+                <td>2</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>1:40</td>
+                <td>2</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>1:20</td>
+                <td>2</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>1:00</td>
+                <td>2</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>0:41</td>
+                <td>2</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>0:20</td>
+                <td>2</td>
+                <td>2</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Terminal 4:</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Wave</th>
+                <th>Time Left</th>
+                <th>Tech Level</th>
+                <th>Stength Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>2:25</td>
+                <td>3</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>1:40</td>
+                <td>5</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>1:10*</td>
+                <td>4</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>0:55</td>
+                <td>4</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>0:28**</td>
+                <td>4</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>0:15</td>
+                <td>4</td>
+                <td>5</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>*Only on Blue Pattern (above).</p>
+    <p>**Only on Yellow Pattern (above)</p>
+    <p>Terminal 5:</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Wave</th>
+                <th>Time Left</th>
+                <th>Tech Level</th>
+                <th>Stength Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>2:30</td>
+                <td>4</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>1:55</td>
+                <td>5</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>1:30</td>
+                <td>5</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>0:22</td>
+                <td>5</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>0:50</td>
+                <td>4</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>0:30</td>
+                <td>5</td>
+                <td>5</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Attack waves work a little differently. The first attack wave will <i>always</i> occur at 3:36.</p>
+    <p>Howevever, the two subsequent attack waves will occur when the transport reaches a certain point on the map. The minimap below shows the points that trigger the second and third attack waves.</p>
+    <img src="../images/missiondata/malwarfare/attackwavetriggers.jpg" alt="Attack Wave Trigger Locations">
+    <p>Strength and Tech Level information of these attack waves is below:</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Attack Wave</th>
+                <th>Tech Level</th>
+                <th>Strength Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>3</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>4</td>
+                <td>4</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="spawnPoints"></a><h2>Spawn Points</h2>
+    <p>The spawn points for the Harass waves and Attack waves are different. Harass waves are created from a random point in the lock area.</p>
+    <p>However, attack waves have a fixed number of spawn positions. Attack Waves 1 and 2 have the same possible spawn points. The spawn points for attack waves 1 and 2 are shown below.</p>
+    <img src="../images/missiondata/malwarfare/wave12spawnpoint.jpg" alt="Spawn Points for Attack Waves 1 and 2">
+    <p>Attack Wave 3 only has one spawn point. This is shown below.</p>
+    <img src="../images/missiondata/malwarfare/wave3spawnpoint.jpg" alt="Spawn Points for Attack Waves 3">
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="misTips"></a><h2>Mission Tips</h2>
+    <ul>
+        <li>Pay attention to Aurana's Transport while it is moving. It will slow down if enemy units attack it, giving them even more time to damage it.</li>
+        <li>Aurana's Transport does not regen to full HP at the end of every Terminal. It heals a total of 5000 HP per terminal.</li>
+        <li>When downloading Personalities for the bonus objective, only three attack waves will spawn in close proximity to each other. Once those attack waves are cleared, all you need is vision to download the rest. No defenses are required.</li>
+        <li>Pre-clearing the areas ahead of the transport is the best way to ensure it doesn't take damage and allows you to finish the mission as fast as possible.</li>
+    </ul>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="comTips"></a><h2>Commander-specific Tips</h2>
+    <ul>
+        <li><a href="../commanders/abathur.html">Abathur</a>: Place Toxic Nests outside the camps at the expansions and lure the units to get early biomass.</li>
+        <li><a href="../commanders/abathur.html">Abathur</a>: Place Toxic Nests on attack wave and suppression tower defense spawn locations to weaken them.</li>
+        <li><a href="../commanders/alarak.html">Alarak</a>: (Risky) Sneak a probe down the back of the mineral line, drop a pylon and overcharge it to capture an early expansion.</li>
+        <li><a href="../commanders/horner.html">Han & Horner</a>: Place Mag Mines on attack wave and suppression tower defense spawn locations to weaken them.</li>
+        <li><a href="../commanders/horner.html">Han & Horner</a>: Because Suppression Towers are not Heroic, Space Station Reallocation will do its full damage to them. This means the first Suppression Tower can be instantly destroyed, while the others have their HP's significantly reduced.</li>
+        <li><a href="../commanders/karax.html">Karax</a>: Use your Spear of Adun abilities to capture your expansion at the start of the game.</li>
+        <li><a href="../commanders/kerrigan.html">Kerrigan</a>: Use Omega worms outside each of the Suppression Tower spawn locations to allow you to access them quickly.</li>
+        <li><a href="../commanders/nova.html">Nova</a>: If you use Siege Tanks, place Spider Mines on attack wave and suppression tower defense spawn locations to weaken them.</li>
+        <li><a href="../commanders/raynor.html">Raynor</a>: If you use Vultures, place Spider Mines on attack wave and suppression tower defense spawn locations to weaken them.</li>
+        <li><a href="../commanders/stetmann.html">Stetmann</a>: Build Hatcheries near Security Terminals to provide a location to spread Stetellites from, as the distance between locations may be too large.</li>
+        <li><a href="../commanders/stukov.html">Stukov</a>: Build a 3rd Command Center and root it near the second terminal to spread creep.</li>
+        <li><a href="../commanders/zeratul.html">Zeratul</a>: The Void Suppression Crystal can be used to delay the spawn of the Suppression Towers.</li>
+        <li><a href="../commanders/zeratul.html">Zeratul</a>: Use Void Arrays outside each of the Suppression Tower spawn locations to allow you to access them quickly.</li>
+    </ul>
+</div>
+<div id="footer">
+    <p>Note: All data generated on this site is based on Brutal difficulty. Timings, compositions and other elements may differ on easier difficulty levels.</p>
+    <p>© Blizzard Entertainment, Inc. All rights reserved. Wings of Liberty, Heart of the Swarm, Legacy of the Void, and StarCraft are trademarks or registered trademarks of Blizzard Entertainment, Inc. in the U.S. and/or other countries.</p>
+</div></body>
+</html>

@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+<link rel='shortcut icon' href='../images/favicon.ico' type='image/x-icon' />
+<link rel="stylesheet"  media="all" type="text/css" href="../styles/mainstyle.css%3Fv=1.28.css">
+<link href='https://fonts.googleapis.com/css?family=Convergence' rel='stylesheet' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-165288360-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-165288360-1');
+</script>
+<script>
+    grecaptcha.ready(function() {
+        $(".captchaForm").each(function(){
+            currentID = $(this).attr('id');
+            if(currentID=="reportForm"){
+                $(this).submit(function(event){
+                    $("#submitbtn").attr("disabled", true);
+                    grecaptcha.execute('6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd', { action: currentID }).then(function (token) {
+                        $("#reportFormRecaptchaResponse").val(token);
+                        var path = window.location.pathname;
+                        var page = path.split("/").pop();
+                        var x = document.forms["errorReport"]["comment"].value;
+            		    var y = document.forms["errorReport"]["url"].value;
+            			var z = $("#reportFormRecaptchaResponse").val();
+            			$.ajax({  
+                            type: 'POST',
+                            url: '/scripts/addreport.php', 
+                            data: { 
+                                comment: x,
+                                errorpage: page,
+                                url:y, 
+                                recaptcha_response:z},
+                            success: function(data) {
+                                $("#reportForm").hide();
+                                $("#errorReport").append(data);
+                                return false;
+                            }
+                        });
+                        return false;
+                        $("#submitbtn").attr("disabled", false);
+                    });
+                    
+                })
+            }
+            else{
+                $(this).submit(function(event){
+                    var currentID = $(this).attr('id');
+                    var currentForm = $(this);
+                    event.preventDefault();
+                    grecaptcha.execute('6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd', { action: currentID }).then(function (token) {
+                        $("#" + currentID + "RecaptchaResponse").val(token);
+                        currentForm.off("submit");
+                        currentForm.submit();
+                    });
+                })
+            }
+            
+        })
+    },false)
+</script>  <title>Starcraft 2 Co-op - Mission Guide - Dead of Night</title>
+  <meta name="description" content="Starcraft 2 Co-op Mission Guide Dead of Night">
+  <meta name="keywords" content="Starcraft co-op guides dead night mission">
+  <link rel="stylesheet"  media="all" type="text/css" href="../styles/missionstyle.css%3Fv=1.00.css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link rel="canonical" href="deadofnight.html">
+  <script src="../scripts/preload.js"></script>
+  <style>
+      .specialInfested{
+          border-radius:50%;
+      }
+  </style>
+  </head>
+<body>
+<div id="header"><img src="../images/mainpageheader.png" alt="Starcraft II Co-op Logo">
+</div>
+<div id="menu">
+<ul>
+    <li class="normal"><a href="../index.html">&#127968;</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'commanders');">Commanders</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'community');">Community</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'guides');">Guides</a></li>
+    <li class="highlight"><a href="../index.html" onclick="javascript:openSubmenu(event,'missions');">Missions</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'resources');">Resources</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'tools');">Tools</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'about');">About</a></li>
+    <li class="normal"><a href="../account.html">My&nbsp;Account</a></li>
+</ul>
+<div id="container">
+    <div id="commanderList" class="submenu">
+        <a href="../commanders/raynor.html"><img src="../images/commanderportraits/raynorportrait.png" alt="Raynor Portrait"></a>
+        <a href="../commanders/kerrigan.html"><img src="../images/commanderportraits/kerriganportrait.png" alt="Kerrigan Portrait"></a>
+        <a href="../commanders/artanis.html"><img src="../images/commanderportraits/artanisportrait.png" alt="Artanis Portrait"></a>
+        <a href="../commanders/swann.html"><img src="../images/commanderportraits/swannportrait.png" alt="Swann Portrait"></a>
+        <a href="../commanders/zagara.html"><img src="../images/commanderportraits/zagaraportrait.png" alt="Zagara Portrait"></a>
+        <a href="../commanders/vorazun.html"><img src="../images/commanderportraits/vorazunportrait.png" alt="Vorazun Portrait"></a>
+        <a href="../commanders/karax.html"><img src="../images/commanderportraits/karaxportrait.png" alt="Karax Portrait"></a>
+        <a href="../commanders/abathur.html"><img src="../images/commanderportraits/abathurportrait.png" alt="Abathur Portrait"></a>
+        <a href="../commanders/alarak.html"><img src="../images/commanderportraits/alarakportrait.png" alt="Alarak Portrait"></a>
+        <a href="../commanders/nova.html"><img src="../images/commanderportraits/novaportrait.png" alt="Nova Portrait"></a>
+        <a href="../commanders/stukov.html"><img src="../images/commanderportraits/stukovportrait.png" alt="Stukov Portrait"></a>
+        <a href="../commanders/fenix.html"><img src="../images/commanderportraits/fenixportrait.png" alt="Fenix Portrait"></a>
+        <a href="../commanders/dehaka.html"><img src="../images/commanderportraits/dehakaportrait.png" alt="Dehaka Portrait"></a>
+        <a href="../commanders/horner.html"><img src="../images/commanderportraits/hornerportrait.png" alt="Han & Horner Portrait"></a>
+        <a href="../commanders/tychus.html"><img src="../images/commanderportraits/tychusportrait.png" alt="Tychus Portrait"></a>
+        <a href="../commanders/zeratul.html"><img src="../images/commanderportraits/zeratulportrait.png" alt="Zeratul Portrait"></a>
+        <a href="../commanders/stetmann.html"><img src="../images/commanderportraits/stetmannportrait.png" alt="Stetmann Portrait"></a>
+        <a href="../commanders/mengsk.html"><img src="../images/commanderportraits/mengskportrait.png" alt="Mengsk Portrait"></a>
+    </div>
+    <div id="missionList" class="submenu">
+        <a href="chainofascension.html"><img src="../images/missionthumbnails/chainofascension.png" alt="Chain of Ascension Thumbnail"></a>
+        <a href="cradleofdeath.html"><img src="../images/missionthumbnails/cradleofdeath.png" alt="Cradle of Death Thumbnail"></a>
+        <a href="deadofnight.html"><img src="../images/missionthumbnails/deadofnight.png" alt="Dead of Night Thumbnail"></a>
+        <a href="lockload.html"><img src="../images/missionthumbnails/lockload.png" alt="Lock & Load Thumbnail"></a>
+        <a href="malwarfare.html"><img src="../images/missionthumbnails/malwarfare.png" alt="Malwarfare Thumbnail"></a>
+        <a href="minerevacuation.html"><img src="../images/missionthumbnails/minerevacuation.png" alt="Miner Evacuation Thumbnail"></a>
+        <a href="mistopportunities.html"><img src="../images/missionthumbnails/mistopportunities.png" alt="Mist Opportunities Thumbnail"></a>
+        <a href="oblivionexpress.html"><img src="../images/missionthumbnails/oblivionexpress.png" alt="Oblivion Express Thumbnail"></a>
+        <a href="partparcel.html"><img src="../images/missionthumbnails/partparcel.png" alt="Part & Parcel Thumbnail"></a>
+        <a href="riftstokorhal.html"><img src="../images/missionthumbnails/riftstokorhal.png" alt="Rifts to Korhal Thumbnail"></a>
+        <a href="scytheofamon.html"><img src="../images/missionthumbnails/scytheofamon.png" alt="Scythe Of Amon Thumbnail"></a>
+        <a href="templeofthepast.html"><img src="../images/missionthumbnails/templeofthepast.png" alt="Temple of the Past Thumbnail"></a>
+        <a href="thevermillionproblem.html"><img src="../images/missionthumbnails/thevermillionproblem.png" alt="The Vermillion Problem Thumbnail"></a>
+        <a href="voidlaunch.html"><img src="../images/missionthumbnails/voidlaunch.png" alt="Void Launch Thumbnail"></a>
+        <a href="voidthrashing.html"><img src="../images/missionthumbnails/voidthrashing.png" alt="Void Thrashing Thumbnail"></a>
+    </div>
+    <div id="guideList" class="submenu">
+        <ul>
+            <li class="normal"><a href="../guides/buildordertheory.html">Build&nbsp;Order&nbsp;Theory</a></li>
+            <li class="normal"><a href="../guides/enemycomps.html">Enemy&nbsp;Compositions</a></li>
+            <li class="normal"><a href="../guides/generaltips.html">General&nbsp;Tips</a></li>
+            <li class="normal"><a href="../guides/newplayer.html">New&nbsp;Players&nbsp;</a></li>
+        </ul>
+    </div>
+    <div id="resources" class="submenu">
+        <ul>
+            <li class="normal"><a href="../resources/achievements.html">Achievements</a></li>
+            <li class="normal"><a href="../resources/ailogic.html">AI&nbsp;Logic</a></li>
+            <li class="normal"><a href="../resources/bugs.html">Bugs</a></li>
+            <li class="normal"><a href="../resources/brutal.html">Brutal+</a></li>
+            <li class="normal"><a href="../resources/deathprevention.html">Death&nbsp;Prevent&nbsp;Effects</a></li>
+            <li class="normal"><a href="../resources/eastereggs.html">Easter&nbsp;Eggs</a></li>
+            <li class="normal"><a href="../resources/levels.html">Levels</a></li>
+            <li class="normal"><a href="../resources/mutators.html">Mutators</a></li>
+            <li class="normal"><a href="../resources/patchdata.html">Patch&nbsp;Data</a></li>
+            <li class="normal"><a href="../resources/stats.html">Stats</a></li>
+            <li class="normal"><a href="../resources/weeklymutations.html">Weekly&nbsp;Mutations</a></li>
+            
+        </ul>
+    </div>
+    <div id="tools" class="submenu">
+        <ul>
+            <li class="normal"><a href="../tools/downloads.html">Downloads</a></li>
+            <li class="normal"><a href="../tools/masterybreakpoints.html">Mastery&nbsp;Breakpoints</a></li>
+            <li class="normal"><a href="../tools/replayanalyzer.html">Replay&nbsp;Analyzer</a></li>
+            <li class="normal"><a href="../tools/unitstats.html">Unit&nbsp;Stats</a></li>
+        </ul>
+    </div>
+    <div id="community" class="submenu">
+        <ul>
+            <li class="normal"><a href="../community/tournament/main.html">Co&#8209;op&nbsp;Tournament</a></li>
+            <li class="normal"><a href="../community/gamespotlight.html">Game&nbsp;Spotlight</a></li>
+            <li class="normal"><a href="../community/mythbusters.html">Mythbusters</a></li>
+            <li class="normal"><a href="../community/rockslappingchampions.html">Rockslapping&nbsp;Champions</a></li>
+            <li class="normal"><a href="../youtube.html">Youtube</a></li>
+        </ul>
+    </div>
+    <div id="about" class="submenu">
+        <ul>
+            <!--<li class="normal"><a href="/about/contact">Contact</a></li>-->
+            <li class="normal"><a href="../about/faq.html">FAQ</a></li>
+            <li class="normal"><a href="../about/links.html">Links</a></li>
+            <li class="normal"><a href="https://www.youtube.com/c/Starcraft2Coop" rel="nofollow">Youtube</a></li>
+        </ul>
+    </div>
+    <!--<div id="imgs">
+        <a href="https://www.youtube.com/c/Starcraft2Coop" rel="nofollow"><img src="/images/links/yt.png" alt="Youtube"></a>
+        <a href="https://www.patreon.com/starcraft2coop" rel="nofollow"><img src="/images/links/patreon.png" alt="Patreon"></a>
+        <a href="https://www.twitch.tv/aommaster" rel="nofollow"><img src="/images/links/twitch.png" alt="Twitch"></a>
+        <a href="https://discord.gg/AbFXRAB" rel="nofollow"><img src="/images/links/discord.png" alt="Discord"></a>
+    </div>-->
+</div>
+<script>
+    function openSubmenu(event, selection){
+        event.preventDefault();
+        
+        switch (selection){
+            case "commanders":
+                $(".submenu").not("#commanderList").hide();
+                $("#commanderList").fadeToggle();
+                break;
+            case "missions":
+                $(".submenu").not("#missionList").hide();
+                $("#missionList").fadeToggle();
+                break;
+            case "community":
+                $(".submenu").not("#community").hide();
+                $("#community").fadeToggle();
+                break;
+            case "guides":
+                $(".submenu").not("#guideList").hide();
+                $("#guideList").fadeToggle();
+                break;
+            case "resources":
+                $(".submenu").not("#resources").hide();
+                $("#resources").fadeToggle();
+                break;
+            case "tools":
+                $(".submenu").not("#tools").hide();
+                $("#tools").fadeToggle();
+                break;
+            case "about":
+                $(".submenu").not("#about").hide();
+                $("#about").fadeToggle();
+                break;
+        }
+    }
+</script></div>
+<div id="content">
+    <h1>Co-op Mission Guide: Dead of Night</h1>
+    <p id="missionPlace">Chazington</p>
+        <h2>Sections on this Page</h2>
+    <div id="links">
+        <p><a href="deadofnight.html#misSum">Mission Summary</a></p>
+        <p><a href="deadofnight.html#objectives">Objectives</a></p>
+        <p><a href="deadofnight.html#baseAnalysis">Enemy Base Analysis</a></p>
+        <p><a href="deadofnight.html#dayNight">Day and Night Cycle Information</a></p>
+        <p><a href="deadofnight.html#bonus">Completing the Bonus Objective</a></p>
+        <p><a href="deadofnight.html#timings">Timings</a></p>
+        <p><a href="deadofnight.html#spawnPoints">Spawn Points</a></p>
+        <p><a href="deadofnight.html#misTips">Mission Tips</a></p>
+        <p><a href="deadofnight.html#comTips">Commander-Specific Tips</a></p>
+    </div>
+    <a id="misSum"></a><h2>Mission Summary</h2>
+    <p>A rapid infestation has been discovered on one of the Dominion's fringe worlds. Burn down all of the infested structures before it has a chance to spread. At the Dead of Night, they will start to attack you.</p>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="objectives"></a><h2>Objectives</h2>
+    <h3>Primary Objective</h3>
+        <ul>
+            <li>Destroy all infested structures (151)</li>
+        </ul>
+    <h3>Secondary Objective</h3>
+        <ul>
+            <li>Destroy the Virophage</li>
+        </ul>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="baseAnalysis"></a><h2>Enemy Base Analysis</h2>
+    <div id="globalRaceSelect">
+        <p>Change all base analysis pictures to race:</p>
+        <form action="deadofnight.html#">
+            <label><input type="radio" name="globalRace" value="protoss" checked>Protoss</label><br>
+            <label><input type="radio" name="globalRace" value="terran">Terran</label><br>
+            <label><input type="radio" name="globalRace" value="zerg">Zerg</label><br>
+        </form>
+        <script>
+            $("input[name='globalRace']").change(function(){
+                var race= $(this).val();
+                $('input:radio[value="' + race + '"]').each(function () {
+                    if($(this).attr('name')!=="globalRace"){
+                        $(this).prop('checked', true).trigger('change');
+                    }
+                })
+                return false;
+            })
+        </script>
+    </div>
+    <p>Note that the images below show the starting state of the mission. As the mission progresses, Hybrids get added to enemy bases.</p>
+        <p>A camp is located to the West of the starting location. It is very lightly defended.</p>
+    <div class='switcher'><div class='basePic' id='wdiv'><img id ='w' src='../images/missiondata/deadofnight/w_protoss.jpg' alt='w Picture'></div><div class = 'baseMinimap'><form action='deadofnight.html#'><label><input type='radio' name='w' value='protoss' checked>Protoss</label><br><label><input type='radio' name='w' value='terran'>Terran</label><br><label><input type='radio' name='w' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/deadofnight/wminimap.jpg' alt='w Minimap'></div></div></div><script>$("input[name='w']").change(function(){var race= $(this).val();var oldImg = $('#w');var img = new Image();img.src = '/images/missiondata/deadofnight/w_'+ race + '.jpg';var newImg = $(img).hide();$('#wdiv').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'w');return false;});var imgList=[];imgList.push('/images/missiondata/deadofnight/w_protoss.jpg');imgList.push('/images/missiondata/deadofnight/w_terran.jpg');imgList.push('/images/missiondata/deadofnight/w_zerg.jpg');preload(imgList);</script>    <p>Clockwise from the above camp, a small enemy base is located. Linear calldowns are best used here to take advantage of all the enemies that are lined up.</p>
+    <div class='switcher'><div class='long' id='nwlongdiv'><img id ='nwlong' src='../images/missiondata/deadofnight/nwlong_protoss.jpg' alt='nwlong Picture'></div><div class = 'baseMinimap'><form action='deadofnight.html#'><label><input type='radio' name='nwlong' value='protoss' checked>Protoss</label><br><label><input type='radio' name='nwlong' value='terran'>Terran</label><br><label><input type='radio' name='nwlong' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/deadofnight/nwlongminimap.jpg' alt='nwlong Minimap'></div></div></div><script>$("input[name='nwlong']").change(function(){var race= $(this).val();var oldImg = $('#nwlong');var img = new Image();img.src = '/images/missiondata/deadofnight/nwlong_'+ race + '.jpg';var newImg = $(img).hide();$('#nwlongdiv').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'nwlong');return false;});var imgList=[];imgList.push('/images/missiondata/deadofnight/nwlong_protoss.jpg');imgList.push('/images/missiondata/deadofnight/nwlong_terran.jpg');imgList.push('/images/missiondata/deadofnight/nwlong_zerg.jpg');preload(imgList);</script>    <p>The enemy base at the North of the map is well-defended, and will need a reasonably-sized army to push into.</p>
+    <div class='switcher'><div class='long' id='nlongdiv'><img id ='nlong' src='../images/missiondata/deadofnight/nlong_protoss.jpg' alt='nlong Picture'></div><div class = 'baseMinimap'><form action='deadofnight.html#'><label><input type='radio' name='nlong' value='protoss' checked>Protoss</label><br><label><input type='radio' name='nlong' value='terran'>Terran</label><br><label><input type='radio' name='nlong' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/deadofnight/nlongminimap.jpg' alt='nlong Minimap'></div></div></div><script>$("input[name='nlong']").change(function(){var race= $(this).val();var oldImg = $('#nlong');var img = new Image();img.src = '/images/missiondata/deadofnight/nlong_'+ race + '.jpg';var newImg = $(img).hide();$('#nlongdiv').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'nlong');return false;});var imgList=[];imgList.push('/images/missiondata/deadofnight/nlong_protoss.jpg');imgList.push('/images/missiondata/deadofnight/nlong_terran.jpg');imgList.push('/images/missiondata/deadofnight/nlong_zerg.jpg');preload(imgList);</script>    <p>The enclave in the North East of the map is a great spot to use large Area of Effect calldowns like Pulse Cannon and Nukes.</p>
+    <div class='switcher'><div class='basePic' id='nediv'><img id ='ne' src='../images/missiondata/deadofnight/ne_protoss.jpg' alt='ne Picture'></div><div class = 'baseMinimap'><form action='deadofnight.html#'><label><input type='radio' name='ne' value='protoss' checked>Protoss</label><br><label><input type='radio' name='ne' value='terran'>Terran</label><br><label><input type='radio' name='ne' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/deadofnight/neminimap.jpg' alt='ne Minimap'></div></div></div><script>$("input[name='ne']").change(function(){var race= $(this).val();var oldImg = $('#ne');var img = new Image();img.src = '/images/missiondata/deadofnight/ne_'+ race + '.jpg';var newImg = $(img).hide();$('#nediv').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'ne');return false;});var imgList=[];imgList.push('/images/missiondata/deadofnight/ne_protoss.jpg');imgList.push('/images/missiondata/deadofnight/ne_terran.jpg');imgList.push('/images/missiondata/deadofnight/ne_zerg.jpg');preload(imgList);</script>    <p>The enemy base at the East contains strong defenses, and will need a powerful army to push into.</p>
+    <div class='switcher'><div class='basePic' id='ediv'><img id ='e' src='../images/missiondata/deadofnight/e_protoss.jpg' alt='e Picture'></div><div class = 'baseMinimap'><form action='deadofnight.html#'><label><input type='radio' name='e' value='protoss' checked>Protoss</label><br><label><input type='radio' name='e' value='terran'>Terran</label><br><label><input type='radio' name='e' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/deadofnight/eminimap.jpg' alt='e Minimap'></div></div></div><script>$("input[name='e']").change(function(){var race= $(this).val();var oldImg = $('#e');var img = new Image();img.src = '/images/missiondata/deadofnight/e_'+ race + '.jpg';var newImg = $(img).hide();$('#ediv').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'e');return false;});var imgList=[];imgList.push('/images/missiondata/deadofnight/e_protoss.jpg');imgList.push('/images/missiondata/deadofnight/e_terran.jpg');imgList.push('/images/missiondata/deadofnight/e_zerg.jpg');preload(imgList);</script>    <p>The South East base is the largest enemy base on the map. It contains several Hybrids and cloaked units.</p>
+    <div class='switcher'><div class='long' id='selongdiv'><img id ='selong' src='../images/missiondata/deadofnight/selong_protoss.jpg' alt='selong Picture'></div><div class = 'baseMinimap'><form action='deadofnight.html#'><label><input type='radio' name='selong' value='protoss' checked>Protoss</label><br><label><input type='radio' name='selong' value='terran'>Terran</label><br><label><input type='radio' name='selong' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/deadofnight/selongminimap.jpg' alt='selong Minimap'></div></div></div><script>$("input[name='selong']").change(function(){var race= $(this).val();var oldImg = $('#selong');var img = new Image();img.src = '/images/missiondata/deadofnight/selong_'+ race + '.jpg';var newImg = $(img).hide();$('#selongdiv').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'selong');return false;});var imgList=[];imgList.push('/images/missiondata/deadofnight/selong_protoss.jpg');imgList.push('/images/missiondata/deadofnight/selong_terran.jpg');imgList.push('/images/missiondata/deadofnight/selong_zerg.jpg');preload(imgList);</script>    <p>The South West area is covered by very lightly defended camps and is a great spot to push into after the first night.</p>
+    <div class='switcher'><div class='long' id='slongdiv'><img id ='slong' src='../images/missiondata/deadofnight/slong_protoss.jpg' alt='slong Picture'></div><div class = 'baseMinimap'><form action='deadofnight.html#'><label><input type='radio' name='slong' value='protoss' checked>Protoss</label><br><label><input type='radio' name='slong' value='terran'>Terran</label><br><label><input type='radio' name='slong' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/deadofnight/slongminimap.jpg' alt='slong Minimap'></div></div></div><script>$("input[name='slong']").change(function(){var race= $(this).val();var oldImg = $('#slong');var img = new Image();img.src = '/images/missiondata/deadofnight/slong_'+ race + '.jpg';var newImg = $(img).hide();$('#slongdiv').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'slong');return false;});var imgList=[];imgList.push('/images/missiondata/deadofnight/slong_protoss.jpg');imgList.push('/images/missiondata/deadofnight/slong_terran.jpg');imgList.push('/images/missiondata/deadofnight/slong_zerg.jpg');preload(imgList);</script>    <div class='switcher'><div class='long' id='swlongdiv'><img id ='swlong' src='../images/missiondata/deadofnight/swlong_protoss.jpg' alt='swlong Picture'></div><div class = 'baseMinimap'><form action='deadofnight.html#'><label><input type='radio' name='swlong' value='protoss' checked>Protoss</label><br><label><input type='radio' name='swlong' value='terran'>Terran</label><br><label><input type='radio' name='swlong' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/deadofnight/swlongminimap.jpg' alt='swlong Minimap'></div></div></div><script>$("input[name='swlong']").change(function(){var race= $(this).val();var oldImg = $('#swlong');var img = new Image();img.src = '/images/missiondata/deadofnight/swlong_'+ race + '.jpg';var newImg = $(img).hide();$('#swlongdiv').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'swlong');return false;});var imgList=[];imgList.push('/images/missiondata/deadofnight/swlong_protoss.jpg');imgList.push('/images/missiondata/deadofnight/swlong_terran.jpg');imgList.push('/images/missiondata/deadofnight/swlong_zerg.jpg');preload(imgList);</script>    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="dayNight"></a><h2>Day and Night Cycle Information</h2>
+    <p>Days are always 3:30 long, whereas nights are 4:00 long. The first few day/night cycles are shown below:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Phase</th>
+                <th>Start</th>
+                <th>End</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Day 1</td>
+                <td>0:00</td>
+                <td>3:30</td>
+            </tr>
+            <tr>
+                <td>Night 1</td>
+                <td>3:30</td>
+                <td>7:30</td>
+            </tr>
+            <tr>
+                <td>Day 2</td>
+                <td>7:30</td>
+                <td>11:00</td>
+            </tr>
+            <tr>
+                <td>Night 2</td>
+                <td>11:00</td>
+                <td>15:00</td>
+            </tr>
+            <tr>
+                <td>Day 3</td>
+                <td>15:00</td>
+                <td>18:30</td>
+            </tr>
+            <tr>
+                <td>Night 3</td>
+                <td>18:30</td>
+                <td>22:30</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>During the day, no infested will spawn, making it easy to clear the infested buildings. There are a minimal number of enemy units defending the infested structures. Upon killing infested structures, a number of broodlings will spawn. This is dependent on the infested structure killed, as follows:</p>
+    <ul>
+        <li><b>Infested Biodome (1300 HP):</b> 6 broodlings</li>
+        <li><b>All Other Infested (500 HP):</b> 3 broodlings</li>
+    </ul>
+    <p>At the start of each day, a number of hybrids will be added to uncleared areas of the map to help defend. These are in addition to the starting hybrids on the map. The number of hybrids added is listed below. Note that Light Hybrids are Hybrid Reavers and Hybrid Destroyers. Heavy Hybrids are Hybrid Behemoths and Hybrid Dominators.</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>Light Hybrid Added</th>
+                <th>Heavy Hybrid Added</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>2</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>4</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>5+</td>
+                <td>5</td>
+                <td>2</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The types of Hybrids added will depend on the enemy race you are fighting. This is summarized below:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Race</th>
+                <th>Light Hybrid</th>
+                <th>Heavy Hybrid</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Protoss</td>
+                <td>Hybrid Destroyer</td>
+                <td>Hybrid Dominator</td>
+            </tr>
+            <tr>
+                <td>Terran</td>
+                <td>Hybrid Reaver</td>
+                <td>Hybrid Dominator</td>
+            </tr>
+            <tr>
+                <td>Zerg</td>
+                <td>Hybrid Reaver</td>
+                <td>Hybrid Behemoth</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The night is very different. During the night, you will be attacked by a constant stream of Infested Terrans, Infested Marines and Aberrations.</p>
+    <p>Infested units will only attack from certain positions, depending on the night. The below table lists the side attacked in the mission.</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Night</th>
+                <th>Side</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>South</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>South + North</td>
+            </tr>
+            <tr>
+                <td>3+</td>
+                <td>All four sides</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>There are two different "groups" of infested units on the map. These groups are:</p>
+    <ul>
+        <li><b>Attack Waves:</b> These are groups of infested units that will make aggressive pushes towards your base. The units that can be in the attack waves are:
+        <ul>
+            <li>Infested Terrans</li>
+            <li>Infested Marines</li>
+            <li>Aberrations</li>
+        </ul></li>
+        <li><b>Noise:</b> This is a constant spawn of infested units that move towards your base. The units that are part of the noise are:
+        <ul>
+            <li>Infested Terrans</li>
+            <li>Infested Marines</li>
+            <li>Volatile Infested</li>
+            <li>Aberrations</li>
+        </ul></li>
+    </ul>
+    <p>In general, it is very difficult to distinguish the attack waves from the noise, and hence, the attack wave compositions and timings are irrelevant as all entrances to your base need to be defended.</p>
+    <p>The spawning rate of the Noise infested units per second in each night is shown below.</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Night</th>
+                <th>Infested Terran</th>
+                <th>Infested Marine</th>
+                <th>Volatile Infested</th>
+                <th>Aberration</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>0.91</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>0.32</td>
+                <td>0.63</td>
+                <td>0</td>
+                <td>0.1</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>0.32</td>
+                <td>0.48</td>
+                <td>0.16</td>
+                <td>0.20</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>0.32</td>
+                <td>0.63</td>
+                <td>0.32</td>
+                <td>0.38</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>0.32</td>
+                <td>0.63</td>
+                <td>0.63</td>
+                <td>0.57</td>
+            </tr>
+            <tr>
+                <td>6+</td>
+                <td>0.48</td>
+                <td>0.91</td>
+                <td>0.91</td>
+                <td>0.83</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>In addition to the standard infested units, you will also be attacked by Special infested. The two out of the four infested units below are picked randomly. The first is introduced to you during the first night and the second during the second night.</p>
+    <img class="specialInfested" src="../images/missiondata/deadofnight/choker.jpg" alt="Choker">
+    <p>The Choker can permanently stun-lock targeted units until they die. Units with the Frenzied buff are immune (e.g. Brutalisks, Odin, Ultralisks). It poses a huge threat for heroes. However, the Choker can only stun-lock one heroic unit. So, if multiple heroes are present nearby, they will be able to deal with the Choker. The Choker can target at maximum 5 units at a time.</p>
+    <p>It is usually recommended to send some low-cost units into the Choker's range, before targeting it with more expensive units. Mobility abilities can be used to break free of a Choker stun. These include:</p>
+    <ul>
+        <li>Artanis' Guardian Shell</li>
+        <li>Fenix's Cybros Arbiter Recall</li>
+        <li>Nova's Tactical Airlift</li>
+        <li>Tychus' Medivac Transport</li>
+        <li>Vorazun's Dark Pylon Recall</li>
+        <li>Vorazun's Emergency Recall</li>
+    </ul>
+    <img class="specialInfested"  src="../images/missiondata/deadofnight/hunterling.jpg" alt="Hunterling">
+    <p>The Hunterling can jump over cliffs and reach your mineral line without going through the entrances to your base. This is a particular problem if you are playing as Player 1 on Night#1. One solution is to block the high ground to the left of the top-left barrier with a small 2x2 structure. Such structures include Pylons, Supply Depots, Spore/Spine crawlers. You will need to get a worker there, which can be done by using a transport.</p>
+    <p>Its jump attack can stun units for 5 seconds. Mobility abilities can be used to break free of a Hunterling stun. These include:</p>
+    <ul>
+        <li>Fenix's Cybros Arbiter Recall</li>
+        <li>Nova's Tactical Airlift</li>
+        <li>Tychus' Medivac Transport</li>
+        <li>Vorazun's Dark Pylon Recall</li>
+    </ul>
+    <img class="specialInfested"  src="../images/missiondata/deadofnight/kaboomer.jpg" alt="Kaboomer">
+    <p>The Kaboomer explodes on death, dealing damage to all enemies around it. It also has a constant AoE attack that can kill low-HP targets quickly. It deals double damage to structures.</p>
+    <img class="specialInfested"  src="../images/missiondata/deadofnight/spotter.jpg" alt="Spotter">
+    <p>The Spotter is the only flying Special Infested unit. It can disable pylons, turrets and bunkers, making it extremely dangerous unless dealt with quickly. A single Spotter will disable two structures.</p>
+    <p>Additionally, it provides an aura buff that increases movement speed of nearby infested by 1 and life regen by 2.</p>
+    <br><br>
+    <p>Additionally, on Night #3 and future nights, you will have to fight an additional threat, either a Nydus Network or a Stank.</p>
+    <p>The Nydus Networks behave like any other Nydus threat in the game. They should be killed quickly, otherwise they will unload enemy units (a 3 Strength/3 Tech Level <a href="../guides/enemycomps.html">Enemy composition</a> wave) that will attack you.</p>
+    <img class="specialInfested"  src="../images/missiondata/deadofnight/stank.jpg" alt="Stank">
+    <p>The Stank is a powerful ultralisk-like unit that requires the full might of an army to take down. A Stank does not burn during the day, so you will have to kill it, or it can destroy your entire base within minutes.</p>
+    <br><br>
+    <p>The number of Special Infested units that spawn per night is shown below. Timings are somewhat unpredictable due to different spawn locations, and order-based spawn timings and will therefore not be listed.</p>
+    <div class="tableContainer">
+        <table class="centered">
+            <thead>
+                <tr>
+                    <th>Night</th>
+                    <th>Chokers</th>
+                    <th>Hunterlings</th>
+                    <th>Kaboomers</th>
+                    <th>Spotters</th>
+                    <th>Stanks</th>
+                    <th>Max Concurrent Nydus Worms</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>3</td>
+                    <td>11</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>10</td>
+                    <td>32</td>
+                    <td>14</td>
+                    <td>11</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>14</td>
+                    <td>30</td>
+                    <td>15</td>
+                    <td>15</td>
+                    <td>1</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>16</td>
+                    <td>18</td>
+                    <td>12</td>
+                    <td>12</td>
+                    <td>2</td>
+                    <td>4</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>19</td>
+                    <td>36</td>
+                    <td>19</td>
+                    <td>19</td>
+                    <td>4</td>
+                    <td>5</td>
+                </tr>
+                <tr>
+                    <td>6+</td>
+                    <td>32</td>
+                    <td>66</td>
+                    <td>32</td>
+                    <td>40</td>
+                    <td>11</td>
+                    <td>6</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p>You can attack buildings at night. However, they will spawn infested units shown below depending on the night. Each building has a 30-second cooldown before it can spawn the set again.</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Night</th>
+                <th>Spawn</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>6 Infested Terrans</td>
+            </tr>
+            <tr>
+                <td>2,3</td>
+                <td>6 Infested Terrans<br>4 Infested Marines</td>
+            </tr>
+            <tr>
+                <td>4,5</td>
+                <td>6 Infested Terrans<br>9 Infested Marines<br>3 Volatile Infested<br>2 Aberrations</td>
+            </tr>
+            <tr>
+                <td>6+</td>
+                <td>6 Infested Terrans<br>12 Infested Marines<br>3 Volatile Infested<br>3 Aberrations</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="bonus"></a><h2>Completing the Bonus Objective</h2>
+    <div id="objectiveImages">
+        <img src="../images/missiondata/deadofnight/virophage.jpg" alt="Virophage">
+    </div>
+    <p>The bonus objective requires you to kill the Virophage which appears at night, starting from the third night.</p>
+    <p>The Virophage can spawn in one of the locations shown below.</p>
+    <img src="../images/missiondata/deadofnight/virophagespawnlocations.jpg" alt="Virophage Spawn Locations">
+    <p>The position the Virophage will spawn is based on the number of infested structures in that particular area. The Virophage will spawn in the area with the least infested structures. The game checks the areas from the top left, clockwise, prioritizing later areas. So, if you have cleared the South position of the map, the Virophage will always spawn there.</p>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="timings"></a><h2>Timings</h2>
+        <p>Note: Information on Tech and Strength levels can be found on the <a href="../guides/enemycomps.html">Enemy Compositions</a> page.</p>
+        <p>Attack waves always spawn when there is 1:00 left on the night clock. Additionally, they will always come in transports. The side they come from is randomized. The attack wave Tech Levels and Strength Levels for each night are shown below.</p>
+        <table class="centered">
+            <thead>
+                <tr>
+                    <th>Night</th>
+                    <th>Tech Level</th>
+                    <th>Strength Level</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>2</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>4</td>
+                    <td>4</td>
+                </tr>
+                <tr>
+                    <td>5+</td>
+                    <td>4</td>
+                    <td>4</td>
+                </tr>
+            </tbody>
+        </table>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="spawnPoints"></a><h2>Spawn Points</h2>
+    <p>The Noise infested spawn randomly from any infested structure on the map. So, if you have cleared out a portion of the map, you will need less defenses on that side to deal with infested. Remember that there are still infested attack waves to deal with.</p>
+    <p>Attack waves spawn near the four corners of the map and rally to a point on the map.</p>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="misTips"></a><h2>Mission Tips</h2>
+    <ul>
+        <li>It is often possible to clear the mission before Night #3, completely avoiding the need to defend more than two entrances, and dealing with Nydus Worms or Stanks.</li>
+        <li>Both players should aim to push and clear the mission in order to clear the mission as soon as possible.</li>
+        <li>Hunterlings like to target mineral lines, so ensure you have appropriate defenses in the mineral line if you have Hunterlings as the Special Infested.</li>
+        <li>Engage Chokers with disposable units first, so it chokes them, before you engage with more expensive/heroic units.</li>
+        <li>If playing a Protoss commander that has Pylons, power buildings with multiple Pylons to prevent Spotters from disabling an Artosis pylon and therefore your entire production.</li>
+        <li>If playing a Protoss commander that has Pylons, place Pylons in front of ally static defense to bait Spotter stasis casts.</li>
+    </ul>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="comTips"></a><h2>Commander-specific Tips</h2>
+    <ul>
+        <li><a href="../commanders/abathur.html">Abathur</a>: Infested Terrans do not drop biomass. If you can defend well, place your Toxic Nests behind your defensive force and only lure Aberrations and Special Infested units towards them.</li>
+        <li><a href="../commanders/dehaka.html">Dehaka</a>: As soon as Dehaka spawns, send him West to the small enemy camp there to gain essence, then move Southwards up the ramp to get more essence before the first night.</li>
+        <li><a href="../commanders/fenix.html">Fenix</a>: While massing a single unit is usually a bad strategy, mass Scouts with upgrades can make short work of infested units. Split your scouts into two or three squadrons to clear during the day.</li>
+        <li><a href="../commanders/horner.html">Han & Horner</a>: Strike Fighter Platforms with Napalm upgrade can be used to destroy infested structures during the night.</li>
+        <li><a href="../commanders/horner.html">Han & Horner</a>: When using Strike Fighter Platforms, use the Area Size mastery so that you can target in between two infested buildings. This will destroy two infested buildings with one strike.</li>
+        <li><a href="../commanders/karax.html">Karax</a>: An upgraded Solar Lance can be used to burn down lines of infested buildings.</li>
+        <li><a href="../commanders/karax.html">Karax</a>: Use your Spear of Adun abilities to kill air units in this mission, instead of building anti-air units.</li>
+        <li><a href="../commanders/nova.html">Nova</a>: Use your Ravens' Railgun turrets to destroy infested structures while your army moves on to clear enemy forces.</li>
+        <li><a href="../commanders/stukov.html">Stukov</a>: Use Infest Structure on Nydus Worms, select Broodlings and attack the already-infested worms to clear them.</li>
+        <li><a href="../commanders/swann.html">Swann</a>: Swann can clear this mission using his drill (targeting Infested Structures with vision provided with a Hercules), while still defending during the night. For efficient calldown use, check the <a href="../commanders/swann.html">Swann Commander Page</a>.</li>
+        <li><a href="../commanders/tychus.html">Tychus</a>: Use Sirius' turrets to destroy infested structures while your outlaws move on to clear ahead.</li>
+        <li><a href="../commanders/zagara.html">Zagara</a>: Zagara with mass fully upgraded zerglings can clear the map before the third night if you use Frenzy and Roach Drops efficiently.</li>
+        <li><a href="../commanders/zeratul.html">Zeratul</a>: Use Shaded Cannons to clear buildings while your army moves on to clear enemy forces.</li>
+        <li><a href="../commanders/zeratul.html">Zeratul</a>: Zeratul's Purity of Will passive allows him to escape from a Choker stun when the immunity buff is applied to him.</li>
+    </ul>
+</div>
+<div id="footer">
+    <p>Note: All data generated on this site is based on Brutal difficulty. Timings, compositions and other elements may differ on easier difficulty levels.</p>
+    <p>© Blizzard Entertainment, Inc. All rights reserved. Wings of Liberty, Heart of the Swarm, Legacy of the Void, and StarCraft are trademarks or registered trademarks of Blizzard Entertainment, Inc. in the U.S. and/or other countries.</p>
+</div></body>
+</html>

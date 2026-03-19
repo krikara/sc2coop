@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+<link rel='shortcut icon' href='../images/favicon.ico' type='image/x-icon' />
+<link rel="stylesheet"  media="all" type="text/css" href="../styles/mainstyle.css%3Fv=1.28.css">
+<link href='https://fonts.googleapis.com/css?family=Convergence' rel='stylesheet' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-165288360-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-165288360-1');
+</script>
+<script>
+    grecaptcha.ready(function() {
+        $(".captchaForm").each(function(){
+            currentID = $(this).attr('id');
+            if(currentID=="reportForm"){
+                $(this).submit(function(event){
+                    $("#submitbtn").attr("disabled", true);
+                    grecaptcha.execute('6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd', { action: currentID }).then(function (token) {
+                        $("#reportFormRecaptchaResponse").val(token);
+                        var path = window.location.pathname;
+                        var page = path.split("/").pop();
+                        var x = document.forms["errorReport"]["comment"].value;
+            		    var y = document.forms["errorReport"]["url"].value;
+            			var z = $("#reportFormRecaptchaResponse").val();
+            			$.ajax({  
+                            type: 'POST',
+                            url: '/scripts/addreport.php', 
+                            data: { 
+                                comment: x,
+                                errorpage: page,
+                                url:y, 
+                                recaptcha_response:z},
+                            success: function(data) {
+                                $("#reportForm").hide();
+                                $("#errorReport").append(data);
+                                return false;
+                            }
+                        });
+                        return false;
+                        $("#submitbtn").attr("disabled", false);
+                    });
+                    
+                })
+            }
+            else{
+                $(this).submit(function(event){
+                    var currentID = $(this).attr('id');
+                    var currentForm = $(this);
+                    event.preventDefault();
+                    grecaptcha.execute('6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd', { action: currentID }).then(function (token) {
+                        $("#" + currentID + "RecaptchaResponse").val(token);
+                        currentForm.off("submit");
+                        currentForm.submit();
+                    });
+                })
+            }
+            
+        })
+    },false)
+</script>  <title>Starcraft 2 Co-op - Mastery Breakpoints Calculator</title>
+  <meta name="description" content="Figure out how many mastery points you need to reach certain breakpoints with this calculator.">
+  <meta name="keywords" content="Starcraft co-op mastery breakpoints calculator damage units">
+  <link rel="canonical" href="masterybreakpoints.html">
+  <style>
+        #tooltip{
+            position:absolute;
+            background-color:khaki;
+            color:black;
+            font-size:0.8em;
+            display:none;
+            z-index:1;
+            padding:5px;
+            border-radius:5px;
+        }
+        #abilityContainer,#damageContainer, #protossContainer,#terranContainer,#zergContainer,#infestedContainer,#mutatorContainer{
+            border: 1px solid white;
+            display: inline-block;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        #abilityContainer img{
+            max-width:50px;
+        }
+        #unitContainerSingle,#unitContainerMulti{
+            display:block;
+            margin-bottom:50px;
+        }
+        #slide{
+            vertical-align:middle;
+            width:400px;
+        }
+        #masteryPoints{
+            vertical-align:middle;
+        }
+        #input{
+            width:49%;
+            display:inline-block;
+            vertical-align:top;
+        }
+        #calculatedOutput{
+            width:49%;
+            display:inline-block;
+            display:none;
+        }
+        #unitContainerSingle img, #unitContainerMulti img{
+            max-width:40px;
+        }
+        .unselected{
+            opacity:0.5;
+        }
+        .note{
+            font-size:0.6em;
+            font-style:italic;
+        }
+        #unitContainerSingle td:nth-child(2), #unitContainerSingle td:nth-child(3){
+            width:400px;
+        }
+        #unitContainerMulti td:nth-child(2), #unitContainerMulti td:nth-child(3), #unitContainerMulti td:nth-child(4), #unitContainerMulti td:nth-child(5){
+            width:200px;
+        }
+  </style>
+  </head>
+<body>
+<div id="header"><img src="../images/mainpageheader.png" alt="Starcraft II Co-op Logo">
+</div>
+<div id="menu">
+<ul>
+    <li class="normal"><a href="../index.html">&#127968;</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'commanders');">Commanders</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'community');">Community</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'guides');">Guides</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'missions');">Missions</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'resources');">Resources</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'tools');">Tools</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'about');">About</a></li>
+    <li class="normal"><a href="../account.html">My&nbsp;Account</a></li>
+</ul>
+<div id="container">
+    <div id="commanderList" class="submenu">
+        <a href="../commanders/raynor.html"><img src="../images/commanderportraits/raynorportrait.png" alt="Raynor Portrait"></a>
+        <a href="../commanders/kerrigan.html"><img src="../images/commanderportraits/kerriganportrait.png" alt="Kerrigan Portrait"></a>
+        <a href="../commanders/artanis.html"><img src="../images/commanderportraits/artanisportrait.png" alt="Artanis Portrait"></a>
+        <a href="../commanders/swann.html"><img src="../images/commanderportraits/swannportrait.png" alt="Swann Portrait"></a>
+        <a href="../commanders/zagara.html"><img src="../images/commanderportraits/zagaraportrait.png" alt="Zagara Portrait"></a>
+        <a href="../commanders/vorazun.html"><img src="../images/commanderportraits/vorazunportrait.png" alt="Vorazun Portrait"></a>
+        <a href="../commanders/karax.html"><img src="../images/commanderportraits/karaxportrait.png" alt="Karax Portrait"></a>
+        <a href="../commanders/abathur.html"><img src="../images/commanderportraits/abathurportrait.png" alt="Abathur Portrait"></a>
+        <a href="../commanders/alarak.html"><img src="../images/commanderportraits/alarakportrait.png" alt="Alarak Portrait"></a>
+        <a href="../commanders/nova.html"><img src="../images/commanderportraits/novaportrait.png" alt="Nova Portrait"></a>
+        <a href="../commanders/stukov.html"><img src="../images/commanderportraits/stukovportrait.png" alt="Stukov Portrait"></a>
+        <a href="../commanders/fenix.html"><img src="../images/commanderportraits/fenixportrait.png" alt="Fenix Portrait"></a>
+        <a href="../commanders/dehaka.html"><img src="../images/commanderportraits/dehakaportrait.png" alt="Dehaka Portrait"></a>
+        <a href="../commanders/horner.html"><img src="../images/commanderportraits/hornerportrait.png" alt="Han & Horner Portrait"></a>
+        <a href="../commanders/tychus.html"><img src="../images/commanderportraits/tychusportrait.png" alt="Tychus Portrait"></a>
+        <a href="../commanders/zeratul.html"><img src="../images/commanderportraits/zeratulportrait.png" alt="Zeratul Portrait"></a>
+        <a href="../commanders/stetmann.html"><img src="../images/commanderportraits/stetmannportrait.png" alt="Stetmann Portrait"></a>
+        <a href="../commanders/mengsk.html"><img src="../images/commanderportraits/mengskportrait.png" alt="Mengsk Portrait"></a>
+    </div>
+    <div id="missionList" class="submenu">
+        <a href="../missions/chainofascension.html"><img src="../images/missionthumbnails/chainofascension.png" alt="Chain of Ascension Thumbnail"></a>
+        <a href="../missions/cradleofdeath.html"><img src="../images/missionthumbnails/cradleofdeath.png" alt="Cradle of Death Thumbnail"></a>
+        <a href="../missions/deadofnight.html"><img src="../images/missionthumbnails/deadofnight.png" alt="Dead of Night Thumbnail"></a>
+        <a href="../missions/lockload.html"><img src="../images/missionthumbnails/lockload.png" alt="Lock & Load Thumbnail"></a>
+        <a href="../missions/malwarfare.html"><img src="../images/missionthumbnails/malwarfare.png" alt="Malwarfare Thumbnail"></a>
+        <a href="../missions/minerevacuation.html"><img src="../images/missionthumbnails/minerevacuation.png" alt="Miner Evacuation Thumbnail"></a>
+        <a href="../missions/mistopportunities.html"><img src="../images/missionthumbnails/mistopportunities.png" alt="Mist Opportunities Thumbnail"></a>
+        <a href="../missions/oblivionexpress.html"><img src="../images/missionthumbnails/oblivionexpress.png" alt="Oblivion Express Thumbnail"></a>
+        <a href="../missions/partparcel.html"><img src="../images/missionthumbnails/partparcel.png" alt="Part & Parcel Thumbnail"></a>
+        <a href="../missions/riftstokorhal.html"><img src="../images/missionthumbnails/riftstokorhal.png" alt="Rifts to Korhal Thumbnail"></a>
+        <a href="../missions/scytheofamon.html"><img src="../images/missionthumbnails/scytheofamon.png" alt="Scythe Of Amon Thumbnail"></a>
+        <a href="../missions/templeofthepast.html"><img src="../images/missionthumbnails/templeofthepast.png" alt="Temple of the Past Thumbnail"></a>
+        <a href="../missions/thevermillionproblem.html"><img src="../images/missionthumbnails/thevermillionproblem.png" alt="The Vermillion Problem Thumbnail"></a>
+        <a href="../missions/voidlaunch.html"><img src="../images/missionthumbnails/voidlaunch.png" alt="Void Launch Thumbnail"></a>
+        <a href="../missions/voidthrashing.html"><img src="../images/missionthumbnails/voidthrashing.png" alt="Void Thrashing Thumbnail"></a>
+    </div>
+    <div id="guideList" class="submenu">
+        <ul>
+            <li class="normal"><a href="../guides/buildordertheory.html">Build&nbsp;Order&nbsp;Theory</a></li>
+            <li class="normal"><a href="../guides/enemycomps.html">Enemy&nbsp;Compositions</a></li>
+            <li class="normal"><a href="../guides/generaltips.html">General&nbsp;Tips</a></li>
+            <li class="normal"><a href="../guides/newplayer.html">New&nbsp;Players&nbsp;</a></li>
+        </ul>
+    </div>
+    <div id="resources" class="submenu">
+        <ul>
+            <li class="normal"><a href="../resources/achievements.html">Achievements</a></li>
+            <li class="normal"><a href="../resources/ailogic.html">AI&nbsp;Logic</a></li>
+            <li class="normal"><a href="../resources/bugs.html">Bugs</a></li>
+            <li class="normal"><a href="../resources/brutal.html">Brutal+</a></li>
+            <li class="normal"><a href="../resources/deathprevention.html">Death&nbsp;Prevent&nbsp;Effects</a></li>
+            <li class="normal"><a href="../resources/eastereggs.html">Easter&nbsp;Eggs</a></li>
+            <li class="normal"><a href="../resources/levels.html">Levels</a></li>
+            <li class="normal"><a href="../resources/mutators.html">Mutators</a></li>
+            <li class="normal"><a href="../resources/patchdata.html">Patch&nbsp;Data</a></li>
+            <li class="normal"><a href="../resources/stats.html">Stats</a></li>
+            <li class="normal"><a href="../resources/weeklymutations.html">Weekly&nbsp;Mutations</a></li>
+            
+        </ul>
+    </div>
+    <div id="tools" class="submenu">
+        <ul>
+            <li class="normal"><a href="downloads.html">Downloads</a></li>
+            <li class="highlight"><a href="masterybreakpoints.html">Mastery&nbsp;Breakpoints</a></li>
+            <li class="normal"><a href="replayanalyzer.html">Replay&nbsp;Analyzer</a></li>
+            <li class="normal"><a href="unitstats.html">Unit&nbsp;Stats</a></li>
+        </ul>
+    </div>
+    <div id="community" class="submenu">
+        <ul>
+            <li class="normal"><a href="../community/tournament/main.html">Co&#8209;op&nbsp;Tournament</a></li>
+            <li class="normal"><a href="../community/gamespotlight.html">Game&nbsp;Spotlight</a></li>
+            <li class="normal"><a href="../community/mythbusters.html">Mythbusters</a></li>
+            <li class="normal"><a href="../community/rockslappingchampions.html">Rockslapping&nbsp;Champions</a></li>
+            <li class="normal"><a href="../youtube.html">Youtube</a></li>
+        </ul>
+    </div>
+    <div id="about" class="submenu">
+        <ul>
+            <!--<li class="normal"><a href="/about/contact">Contact</a></li>-->
+            <li class="normal"><a href="../about/faq.html">FAQ</a></li>
+            <li class="normal"><a href="../about/links.html">Links</a></li>
+            <li class="normal"><a href="https://www.youtube.com/c/Starcraft2Coop" rel="nofollow">Youtube</a></li>
+        </ul>
+    </div>
+    <!--<div id="imgs">
+        <a href="https://www.youtube.com/c/Starcraft2Coop" rel="nofollow"><img src="/images/links/yt.png" alt="Youtube"></a>
+        <a href="https://www.patreon.com/starcraft2coop" rel="nofollow"><img src="/images/links/patreon.png" alt="Patreon"></a>
+        <a href="https://www.twitch.tv/aommaster" rel="nofollow"><img src="/images/links/twitch.png" alt="Twitch"></a>
+        <a href="https://discord.gg/AbFXRAB" rel="nofollow"><img src="/images/links/discord.png" alt="Discord"></a>
+    </div>-->
+</div>
+<script>
+    function openSubmenu(event, selection){
+        event.preventDefault();
+        
+        switch (selection){
+            case "commanders":
+                $(".submenu").not("#commanderList").hide();
+                $("#commanderList").fadeToggle();
+                break;
+            case "missions":
+                $(".submenu").not("#missionList").hide();
+                $("#missionList").fadeToggle();
+                break;
+            case "community":
+                $(".submenu").not("#community").hide();
+                $("#community").fadeToggle();
+                break;
+            case "guides":
+                $(".submenu").not("#guideList").hide();
+                $("#guideList").fadeToggle();
+                break;
+            case "resources":
+                $(".submenu").not("#resources").hide();
+                $("#resources").fadeToggle();
+                break;
+            case "tools":
+                $(".submenu").not("#tools").hide();
+                $("#tools").fadeToggle();
+                break;
+            case "about":
+                $(".submenu").not("#about").hide();
+                $("#about").fadeToggle();
+                break;
+        }
+    }
+</script></div>
+<div id="content">
+    <div id="tooltip">tooltip</div>
+    <h1>Mastery Breakpoints Calculator</h1>
+        <p>You may use the calculator below to determine what mastery allocation you require to kill various units in Amon's forces. Note that objectives, Infested units and Mutator units are not taken into consideration. Move the slider left and right to allocate mastery points, and the units above the slider will move to show you which can be killed and which can't.</p>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <div id="input">
+        <h2>Select the Ability/Damage Type</h2>
+        <div id="abilityContainer">
+            <img class="tooltip unselected" src="../images/commanderdata/hero/kerrigan/leapingstrike.png" alt="Kerrigan's Leaping Strike">
+            <img class="tooltip unselected" src="../images/commanderdata/hero/kerrigan/psionicshift.png" alt="Kerrigan's Psionic Shift">
+            <img class="tooltip unselected" src="../images/commanderdata/hero/kerrigan/immobilizationwave.png" alt="Kerrigan's Immobilization Wave">
+            <br>
+            <img class="tooltip unselected" src="../images/commanderdata/hero/kerrigan/leapingstrikep2.png" alt="Kerrigan's Leaping Strike">
+            <img class="tooltip unselected" src="../images/commanderdata/hero/kerrigan/psionicshiftp2.png" alt="Kerrigan's Psionic Shift">
+            <img class="tooltip unselected" src="../images/commanderdata/hero/kerrigan/immobilizationwavep2.png" alt="Kerrigan's Immobilization Wave">
+            <br>
+            <img class="tooltip unselected" src="../images/commanderdata/hero/kerrigan/kineticblast.png" alt="Kerrigan's Kinetic Blast">
+            <img class="tooltip unselected" src="../images/commanderdata/hero/kerrigan/crushinggrip.png" alt="Kerrigan's Crushing Grip">
+            <br>
+            <img class="tooltip unselected" src="../images/commanderdata/abilities/swann/concentratedbeam.png" alt="Swann's Concentrated Beam">
+            <img class="tooltip unselected" src="../images/commanderdata/hero/zagara/infesteddrop.png" alt="Zagara's Infested Drop Single Pod Impact">
+            <img class="tooltip unselected" src="../images/commanderdata/abilities/abathur/spawntoxicnest.png" alt="Abathur's Toxic Nest">
+            <img class="tooltip unselected" src="../images/commanderdata/hero/nova/snipe.png" alt="Nova's Snipe">
+            <img class="tooltip unselected" id="penBlast1" src="../images/commanderdata/hero/nova/penetratingblast.png" alt="Nova's Penetrating Blast">
+            <img class="tooltip unselected" id="penBlast2" src="../images/commanderdata/hero/nova/stancedanceswitch.png" alt="Nova's Penetrating Blast with Stance Dance">
+            <img class="tooltip unselected" id="sabotageDrone" src="../images/commanderdata/hero/nova/sabotagedrone.png" alt="Nova's Sabotage Drone">
+            <img class="tooltip unselected" id="banelingBarrage" src="../images/commanderdata/hero/zagara/banelingbarrage.png" alt="Zagara's Baneling Barrage (per Baneling hit)">
+            <br>
+            <img class="tooltip unselected" src="../images/commanderportraits/kerriganportrait.png" alt="Kerrigan's Hero Unit Attack Damage">
+            <img class="tooltip unselected" src="../images/commanderportraits/zagaraportrait.png" alt="Zagara's Hero Unit Attack Damage">
+            <img class="tooltip unselected" src="../images/commanderportraits/alarakportrait.png" alt="Alarak's Hero Unit Attack Damage">
+        </div>
+    </div>
+    <div id="calculatedOutput">
+        <h2>Damage Stats</h2>
+        <div id="damageContainer">
+            <div id="damageStats">
+                <p>Base Damage: <span id="baseDmg"></span></p>
+                <p>Mastery Increase: <span id="dmgIncrease"></span>%</p>
+                <p>Current Damage: <span id="currentDamage"></span><span id="bonus"></span></p>
+            </div>
+            <div id="sliderContainer">
+                <div id="sliderBar">
+                    <input id="slide" type="range" min="0" max="30" step="1" value="0" oninput="updateUnits()">
+                    <span id="masteryPoints">0</span>
+                </div>
+                <br>
+                <div id="armorContainer">
+                    <label><input type="radio" id="armor0" name="armor" value="0" onchange="updateUnits()">0 Armor</label>
+                    <label><input type="radio" id="armor1" name="armor" value="1" onchange="updateUnits()">1 Armor</label>
+                    <label><input type="radio" id="armor2" name="armor" value="2" onchange="updateUnits()">2 Armor</label>
+                    <label><input type="radio" id="armor3" name="armor" value="3" onchange="updateUnits()">3 Armor</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="unitContainer" id="unitContainerSingle">
+        <h2>Enemy Units</h2>
+        <p class="note">Note: Zerg units regenerate HP when they take damage and survive, so take account of that when allocating mastery points.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Race</th>
+                    <th>1-shot</th>
+                    <th>Survives</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Protoss</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Terran</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Zerg</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Infested</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Mutator</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="unitContainer" id="unitContainerMulti">
+        <h2>Enemy Units</h2>
+        <p class="note">Note: Zerg units regenerate HP when they take damage and survive, so take account of that when allocating mastery points.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Race</th>
+                    <th>1-shot</th>
+                    <th>2-shots</th>
+                    <th>3-shots</th>
+                    <th>4+ shots</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Protoss</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Terran</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Zerg</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Infested</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Mutator</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <script>
+        $( document ).ready(function() {
+            $("#unitContainerSingle").hide();
+            $("#unitContainerMulti").hide();
+        });
+        var unitsList;
+        var multishot = false;
+        $(document).on('mouseover','.tooltip',function(){
+            var text = $(this).attr("alt");
+            $("#tooltip").html(text);
+            $("#tooltip").show();
+        });
+        
+        $(document).on('mouseleave','.tooltip',function(){
+            $("#tooltip").hide();
+        });
+        
+        $(document).on('mousemove','.tooltip',function(e){
+            $('#tooltip').css('top', e.pageY-40);
+            $('#tooltip').css('left', e.pageX+5);
+            $('#tooltip').css('position', "absolute");
+            
+        });
+        $(".tooltip").click(function(){
+            $(".selected").addClass("unselected");
+            $(".selected").removeClass("selected");
+            $(this).addClass("selected");
+            $(this).removeClass("unselected");
+            var src = $(this).attr('src').split('/');
+            var abilityName = src[src.length-1];
+            abilityName = abilityName.substring(0, abilityName.length - 4);
+            $.ajax({
+                type: "POST",
+                url: "../scripts/calculatebreakpoints.php",
+                data: {
+                    ability: abilityName,
+                },
+                success: function(data) {
+ 
+                    var data = JSON.parse(data);
+                    unitsList = data[4];
+                    $("#baseDmg").text(data[2]);
+                    var dmgIncrease = Math.round(data[3] * 10000) / 100;
+                    $("#dmgIncrease").text(dmgIncrease);
+                    $("#calculatedOutput").css("display","inline-block");
+                    $("#unitContainerSingle").hide();
+                    $("#unitContainerMulti").hide();
+                    $("#slide").val(0);
+                    if(data[0]==1){
+                        $("#unitContainerMulti").show();
+                        multishot = true;
+                    }
+                    else{
+                        $("#unitContainerSingle").show();
+                        multishot=false;
+                    }
+                    if(data[1]==1){
+                        $("#armorContainer").show();
+                        $("#armor1").prop('checked',true);
+                    }
+                    else{
+                        $("#armorContainer").hide();
+                    }
+                    console.log(unitsList);
+                    updateUnits();
+                }
+            });
+        })
+        function updateUnits(){
+            var points = $("#slide").val();
+            var baseDamage = parseInt($("#baseDmg").text());
+            var damageIncrease = parseFloat($("#dmgIncrease").text());
+            //This is added units get left with 1HP even if they should be 1-shot
+            if(points==15 || points==30){
+                var currentDamage = Math.round(parseFloat(baseDamage) + (damageIncrease*points*parseFloat(baseDamage)/100));
+            }
+            else{
+                var currentDamage = Math.floor(parseFloat(baseDamage) + (damageIncrease*points*parseFloat(baseDamage)/100));
+            }
+            
+            $("#currentDamage").text(currentDamage);
+            //Add bonus text for Penetrating Blast
+            if($("#penBlast1").hasClass("selected")){
+                var extraDamage = currentDamage;
+                $("#bonus").text(" (+" + extraDamage + " vs. Light)");
+            }
+            else if($("#penBlast2").hasClass("selected")){
+                var extraDamage = currentDamage;
+                $("#bonus").text(" (+" + extraDamage + " vs. Light)");
+            }
+            else if($("#sabotageDrone").hasClass("selected")){
+                var extraDamage = currentDamage;
+                $("#bonus").text(" (+" + extraDamage + " vs. Structures)");
+            }
+            else{
+                $("#bonus").text("");
+            }
+            
+            if($("#armorContainer").is(":visible")){
+                var subtractor = $("input[name='armor']:checked").val();
+                currentDamage = currentDamage - subtractor;
+            }
+            var container = "";
+            if(multishot){
+                container = "#unitContainerMulti";
+            }
+            else{
+                container = "#unitContainerSingle";
+            }
+            $("#masteryPoints").text(points);
+            
+            $(container + " table tbody tr").each(function(){
+                var row = $(this);
+                row.find("td:nth-child(2)").empty();
+                row.find("td:nth-child(3)").empty();
+                row.find("td:nth-child(4)").empty();
+                row.find("td:nth-child(5)").empty();
+                unitsList[row.find("td:nth-child(1)").text()].forEach(function (item, index) {
+                    var imageName = item[1].replace(/ /g,'').toLowerCase() + ".png";
+                    var classes = "unit tooltip";
+                    var calculatedDamage = currentDamage;
+                    if(item[2]==1){
+                        classes += " light";
+                        if($("#penBlast1").hasClass("selected") || $("#penBlast2").hasClass("selected")){
+                            calculatedDamage *= 2;
+                        }
+                    }
+                    if(item[3]==1){
+                        classes += " structure";
+                        if($("#sabotageDrone").hasClass("selected")){
+                            calculatedDamage *= 2;
+                        }
+                    }
+                    if(multishot){
+                        if(item[0]<=calculatedDamage){
+                            row.find("td:nth-child(2)").append("<img class='" + classes + "' src='https://starcraft2coop.com/images/comps/unitimages/&quot;&#32;+&#32;imageName&#32;+&#32;&quot;' alt='" + item[1] + ": " + item[0] + " vitality'>")
+                        }
+                        else if (item[0]<=2*calculatedDamage){
+                            row.find("td:nth-child(3)").append("<img class='" + classes + "' src='https://starcraft2coop.com/images/comps/unitimages/&quot;&#32;+&#32;imageName&#32;+&#32;&quot;' alt='" + item[1] + ": " + item[0] + " vitality'>")
+                        }
+                        else if (item[0]<=3*calculatedDamage){
+                            row.find("td:nth-child(4)").append("<img class='" + classes + "' src='https://starcraft2coop.com/images/comps/unitimages/&quot;&#32;+&#32;imageName&#32;+&#32;&quot;' alt='" + item[1] + ": " + item[0] + " vitality'>")
+                        }
+                        else{
+                            row.find("td:nth-child(5)").append("<img class='" + classes + "' src='https://starcraft2coop.com/images/comps/unitimages/&quot;&#32;+&#32;imageName&#32;+&#32;&quot;' alt='" + item[1] + ": " + item[0] + " vitality'>")
+                        }
+                    }
+                    else{
+                        if(item[0]<=calculatedDamage){
+                            row.find("td:nth-child(2)").append("<img class='" + classes + "' src='https://starcraft2coop.com/images/comps/unitimages/&quot;&#32;+&#32;imageName&#32;+&#32;&quot;' alt='" + item[1] + ": " + item[0] + " vitality'>")
+                        }
+                        else{
+                            row.find("td:nth-child(3)").append("<img class='" + classes + "' src='https://starcraft2coop.com/images/comps/unitimages/&quot;&#32;+&#32;imageName&#32;+&#32;&quot;' alt='" + item[1] + ": " + item[0] + " vitality'>")
+                        }
+                    }
+                    
+                    
+               })
+            });
+        }
+    </script>
+</div>
+<div id="footer">
+    <p>Note: All data generated on this site is based on Brutal difficulty. Timings, compositions and other elements may differ on easier difficulty levels.</p>
+    <p>© Blizzard Entertainment, Inc. All rights reserved. Wings of Liberty, Heart of the Swarm, Legacy of the Void, and StarCraft are trademarks or registered trademarks of Blizzard Entertainment, Inc. in the U.S. and/or other countries.</p>
+</div></body>
+</html>

@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+<link rel='shortcut icon' href='../images/favicon.ico' type='image/x-icon' />
+<link rel="stylesheet"  media="all" type="text/css" href="../styles/mainstyle.css%3Fv=1.28.css">
+<link href='https://fonts.googleapis.com/css?family=Convergence' rel='stylesheet' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-165288360-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-165288360-1');
+</script>
+<script>
+    grecaptcha.ready(function() {
+        $(".captchaForm").each(function(){
+            currentID = $(this).attr('id');
+            if(currentID=="reportForm"){
+                $(this).submit(function(event){
+                    $("#submitbtn").attr("disabled", true);
+                    grecaptcha.execute('6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd', { action: currentID }).then(function (token) {
+                        $("#reportFormRecaptchaResponse").val(token);
+                        var path = window.location.pathname;
+                        var page = path.split("/").pop();
+                        var x = document.forms["errorReport"]["comment"].value;
+            		    var y = document.forms["errorReport"]["url"].value;
+            			var z = $("#reportFormRecaptchaResponse").val();
+            			$.ajax({  
+                            type: 'POST',
+                            url: '/scripts/addreport.php', 
+                            data: { 
+                                comment: x,
+                                errorpage: page,
+                                url:y, 
+                                recaptcha_response:z},
+                            success: function(data) {
+                                $("#reportForm").hide();
+                                $("#errorReport").append(data);
+                                return false;
+                            }
+                        });
+                        return false;
+                        $("#submitbtn").attr("disabled", false);
+                    });
+                    
+                })
+            }
+            else{
+                $(this).submit(function(event){
+                    var currentID = $(this).attr('id');
+                    var currentForm = $(this);
+                    event.preventDefault();
+                    grecaptcha.execute('6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd', { action: currentID }).then(function (token) {
+                        $("#" + currentID + "RecaptchaResponse").val(token);
+                        currentForm.off("submit");
+                        currentForm.submit();
+                    });
+                })
+            }
+            
+        })
+    },false)
+</script>  <title>Starcraft 2 Co-op - Replay Analyzer</title>
+  <meta name="description" content="Get detailed replay analysis of Starcraft 2 Co-op games such as calldown usage and hero kills with shareable links">
+  <meta name="keywords" content="Starcraft co-op replay analyzer">
+  <link rel="canonical" href="replayanalyzer.html">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.4"></script>
+  <link rel="stylesheet"  media="all" type="text/css" href="../styles/carousel.css">
+  <script src="../scripts/preload.js"></script>
+  <script>
+      function validate2() {
+          var x = document.forms["submissionform"]["file"].value;
+          if (x == "") {
+              alert("File not selected");
+              return false;
+          }
+      }
+  </script>
+  <style>
+    #reportFile{
+        font-size:0.8em;
+    }
+    #enemyComp{
+        text-align:center;
+    }
+    #enemyComp h4{
+        vertical-align:middle;
+    }
+    #enemyComp img{
+        vertical-align:middle;
+    }
+    .comp{
+        display:inline-block;
+    }
+    #mutatorList{
+        text-align:center;
+    }
+    #mutatorList img{
+        margin: 10px;
+    }
+    #playerSelect{
+        padding:10px;
+    }
+    .weeklyMutation{
+        display: inline-block;
+        background-image: url(../images/replayanalyzer/weekly.png);
+        background-size: cover;
+        color:lightgreen;
+    }
+    .customMutation{
+        display: inline-block;
+        background-image: url(../images/replayanalyzer/custom.png);
+        background-size: cover;
+        color:lightpink;
+    }
+    .error{
+        color:tomato;
+    }
+    .loggedIn{
+        background-color: darkseagreen;
+        color: darkgreen;
+        display: inline-block;
+        border-radius: 5px;
+        padding: 5px;
+    }
+    .error{
+        color:red;
+    }
+        .success{
+        color:green;
+    }
+    .playerBanner{
+        max-width:49%;
+        min-width:350px;
+        display:inline-block;
+        background-repeat: no-repeat;
+        background-size: contain;
+        cursor: pointer;
+        margin-right: 25px;
+    }
+    .tipLabel{
+        font-size:0.75em;
+        border-top: 1px solid white;
+        margin-top: 20px;
+        padding-top:10px;
+    }
+    .playerBanner td{
+        border:0;
+    }
+    h2, h3, h4{
+        text-align:center;
+        margin:0;
+    }
+    .masteries{
+        text-decoration:underline;
+    }
+    .playerBanner .masteryTotal{
+        border-top:1px solid white;
+        text-align:right;
+    }
+    .playerBanner > p{
+        line-height:0;
+    }
+    .unselectedPlayer{
+        opacity:0.25;
+    }
+    #tabs{
+        clear:both;
+        margin-bottom:5px;
+    }
+    .tab{
+        display:inline-block;
+        padding:5px;
+        border-radius: 10px;
+        line-height:60px;
+        background-color: #080919;
+        cursor:pointer;
+    }
+    .tab img{
+        vertical-align:middle;
+    }
+    .tab p{
+        display:inline;
+        font-size:0.95em;
+    }
+    .toggled{
+        background-color:darkslateblue;
+    }
+    canvas{
+        min-height:300px;
+    }
+    .chart{
+        max-height:300px;
+        border:1px solid white;
+    }
+    .zoomReset{
+        position: relative;
+        top: -30px;
+        left: 10px;
+        font-size:0.75em;
+        display:none;
+    }
+    .tileContainer{
+        margin-top:10px;
+    }
+    .unitsData{
+        margin-top:10px;
+    }
+    .favUnits{
+        display:inline-block;
+    }
+    .deadUnits{
+        display:inline-block;
+    }
+    #outlawOrder{
+        border: 2px solid white;
+        border-radius: 25px;
+        padding:5px;
+        margin-top:10px;
+        display:inline-block;
+    }
+    .statsTile{
+        display:inline-block;
+        border: 2px solid white;
+        border-radius: 25px;
+        padding:5px;
+        margin-bottom: 5px;
+    }
+    .statsTile img{
+        display:inline-block;
+        vertical-align:middle;
+        height:50px;
+        width:50px;
+    }
+    .statsTile .infoIcon{
+        display:inline;
+    }
+    .infoIcon img{
+        width:20px;
+        height:20px;
+    }
+    .p2tile{
+        display:none;
+    }
+    .warning{
+        background-color:tomato;
+    }
+    .statsContainer {
+        display:inline-block;
+        vertical-align:middle;
+        line-height:30px;
+    }
+    .statsContainer p{
+        text-align:center;
+        margin:0;
+    }
+    .tooltip{
+        display:none;
+    }
+    #tooltip{
+        position:absolute;
+        background-color:khaki;
+        color:black;
+        font-size:0.8em;
+        display:none;
+        z-index:1;
+        padding:5px;
+        border-radius:5px;
+    }
+  </style>
+  </head>
+<body>
+<div id="header"><img src="../images/mainpageheader.png" alt="Starcraft II Co-op Logo">
+</div>
+<div id="menu">
+<ul>
+    <li class="normal"><a href="../index.html">&#127968;</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'commanders');">Commanders</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'community');">Community</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'guides');">Guides</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'missions');">Missions</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'resources');">Resources</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'tools');">Tools</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'about');">About</a></li>
+    <li class="normal"><a href="../account.html">My&nbsp;Account</a></li>
+</ul>
+<div id="container">
+    <div id="commanderList" class="submenu">
+        <a href="../commanders/raynor.html"><img src="../images/commanderportraits/raynorportrait.png" alt="Raynor Portrait"></a>
+        <a href="../commanders/kerrigan.html"><img src="../images/commanderportraits/kerriganportrait.png" alt="Kerrigan Portrait"></a>
+        <a href="../commanders/artanis.html"><img src="../images/commanderportraits/artanisportrait.png" alt="Artanis Portrait"></a>
+        <a href="../commanders/swann.html"><img src="../images/commanderportraits/swannportrait.png" alt="Swann Portrait"></a>
+        <a href="../commanders/zagara.html"><img src="../images/commanderportraits/zagaraportrait.png" alt="Zagara Portrait"></a>
+        <a href="../commanders/vorazun.html"><img src="../images/commanderportraits/vorazunportrait.png" alt="Vorazun Portrait"></a>
+        <a href="../commanders/karax.html"><img src="../images/commanderportraits/karaxportrait.png" alt="Karax Portrait"></a>
+        <a href="../commanders/abathur.html"><img src="../images/commanderportraits/abathurportrait.png" alt="Abathur Portrait"></a>
+        <a href="../commanders/alarak.html"><img src="../images/commanderportraits/alarakportrait.png" alt="Alarak Portrait"></a>
+        <a href="../commanders/nova.html"><img src="../images/commanderportraits/novaportrait.png" alt="Nova Portrait"></a>
+        <a href="../commanders/stukov.html"><img src="../images/commanderportraits/stukovportrait.png" alt="Stukov Portrait"></a>
+        <a href="../commanders/fenix.html"><img src="../images/commanderportraits/fenixportrait.png" alt="Fenix Portrait"></a>
+        <a href="../commanders/dehaka.html"><img src="../images/commanderportraits/dehakaportrait.png" alt="Dehaka Portrait"></a>
+        <a href="../commanders/horner.html"><img src="../images/commanderportraits/hornerportrait.png" alt="Han & Horner Portrait"></a>
+        <a href="../commanders/tychus.html"><img src="../images/commanderportraits/tychusportrait.png" alt="Tychus Portrait"></a>
+        <a href="../commanders/zeratul.html"><img src="../images/commanderportraits/zeratulportrait.png" alt="Zeratul Portrait"></a>
+        <a href="../commanders/stetmann.html"><img src="../images/commanderportraits/stetmannportrait.png" alt="Stetmann Portrait"></a>
+        <a href="../commanders/mengsk.html"><img src="../images/commanderportraits/mengskportrait.png" alt="Mengsk Portrait"></a>
+    </div>
+    <div id="missionList" class="submenu">
+        <a href="../missions/chainofascension.html"><img src="../images/missionthumbnails/chainofascension.png" alt="Chain of Ascension Thumbnail"></a>
+        <a href="../missions/cradleofdeath.html"><img src="../images/missionthumbnails/cradleofdeath.png" alt="Cradle of Death Thumbnail"></a>
+        <a href="../missions/deadofnight.html"><img src="../images/missionthumbnails/deadofnight.png" alt="Dead of Night Thumbnail"></a>
+        <a href="../missions/lockload.html"><img src="../images/missionthumbnails/lockload.png" alt="Lock & Load Thumbnail"></a>
+        <a href="../missions/malwarfare.html"><img src="../images/missionthumbnails/malwarfare.png" alt="Malwarfare Thumbnail"></a>
+        <a href="../missions/minerevacuation.html"><img src="../images/missionthumbnails/minerevacuation.png" alt="Miner Evacuation Thumbnail"></a>
+        <a href="../missions/mistopportunities.html"><img src="../images/missionthumbnails/mistopportunities.png" alt="Mist Opportunities Thumbnail"></a>
+        <a href="../missions/oblivionexpress.html"><img src="../images/missionthumbnails/oblivionexpress.png" alt="Oblivion Express Thumbnail"></a>
+        <a href="../missions/partparcel.html"><img src="../images/missionthumbnails/partparcel.png" alt="Part & Parcel Thumbnail"></a>
+        <a href="../missions/riftstokorhal.html"><img src="../images/missionthumbnails/riftstokorhal.png" alt="Rifts to Korhal Thumbnail"></a>
+        <a href="../missions/scytheofamon.html"><img src="../images/missionthumbnails/scytheofamon.png" alt="Scythe Of Amon Thumbnail"></a>
+        <a href="../missions/templeofthepast.html"><img src="../images/missionthumbnails/templeofthepast.png" alt="Temple of the Past Thumbnail"></a>
+        <a href="../missions/thevermillionproblem.html"><img src="../images/missionthumbnails/thevermillionproblem.png" alt="The Vermillion Problem Thumbnail"></a>
+        <a href="../missions/voidlaunch.html"><img src="../images/missionthumbnails/voidlaunch.png" alt="Void Launch Thumbnail"></a>
+        <a href="../missions/voidthrashing.html"><img src="../images/missionthumbnails/voidthrashing.png" alt="Void Thrashing Thumbnail"></a>
+    </div>
+    <div id="guideList" class="submenu">
+        <ul>
+            <li class="normal"><a href="../guides/buildordertheory.html">Build&nbsp;Order&nbsp;Theory</a></li>
+            <li class="normal"><a href="../guides/enemycomps.html">Enemy&nbsp;Compositions</a></li>
+            <li class="normal"><a href="../guides/generaltips.html">General&nbsp;Tips</a></li>
+            <li class="normal"><a href="../guides/newplayer.html">New&nbsp;Players&nbsp;</a></li>
+        </ul>
+    </div>
+    <div id="resources" class="submenu">
+        <ul>
+            <li class="normal"><a href="../resources/achievements.html">Achievements</a></li>
+            <li class="normal"><a href="../resources/ailogic.html">AI&nbsp;Logic</a></li>
+            <li class="normal"><a href="../resources/bugs.html">Bugs</a></li>
+            <li class="normal"><a href="../resources/brutal.html">Brutal+</a></li>
+            <li class="normal"><a href="../resources/deathprevention.html">Death&nbsp;Prevent&nbsp;Effects</a></li>
+            <li class="normal"><a href="../resources/eastereggs.html">Easter&nbsp;Eggs</a></li>
+            <li class="normal"><a href="../resources/levels.html">Levels</a></li>
+            <li class="normal"><a href="../resources/mutators.html">Mutators</a></li>
+            <li class="normal"><a href="../resources/patchdata.html">Patch&nbsp;Data</a></li>
+            <li class="normal"><a href="../resources/stats.html">Stats</a></li>
+            <li class="normal"><a href="../resources/weeklymutations.html">Weekly&nbsp;Mutations</a></li>
+            
+        </ul>
+    </div>
+    <div id="tools" class="submenu">
+        <ul>
+            <li class="normal"><a href="downloads.html">Downloads</a></li>
+            <li class="normal"><a href="masterybreakpoints.html">Mastery&nbsp;Breakpoints</a></li>
+            <li class="highlight"><a href="replayanalyzer.html">Replay&nbsp;Analyzer</a></li>
+            <li class="normal"><a href="unitstats.html">Unit&nbsp;Stats</a></li>
+        </ul>
+    </div>
+    <div id="community" class="submenu">
+        <ul>
+            <li class="normal"><a href="../community/tournament/main.html">Co&#8209;op&nbsp;Tournament</a></li>
+            <li class="normal"><a href="../community/gamespotlight.html">Game&nbsp;Spotlight</a></li>
+            <li class="normal"><a href="../community/mythbusters.html">Mythbusters</a></li>
+            <li class="normal"><a href="../community/rockslappingchampions.html">Rockslapping&nbsp;Champions</a></li>
+            <li class="normal"><a href="../youtube.html">Youtube</a></li>
+        </ul>
+    </div>
+    <div id="about" class="submenu">
+        <ul>
+            <!--<li class="normal"><a href="/about/contact">Contact</a></li>-->
+            <li class="normal"><a href="../about/faq.html">FAQ</a></li>
+            <li class="normal"><a href="../about/links.html">Links</a></li>
+            <li class="normal"><a href="https://www.youtube.com/c/Starcraft2Coop" rel="nofollow">Youtube</a></li>
+        </ul>
+    </div>
+    <!--<div id="imgs">
+        <a href="https://www.youtube.com/c/Starcraft2Coop" rel="nofollow"><img src="/images/links/yt.png" alt="Youtube"></a>
+        <a href="https://www.patreon.com/starcraft2coop" rel="nofollow"><img src="/images/links/patreon.png" alt="Patreon"></a>
+        <a href="https://www.twitch.tv/aommaster" rel="nofollow"><img src="/images/links/twitch.png" alt="Twitch"></a>
+        <a href="https://discord.gg/AbFXRAB" rel="nofollow"><img src="/images/links/discord.png" alt="Discord"></a>
+    </div>-->
+</div>
+<script>
+    function openSubmenu(event, selection){
+        event.preventDefault();
+        
+        switch (selection){
+            case "commanders":
+                $(".submenu").not("#commanderList").hide();
+                $("#commanderList").fadeToggle();
+                break;
+            case "missions":
+                $(".submenu").not("#missionList").hide();
+                $("#missionList").fadeToggle();
+                break;
+            case "community":
+                $(".submenu").not("#community").hide();
+                $("#community").fadeToggle();
+                break;
+            case "guides":
+                $(".submenu").not("#guideList").hide();
+                $("#guideList").fadeToggle();
+                break;
+            case "resources":
+                $(".submenu").not("#resources").hide();
+                $("#resources").fadeToggle();
+                break;
+            case "tools":
+                $(".submenu").not("#tools").hide();
+                $("#tools").fadeToggle();
+                break;
+            case "about":
+                $(".submenu").not("#about").hide();
+                $("#about").fadeToggle();
+                break;
+        }
+    }
+</script></div>
+<div id="content">
+    <h1>Co-op Replay Analyzer</h1>
+    <h2>Analyze Your Replays</h2>
+    <p>Upload your replay file below to see statistics regarding to your gameplay. Please note:</p>
+    <ul>
+        <li>Due to the fact that Replay files are optimized for Ladder games, certain information may not be accurate or available. For example, Resource count, supplies and mining rates are usually accurate whereas Tech Spending and army resource values and lost usually contains inaccurate data as some upgrades and units are not counted. This includes data in the "Economy Minerals Lost" tile.</li>
+        <li>Fluctuations in resource gain may occur, as data samples are collected once every 10 seconds.</li>
+        <li>This parser only works on replay files played using the Co-op game mode. Arcade games and Ladder Games are not supported.</li>
+        <li>Calldown efficiency for Energy/Mandate-based calldowns will not be displayed.</li>
+        <li>Extracting Ability information (such as Kerrigan's Immobilization Wave, Alarak's Structure Overcharge) is extremely limited. Any issues will be displayed in the "Notes" section.</li>
+        <li>Mutator detection is only guaranteed for Custom mutation games. Brutal+ difficulty and Weekly Mutation mutators may not be detected.</li>
+    </ul>
+    <form action="https://starcraft2coop.com/tools/replayanalyzer.php" name="submissionform" id="analyzerForm" class="captchaForm" onsubmit="return validate2()" method="post" enctype="multipart/form-data">
+        <p>Replay File: <input type="file" name="file" accept=".SC2Replay"></p>
+        <input type="hidden" name="recaptcha_response" id="analyzerFormRecaptchaResponse">
+        <p><input type="submit" id="startParse" value="Submit"></p>
+        <p id="captchaTOS">This site is protected by reCAPTCHA and the Google
+    <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+    <a href="https://policies.google.com/terms">Terms of Service</a> apply.</p>
+    </form>
+            	    <div id="carousel-container">
+                <img id="carousel" src="../images/replayanalyzer/car1.png" alt="Carousel Image">
+                <div id="carousel-nav"><span id="sel0" class="carSelected">&#127761;</span><span id="sel1">&#127761;</span><span id="sel2">&#127761;</span><span id="sel3">&#127761;</span></div>
+            </div>
+            <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    	    <script>
+    	        var imgList=[];
+    	        imgList.push('/images/replayanalyzer/car1.png');
+    	        imgList.push('/images/replayanalyzer/car2.png');
+    	        imgList.push('/images/replayanalyzer/car3.png');
+    	        imgList.push('/images/replayanalyzer/car4.png');
+                preload(imgList);
+                
+                var dataArray=new Array();
+                dataArray[0]="/images/replayanalyzer/car1.png";
+                dataArray[1]="/images/replayanalyzer/car2.png";
+                dataArray[2]="/images/replayanalyzer/car3.png";
+                dataArray[3]="/images/replayanalyzer/car4.png";
+                
+                var thisId=0;
+                var moving = true;
+                
+                $( document ).ready(function(){
+                    setTimeout(carouselChange, 10000);
+                })
+                
+                var carouselChange = function(){
+                    if (moving){
+                        for (var i=0; i<4; i++){
+                            $('#sel' + i).removeClass("carSelected");
+                        }
+                        thisId++;
+                        if (thisId==4) thisId=0;
+                        
+                        $('#carousel').fadeOut(1000, function(){
+                            $('#carousel').attr('src',dataArray[thisId]);
+                            $('#carousel').fadeIn(1000);
+                            $('#sel' + thisId).addClass("carSelected");
+                        });
+                        if (moving){$
+                            setTimeout(carouselChange, 10000);
+                        }
+                    }
+                    
+                }
+                
+                $("#carousel-nav span").click(function(){
+                    console.log("click");
+                    moving = false;
+                    for (var i=0; i<4; i++){
+                        $('#sel' + i).removeClass("carSelected");
+                    }
+                    
+                    $(this).addClass("carSelected");
+                    var newId = this.id.replace("sel", "");
+                    $('#carousel').fadeOut(1000, function(){
+                        $('#carousel').attr('src',dataArray[newId]);
+                        $('#carousel').fadeIn(1000);
+                        $('#sel' + newId).addClass("carSelected");
+                    });
+                })
+    	    </script>
+    	</div><div id="footer">
+    <p>Note: All data generated on this site is based on Brutal difficulty. Timings, compositions and other elements may differ on easier difficulty levels.</p>
+    <p>© Blizzard Entertainment, Inc. All rights reserved. Wings of Liberty, Heart of the Swarm, Legacy of the Void, and StarCraft are trademarks or registered trademarks of Blizzard Entertainment, Inc. in the U.S. and/or other countries.</p>
+</div>

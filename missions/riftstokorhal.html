@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+<link rel='shortcut icon' href='../images/favicon.ico' type='image/x-icon' />
+<link rel="stylesheet"  media="all" type="text/css" href="../styles/mainstyle.css%3Fv=1.28.css">
+<link href='https://fonts.googleapis.com/css?family=Convergence' rel='stylesheet' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-165288360-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-165288360-1');
+</script>
+<script>
+    grecaptcha.ready(function() {
+        $(".captchaForm").each(function(){
+            currentID = $(this).attr('id');
+            if(currentID=="reportForm"){
+                $(this).submit(function(event){
+                    $("#submitbtn").attr("disabled", true);
+                    grecaptcha.execute('6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd', { action: currentID }).then(function (token) {
+                        $("#reportFormRecaptchaResponse").val(token);
+                        var path = window.location.pathname;
+                        var page = path.split("/").pop();
+                        var x = document.forms["errorReport"]["comment"].value;
+            		    var y = document.forms["errorReport"]["url"].value;
+            			var z = $("#reportFormRecaptchaResponse").val();
+            			$.ajax({  
+                            type: 'POST',
+                            url: '/scripts/addreport.php', 
+                            data: { 
+                                comment: x,
+                                errorpage: page,
+                                url:y, 
+                                recaptcha_response:z},
+                            success: function(data) {
+                                $("#reportForm").hide();
+                                $("#errorReport").append(data);
+                                return false;
+                            }
+                        });
+                        return false;
+                        $("#submitbtn").attr("disabled", false);
+                    });
+                    
+                })
+            }
+            else{
+                $(this).submit(function(event){
+                    var currentID = $(this).attr('id');
+                    var currentForm = $(this);
+                    event.preventDefault();
+                    grecaptcha.execute('6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd', { action: currentID }).then(function (token) {
+                        $("#" + currentID + "RecaptchaResponse").val(token);
+                        currentForm.off("submit");
+                        currentForm.submit();
+                    });
+                })
+            }
+            
+        })
+    },false)
+</script>  <title>Starcraft 2 Co-op - Mission Guide - Rifts to Korhal</title>
+  <meta name="description" content="Starcraft 2 Co-op Mission Guide Rifts to Korhal">
+  <meta name="keywords" content="Starcraft co-op guides rifts korhal mission">
+  <link rel="stylesheet"  media="all" type="text/css" href="../styles/missionstyle.css%3Fv=1.00.css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link rel="canonical" href="riftstokorhal.html">
+  <script src="../scripts/preload.js"></script>
+  </head>
+<body>
+<div id="header"><img src="../images/mainpageheader.png" alt="Starcraft II Co-op Logo">
+</div>
+<div id="menu">
+<ul>
+    <li class="normal"><a href="../index.html">&#127968;</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'commanders');">Commanders</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'community');">Community</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'guides');">Guides</a></li>
+    <li class="highlight"><a href="../index.html" onclick="javascript:openSubmenu(event,'missions');">Missions</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'resources');">Resources</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'tools');">Tools</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'about');">About</a></li>
+    <li class="normal"><a href="../account.html">My&nbsp;Account</a></li>
+</ul>
+<div id="container">
+    <div id="commanderList" class="submenu">
+        <a href="../commanders/raynor.html"><img src="../images/commanderportraits/raynorportrait.png" alt="Raynor Portrait"></a>
+        <a href="../commanders/kerrigan.html"><img src="../images/commanderportraits/kerriganportrait.png" alt="Kerrigan Portrait"></a>
+        <a href="../commanders/artanis.html"><img src="../images/commanderportraits/artanisportrait.png" alt="Artanis Portrait"></a>
+        <a href="../commanders/swann.html"><img src="../images/commanderportraits/swannportrait.png" alt="Swann Portrait"></a>
+        <a href="../commanders/zagara.html"><img src="../images/commanderportraits/zagaraportrait.png" alt="Zagara Portrait"></a>
+        <a href="../commanders/vorazun.html"><img src="../images/commanderportraits/vorazunportrait.png" alt="Vorazun Portrait"></a>
+        <a href="../commanders/karax.html"><img src="../images/commanderportraits/karaxportrait.png" alt="Karax Portrait"></a>
+        <a href="../commanders/abathur.html"><img src="../images/commanderportraits/abathurportrait.png" alt="Abathur Portrait"></a>
+        <a href="../commanders/alarak.html"><img src="../images/commanderportraits/alarakportrait.png" alt="Alarak Portrait"></a>
+        <a href="../commanders/nova.html"><img src="../images/commanderportraits/novaportrait.png" alt="Nova Portrait"></a>
+        <a href="../commanders/stukov.html"><img src="../images/commanderportraits/stukovportrait.png" alt="Stukov Portrait"></a>
+        <a href="../commanders/fenix.html"><img src="../images/commanderportraits/fenixportrait.png" alt="Fenix Portrait"></a>
+        <a href="../commanders/dehaka.html"><img src="../images/commanderportraits/dehakaportrait.png" alt="Dehaka Portrait"></a>
+        <a href="../commanders/horner.html"><img src="../images/commanderportraits/hornerportrait.png" alt="Han & Horner Portrait"></a>
+        <a href="../commanders/tychus.html"><img src="../images/commanderportraits/tychusportrait.png" alt="Tychus Portrait"></a>
+        <a href="../commanders/zeratul.html"><img src="../images/commanderportraits/zeratulportrait.png" alt="Zeratul Portrait"></a>
+        <a href="../commanders/stetmann.html"><img src="../images/commanderportraits/stetmannportrait.png" alt="Stetmann Portrait"></a>
+        <a href="../commanders/mengsk.html"><img src="../images/commanderportraits/mengskportrait.png" alt="Mengsk Portrait"></a>
+    </div>
+    <div id="missionList" class="submenu">
+        <a href="chainofascension.html"><img src="../images/missionthumbnails/chainofascension.png" alt="Chain of Ascension Thumbnail"></a>
+        <a href="cradleofdeath.html"><img src="../images/missionthumbnails/cradleofdeath.png" alt="Cradle of Death Thumbnail"></a>
+        <a href="deadofnight.html"><img src="../images/missionthumbnails/deadofnight.png" alt="Dead of Night Thumbnail"></a>
+        <a href="lockload.html"><img src="../images/missionthumbnails/lockload.png" alt="Lock & Load Thumbnail"></a>
+        <a href="malwarfare.html"><img src="../images/missionthumbnails/malwarfare.png" alt="Malwarfare Thumbnail"></a>
+        <a href="minerevacuation.html"><img src="../images/missionthumbnails/minerevacuation.png" alt="Miner Evacuation Thumbnail"></a>
+        <a href="mistopportunities.html"><img src="../images/missionthumbnails/mistopportunities.png" alt="Mist Opportunities Thumbnail"></a>
+        <a href="oblivionexpress.html"><img src="../images/missionthumbnails/oblivionexpress.png" alt="Oblivion Express Thumbnail"></a>
+        <a href="partparcel.html"><img src="../images/missionthumbnails/partparcel.png" alt="Part & Parcel Thumbnail"></a>
+        <a href="riftstokorhal.html"><img src="../images/missionthumbnails/riftstokorhal.png" alt="Rifts to Korhal Thumbnail"></a>
+        <a href="scytheofamon.html"><img src="../images/missionthumbnails/scytheofamon.png" alt="Scythe Of Amon Thumbnail"></a>
+        <a href="templeofthepast.html"><img src="../images/missionthumbnails/templeofthepast.png" alt="Temple of the Past Thumbnail"></a>
+        <a href="thevermillionproblem.html"><img src="../images/missionthumbnails/thevermillionproblem.png" alt="The Vermillion Problem Thumbnail"></a>
+        <a href="voidlaunch.html"><img src="../images/missionthumbnails/voidlaunch.png" alt="Void Launch Thumbnail"></a>
+        <a href="voidthrashing.html"><img src="../images/missionthumbnails/voidthrashing.png" alt="Void Thrashing Thumbnail"></a>
+    </div>
+    <div id="guideList" class="submenu">
+        <ul>
+            <li class="normal"><a href="../guides/buildordertheory.html">Build&nbsp;Order&nbsp;Theory</a></li>
+            <li class="normal"><a href="../guides/enemycomps.html">Enemy&nbsp;Compositions</a></li>
+            <li class="normal"><a href="../guides/generaltips.html">General&nbsp;Tips</a></li>
+            <li class="normal"><a href="../guides/newplayer.html">New&nbsp;Players&nbsp;</a></li>
+        </ul>
+    </div>
+    <div id="resources" class="submenu">
+        <ul>
+            <li class="normal"><a href="../resources/achievements.html">Achievements</a></li>
+            <li class="normal"><a href="../resources/ailogic.html">AI&nbsp;Logic</a></li>
+            <li class="normal"><a href="../resources/bugs.html">Bugs</a></li>
+            <li class="normal"><a href="../resources/brutal.html">Brutal+</a></li>
+            <li class="normal"><a href="../resources/deathprevention.html">Death&nbsp;Prevent&nbsp;Effects</a></li>
+            <li class="normal"><a href="../resources/eastereggs.html">Easter&nbsp;Eggs</a></li>
+            <li class="normal"><a href="../resources/levels.html">Levels</a></li>
+            <li class="normal"><a href="../resources/mutators.html">Mutators</a></li>
+            <li class="normal"><a href="../resources/patchdata.html">Patch&nbsp;Data</a></li>
+            <li class="normal"><a href="../resources/stats.html">Stats</a></li>
+            <li class="normal"><a href="../resources/weeklymutations.html">Weekly&nbsp;Mutations</a></li>
+            
+        </ul>
+    </div>
+    <div id="tools" class="submenu">
+        <ul>
+            <li class="normal"><a href="../tools/downloads.html">Downloads</a></li>
+            <li class="normal"><a href="../tools/masterybreakpoints.html">Mastery&nbsp;Breakpoints</a></li>
+            <li class="normal"><a href="../tools/replayanalyzer.html">Replay&nbsp;Analyzer</a></li>
+            <li class="normal"><a href="../tools/unitstats.html">Unit&nbsp;Stats</a></li>
+        </ul>
+    </div>
+    <div id="community" class="submenu">
+        <ul>
+            <li class="normal"><a href="../community/tournament/main.html">Co&#8209;op&nbsp;Tournament</a></li>
+            <li class="normal"><a href="../community/gamespotlight.html">Game&nbsp;Spotlight</a></li>
+            <li class="normal"><a href="../community/mythbusters.html">Mythbusters</a></li>
+            <li class="normal"><a href="../community/rockslappingchampions.html">Rockslapping&nbsp;Champions</a></li>
+            <li class="normal"><a href="../youtube.html">Youtube</a></li>
+        </ul>
+    </div>
+    <div id="about" class="submenu">
+        <ul>
+            <!--<li class="normal"><a href="/about/contact">Contact</a></li>-->
+            <li class="normal"><a href="../about/faq.html">FAQ</a></li>
+            <li class="normal"><a href="../about/links.html">Links</a></li>
+            <li class="normal"><a href="https://www.youtube.com/c/Starcraft2Coop" rel="nofollow">Youtube</a></li>
+        </ul>
+    </div>
+    <!--<div id="imgs">
+        <a href="https://www.youtube.com/c/Starcraft2Coop" rel="nofollow"><img src="/images/links/yt.png" alt="Youtube"></a>
+        <a href="https://www.patreon.com/starcraft2coop" rel="nofollow"><img src="/images/links/patreon.png" alt="Patreon"></a>
+        <a href="https://www.twitch.tv/aommaster" rel="nofollow"><img src="/images/links/twitch.png" alt="Twitch"></a>
+        <a href="https://discord.gg/AbFXRAB" rel="nofollow"><img src="/images/links/discord.png" alt="Discord"></a>
+    </div>-->
+</div>
+<script>
+    function openSubmenu(event, selection){
+        event.preventDefault();
+        
+        switch (selection){
+            case "commanders":
+                $(".submenu").not("#commanderList").hide();
+                $("#commanderList").fadeToggle();
+                break;
+            case "missions":
+                $(".submenu").not("#missionList").hide();
+                $("#missionList").fadeToggle();
+                break;
+            case "community":
+                $(".submenu").not("#community").hide();
+                $("#community").fadeToggle();
+                break;
+            case "guides":
+                $(".submenu").not("#guideList").hide();
+                $("#guideList").fadeToggle();
+                break;
+            case "resources":
+                $(".submenu").not("#resources").hide();
+                $("#resources").fadeToggle();
+                break;
+            case "tools":
+                $(".submenu").not("#tools").hide();
+                $("#tools").fadeToggle();
+                break;
+            case "about":
+                $(".submenu").not("#about").hide();
+                $("#about").fadeToggle();
+                break;
+        }
+    }
+</script></div>
+<div id="content">
+    <h1>Co-op Mission Guide: Rifts to Korhal</h1>
+    <p id="missionPlace">Korhal</p>
+        <h2>Sections on this Page</h2>
+    <div id="links">
+        <p><a href="riftstokorhal.html#misSum">Mission Summary</a></p>
+        <p><a href="riftstokorhal.html#objectives">Objectives</a></p>
+        <p><a href="riftstokorhal.html#baseAnalysis">Enemy Base Analysis</a></p>
+        <p><a href="riftstokorhal.html#bonus">Completing the Bonus Objective</a></p>
+        <p><a href="riftstokorhal.html#timings">Timings</a></p>
+        <p><a href="riftstokorhal.html#spawnPoints">Spawn Points</a></p>
+        <p><a href="riftstokorhal.html#misTips">Mission Tips</a></p>
+        <p><a href="riftstokorhal.html#comTips">Commander-Specific Tips</a></p>
+    </div>
+    <a id="misSum"></a><h2>Mission Summary</h2>
+    <p>Void rifts have opened across the Imperial sector of Augustgrad. Together, you must destroy the rifts before the hybrid overwhelm your forces.</p>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="objectives"></a><h2>Objectives</h2>
+    <h3>Primary Objective</h3>
+        <ul>
+            <li>Destroy all Void Shards (10)</li>
+            <li>Do not allow a Void Shard to activate</li>
+        </ul>
+    <h3>Secondary Objective</h3>
+        <ul>
+            <li>Destroy the Pirate Ship (2)</li>
+        </ul>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="baseAnalysis"></a><h2>Enemy Base Analysis</h2>
+    <div id="globalRaceSelect">
+        <p>Change all base analysis pictures to race:</p>
+        <form action="riftstokorhal.html#">
+            <label><input type="radio" name="globalRace" value="protoss" checked>Protoss</label><br>
+            <label><input type="radio" name="globalRace" value="terran">Terran</label><br>
+            <label><input type="radio" name="globalRace" value="zerg">Zerg</label><br>
+        </form>
+        <script>
+            $("input[name='globalRace']").change(function(){
+                var race= $(this).val();
+                $('input:radio[value="' + race + '"]').each(function () {
+                    if($(this).attr('name')!=="globalRace"){
+                        $(this).prop('checked', true).trigger('change');
+                    }
+                })
+                return false;
+            })
+        </script>
+    </div>
+        <p>As Void Shards keep spawning, you will need to push into enemy camps and bases to destroy them. The normal order of bases and camps you will face for Void Shard spawns is shown below. A subsequent set of Void Shards will only spawn when the previous set has been destroyed, or all enemies in that area are dead.</p>
+    <p>The first Void Shard is guarded by a very small force of enemy units. The defenses are shown below:</p>
+    <div class='switcher'><div class='basePic' id='shard1div'><img id ='shard1' src='../images/missiondata/riftstokorhal/shard1_protoss.jpg' alt='shard1 Picture'></div><div class = 'baseMinimap'><form action='riftstokorhal.html#'><label><input type='radio' name='shard1' value='protoss' checked>Protoss</label><br><label><input type='radio' name='shard1' value='terran'>Terran</label><br><label><input type='radio' name='shard1' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/riftstokorhal/shard1minimap.jpg' alt='shard1 Minimap'></div></div></div><script>$("input[name='shard1']").change(function(){var race= $(this).val();var oldImg = $('#shard1');var img = new Image();img.src = '/images/missiondata/riftstokorhal/shard1_'+ race + '.jpg';var newImg = $(img).hide();$('#shard1div').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'shard1');return false;});var imgList=[];imgList.push('/images/missiondata/riftstokorhal/shard1_protoss.jpg');imgList.push('/images/missiondata/riftstokorhal/shard1_terran.jpg');imgList.push('/images/missiondata/riftstokorhal/shard1_zerg.jpg');preload(imgList);</script>    <p>The second set of Void Shards is guarded by a significantly larger enemy force. The defenses are shown below:</p>
+    <div class='switcher'><div class='long' id='shard2longdiv'><img id ='shard2long' src='../images/missiondata/riftstokorhal/shard2long_protoss.jpg' alt='shard2long Picture'></div><div class = 'baseMinimap'><form action='riftstokorhal.html#'><label><input type='radio' name='shard2long' value='protoss' checked>Protoss</label><br><label><input type='radio' name='shard2long' value='terran'>Terran</label><br><label><input type='radio' name='shard2long' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/riftstokorhal/shard2longminimap.jpg' alt='shard2long Minimap'></div></div></div><script>$("input[name='shard2long']").change(function(){var race= $(this).val();var oldImg = $('#shard2long');var img = new Image();img.src = '/images/missiondata/riftstokorhal/shard2long_'+ race + '.jpg';var newImg = $(img).hide();$('#shard2longdiv').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'shard2long');return false;});var imgList=[];imgList.push('/images/missiondata/riftstokorhal/shard2long_protoss.jpg');imgList.push('/images/missiondata/riftstokorhal/shard2long_terran.jpg');imgList.push('/images/missiondata/riftstokorhal/shard2long_zerg.jpg');preload(imgList);</script>    <p>If you choose to attack the third set of Void Shards with a ground army, you will need to push through an enemy camp. Note that air units can completely bypass this camp. The camp is shown below:</p>
+    <div class='switcher'><div class='basePic' id='shard3campdiv'><img id ='shard3camp' src='../images/missiondata/riftstokorhal/shard3camp_protoss.jpg' alt='shard3camp Picture'></div><div class = 'baseMinimap'><form action='riftstokorhal.html#'><label><input type='radio' name='shard3camp' value='protoss' checked>Protoss</label><br><label><input type='radio' name='shard3camp' value='terran'>Terran</label><br><label><input type='radio' name='shard3camp' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/riftstokorhal/shard3campminimap.jpg' alt='shard3camp Minimap'></div></div></div><script>$("input[name='shard3camp']").change(function(){var race= $(this).val();var oldImg = $('#shard3camp');var img = new Image();img.src = '/images/missiondata/riftstokorhal/shard3camp_'+ race + '.jpg';var newImg = $(img).hide();$('#shard3campdiv').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'shard3camp');return false;});var imgList=[];imgList.push('/images/missiondata/riftstokorhal/shard3camp_protoss.jpg');imgList.push('/images/missiondata/riftstokorhal/shard3camp_terran.jpg');imgList.push('/images/missiondata/riftstokorhal/shard3camp_zerg.jpg');preload(imgList);</script>    <p>The third set of Void Shards is placed within an enemy base. The base is shown below:</p>
+    <div class='switcher'><div class='long' id='shard3longdiv'><img id ='shard3long' src='../images/missiondata/riftstokorhal/shard3long_protoss.jpg' alt='shard3long Picture'></div><div class = 'baseMinimap'><form action='riftstokorhal.html#'><label><input type='radio' name='shard3long' value='protoss' checked>Protoss</label><br><label><input type='radio' name='shard3long' value='terran'>Terran</label><br><label><input type='radio' name='shard3long' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/riftstokorhal/shard3longminimap.jpg' alt='shard3long Minimap'></div></div></div><script>$("input[name='shard3long']").change(function(){var race= $(this).val();var oldImg = $('#shard3long');var img = new Image();img.src = '/images/missiondata/riftstokorhal/shard3long_'+ race + '.jpg';var newImg = $(img).hide();$('#shard3longdiv').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'shard3long');return false;});var imgList=[];imgList.push('/images/missiondata/riftstokorhal/shard3long_protoss.jpg');imgList.push('/images/missiondata/riftstokorhal/shard3long_terran.jpg');imgList.push('/images/missiondata/riftstokorhal/shard3long_zerg.jpg');preload(imgList);</script>    <p>The last set of Void Shards is located within a much larger enemy base. The base also has a small forward comp. All of this is shown below:</p>
+    <div class='switcher'><div class='long' id='shard4longdiv'><img id ='shard4long' src='../images/missiondata/riftstokorhal/shard4long_protoss.jpg' alt='shard4long Picture'></div><div class = 'baseMinimap'><form action='riftstokorhal.html#'><label><input type='radio' name='shard4long' value='protoss' checked>Protoss</label><br><label><input type='radio' name='shard4long' value='terran'>Terran</label><br><label><input type='radio' name='shard4long' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/riftstokorhal/shard4longminimap.jpg' alt='shard4long Minimap'></div></div></div><script>$("input[name='shard4long']").change(function(){var race= $(this).val();var oldImg = $('#shard4long');var img = new Image();img.src = '/images/missiondata/riftstokorhal/shard4long_'+ race + '.jpg';var newImg = $(img).hide();$('#shard4longdiv').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'shard4long');return false;});var imgList=[];imgList.push('/images/missiondata/riftstokorhal/shard4long_protoss.jpg');imgList.push('/images/missiondata/riftstokorhal/shard4long_terran.jpg');imgList.push('/images/missiondata/riftstokorhal/shard4long_zerg.jpg');preload(imgList);</script>    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="bonus"></a><h2>Completing the Bonus Objective</h2>
+    <div id="objectiveImages">
+        <img src="../images/missiondata/riftstokorhal/pirateship.jpg" alt="Pirate Ship">
+        <img src="../images/missiondata/riftstokorhal/pirateship.jpg" alt="Pirate Ship">
+    </div>
+    <p>The bonus objective requires you to kill two Pirate Ships that will appear on the minimap. The first one will always spawn in the green-marked location. The second will always spawn in the blue-marked location. The spawn points are shown below:</p>
+    <img src="../images/missiondata/riftstokorhal/piratespawnlocations.jpg" alt="Pirate Ship spawn locations">
+    <p>The Pirate Ships have two abilities:</p>
+    <ul>
+        <li><b>Shock Blast:</b> This skill disables all non-heroic units hit around the Pirate Ship. Units cannot move, attack, or use skills.</li>
+        <li><b>Bombing Run:</b> Does a large amount of damage in a straight line. This skill can usually kill an entire army if you are not careful.</li>
+    </ul>
+    <p>While the first Pirate Ship spawns unguarded, the second spawns behind an enemy base. The base is shown below:</p>
+    <div class='switcher'><div class='basePic' id='piratebasediv'><img id ='piratebase' src='../images/missiondata/riftstokorhal/piratebase_protoss.jpg' alt='piratebase Picture'></div><div class = 'baseMinimap'><form action='riftstokorhal.html#'><label><input type='radio' name='piratebase' value='protoss' checked>Protoss</label><br><label><input type='radio' name='piratebase' value='terran'>Terran</label><br><label><input type='radio' name='piratebase' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/riftstokorhal/piratebaseminimap.jpg' alt='piratebase Minimap'></div></div></div><script>$("input[name='piratebase']").change(function(){var race= $(this).val();var oldImg = $('#piratebase');var img = new Image();img.src = '/images/missiondata/riftstokorhal/piratebase_'+ race + '.jpg';var newImg = $(img).hide();$('#piratebasediv').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'piratebase');return false;});var imgList=[];imgList.push('/images/missiondata/riftstokorhal/piratebase_protoss.jpg');imgList.push('/images/missiondata/riftstokorhal/piratebase_terran.jpg');imgList.push('/images/missiondata/riftstokorhal/piratebase_zerg.jpg');preload(imgList);</script>    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="timings"></a><h2>Timings</h2>
+    <p>Note: Information on Tech and Strength levels can be found on the <a href="../guides/enemycomps.html">Enemy Compositions</a> page.</p>
+    <p>The Attack Wave Timings for this mission are:</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Wave</th>
+                <th>Time</th>
+                <th>Tech Level</th>
+                <th>Strength Level</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>2:00</td>
+                <td>1</td>
+                <td>1</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>5:00</td>
+                <td>2</td>
+                <td>2</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>8:00</td>
+                <td>3</td>
+                <td>3</td>
+                <td>If only one expansion is built, targets that.<br>
+                    Otherwise, targets random expansion.
+                </td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>11:00</td>
+                <td>4</td>
+                <td>4</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>14:00</td>
+                <td>5</td>
+                <td>5</td>
+                <td>Targets the other expansion</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>17:00</td>
+                <td>6</td>
+                <td>6</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>20:30</td>
+                <td>7</td>
+                <td>7</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>24:30</td>
+                <td>7</td>
+                <td>7</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>26:30</td>
+                <td>7</td>
+                <td>7</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>28:30</td>
+                <td>7</td>
+                <td>7</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>30:00</td>
+                <td>7</td>
+                <td>7</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The first Pirate Ship will spawn at 11:40.</p>
+    <p>The second Pirate Ship will spawn when either of these conditions are met:</p>
+    <ul>
+        <li>The mission time hits 18:50</li>
+    </ul>
+    <p>or</p>
+    <ul>
+        <li>The last set of Void Shards are active</li>
+    </ul>
+    <p>or</p>
+    <ul>
+        <li>More than 25% of enemies in the pirate base are dead.</li>
+    </ul>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="spawnPoints"></a><h2>Spawn Points</h2>
+    <p>You can uniquely identify the enemy race at the start of the mission by looking at the creep (for Zerg), or by checking for a Protoss crate present (for Protoss) at Player 1's expansion. This is demonstrated in the video below:</p>
+    <iframe width="475" height="268" src="https://www.youtube.com/embed/UXv5i-Ttz1A" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <p>All attack waves have a single spawn point. This spawn point is located on the top of the ramp, just off the base containing the final set of Void Shards. This spawn point is shown below:</p>
+    <img src="../images/missiondata/riftstokorhal/attackwavespawnpoint.jpg" alt="Spawn point of the Attack Waves">
+    <p>While spawn-camping this point is quite difficult, most attack waves will follow the same path: They will turn left as soon as they get to the bottom of the ramp and will make their way down the narrow funnel leading to the middle of the map. Since the base is outside the path required to be cleared by players, it is usually not done. Note that if you do choose to clear this base, it may force the attack wave  to spawn nearer to the back of the base (the edge of the map).</p>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="misTips"></a><h2>Mission Tips</h2>
+    <ul>
+        <li>Attack waves all spawn from the same location, so defending against them is really easy.</li>
+        <li>You can bypass the defenses guarding the last two sets of Void Shards by using air units to go around them.</li>
+        <li>The first attack wave on this map is unusually early. It spawns before most heroes are out. Ensure you have adequate defenses to deal with it. Tips are listed in the following section.</li>
+    </ul>
+    <h3>Handling the First Attack Wave</h3>
+    <p>The first attack wave on this mission spawns at the 2:00 mark, meaning that most attack waves will reach the main base between 2:35 and 2:50, well before most hero units spawn. The below are some ways commanders can deal with this attack wave:</p>
+    <ul>
+        <li>Raynor: Rush a Barracks to build a Bunker and fill with four Marines</li>
+        <li>Kerrigan: Build a Hatchery at the corner of the ramp and place two Spine Crawlers behind</li>
+        <li>Artanis: Zealot warp-in + Orbital Strikes</li>
+        <li>Swann: Blaster Billies/Flaming Betties depending on the composition (pre-scout with an SCV)</li>
+        <li>Zagara: Free Banelings from Baneling Nest</li>
+        <li>Vorazun: Tank with a Gateway then use Shadowguard</li>
+        <li>Karax: Orbital Strikes</li>
+        <li>Abathur: Toxic Nests</li>
+        <li>Alarak: Structure Overcharge</li>
+        <li>Nova: Build a chokepoint with a Barracks and Factory, then use a Railgun Turret</li>
+        <li>Stukov: Bunker + Infest Structure</li>
+        <li>Fenix: Rush your preferred AI Champion (Kaldalis recommended)</li>
+        <li>Dehaka: Hero unit</li>
+        <li>Han/Horner: Mag-mines</li>
+        <li>Tychus: Tank with a structure until Tychus spawns</li>
+        <li>Zeratul: Legion calldown</li>
+        <li>Stetmann: Build a Hatchery at the corner of the ramp and place two Spine Crawlers behind</li>
+        <li>Mengsk: Supply Bunker drop</li>
+    </ul>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="comTips"></a><h2>Commander-specific Tips</h2>
+    <ul>
+        <li><a href="../commanders/abathur.html">Abathur</a>: Place Toxic Nests on your main's ramp to deal with the early attack wave.</li>
+        <li><a href="../commanders/abathur.html">Abathur</a>: Place Toxic Nests near the exit of the funnel leading to the middle of the map to weaken/destroy attack waves.</li>
+        <li><a href="../commanders/dehaka.html">Dehaka</a>: Dakrun can destroy the Pirate Ship as long as he does not get hit by its charge attack.</li>
+        <li><a href="../commanders/dehaka.html">Dehaka</a>: One Dakrun can destroy <i>both</i> Pirate Ships if you time it right and charge him across the chasm. The video below shows this in action:
+        <iframe width="475" height="268" src="https://www.youtube.com/embed/vtEeBmEFLt0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </li>
+        <li><a href="../commanders/horner.html">Han & Horner</a>: Place Mag Mines near the exit of the funnel leading to the middle of the map to weaken/destroy attack waves.</li>
+        <li><a href="../commanders/mengsk.html">Mengsk</a>: Drop Troopers (with the upgrade researched) at the top of the ramp between Void Shards set #3 and set #4. Then build Earthsplitters to clear all Void Shards on the map.</li>
+        <li><a href="../commanders/nova.html">Nova</a>: If you use Siege Tanks, place Spider Mines near the exit of the funnel leading to the middle of the map to weaken/destroy attack waves.</li>
+        <li><a href="../commanders/raynor.html">Raynor</a>: If you use Vultures, place Spider Mines near the exit of the funnel leading to the middle of the map to weaken/destroy attack waves.</li>
+        <li><a href="../commanders/swann.html">Swann</a>: Concentrated Beam can be used to deal with all the attack waves, and can even wipe it out entirely if placed correctly.</li>
+    </ul>
+</div>
+<div id="footer">
+    <p>Note: All data generated on this site is based on Brutal difficulty. Timings, compositions and other elements may differ on easier difficulty levels.</p>
+    <p>© Blizzard Entertainment, Inc. All rights reserved. Wings of Liberty, Heart of the Swarm, Legacy of the Void, and StarCraft are trademarks or registered trademarks of Blizzard Entertainment, Inc. in the U.S. and/or other countries.</p>
+</div></body>
+</html>

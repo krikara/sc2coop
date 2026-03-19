@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+<link rel='shortcut icon' href='../images/favicon.ico' type='image/x-icon' />
+<link rel="stylesheet"  media="all" type="text/css" href="../styles/mainstyle.css%3Fv=1.28.css">
+<link href='https://fonts.googleapis.com/css?family=Convergence' rel='stylesheet' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-165288360-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-165288360-1');
+</script>
+<script>
+    grecaptcha.ready(function() {
+        $(".captchaForm").each(function(){
+            currentID = $(this).attr('id');
+            if(currentID=="reportForm"){
+                $(this).submit(function(event){
+                    $("#submitbtn").attr("disabled", true);
+                    grecaptcha.execute('6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd', { action: currentID }).then(function (token) {
+                        $("#reportFormRecaptchaResponse").val(token);
+                        var path = window.location.pathname;
+                        var page = path.split("/").pop();
+                        var x = document.forms["errorReport"]["comment"].value;
+            		    var y = document.forms["errorReport"]["url"].value;
+            			var z = $("#reportFormRecaptchaResponse").val();
+            			$.ajax({  
+                            type: 'POST',
+                            url: '/scripts/addreport.php', 
+                            data: { 
+                                comment: x,
+                                errorpage: page,
+                                url:y, 
+                                recaptcha_response:z},
+                            success: function(data) {
+                                $("#reportForm").hide();
+                                $("#errorReport").append(data);
+                                return false;
+                            }
+                        });
+                        return false;
+                        $("#submitbtn").attr("disabled", false);
+                    });
+                    
+                })
+            }
+            else{
+                $(this).submit(function(event){
+                    var currentID = $(this).attr('id');
+                    var currentForm = $(this);
+                    event.preventDefault();
+                    grecaptcha.execute('6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd', { action: currentID }).then(function (token) {
+                        $("#" + currentID + "RecaptchaResponse").val(token);
+                        currentForm.off("submit");
+                        currentForm.submit();
+                    });
+                })
+            }
+            
+        })
+    },false)
+</script>  <title>Starcraft 2 Co-op - Mission Guide - Miner Evacuation</title>
+  <meta name="description" content="Starcraft 2 Co-op Mission Guide Miner Evacuation">
+  <meta name="keywords" content="Starcraft co-op guides miner evacuation mission">
+  <link rel="stylesheet"  media="all" type="text/css" href="../styles/missionstyle.css%3Fv=1.00.css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link rel="canonical" href="minerevacuation.html">
+  <script src="../scripts/preload.js"></script>
+  </head>
+<body>
+<div id="header"><img src="../images/mainpageheader.png" alt="Starcraft II Co-op Logo">
+</div>
+<div id="menu">
+<ul>
+    <li class="normal"><a href="../index.html">&#127968;</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'commanders');">Commanders</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'community');">Community</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'guides');">Guides</a></li>
+    <li class="highlight"><a href="../index.html" onclick="javascript:openSubmenu(event,'missions');">Missions</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'resources');">Resources</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'tools');">Tools</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'about');">About</a></li>
+    <li class="normal"><a href="../account.html">My&nbsp;Account</a></li>
+</ul>
+<div id="container">
+    <div id="commanderList" class="submenu">
+        <a href="../commanders/raynor.html"><img src="../images/commanderportraits/raynorportrait.png" alt="Raynor Portrait"></a>
+        <a href="../commanders/kerrigan.html"><img src="../images/commanderportraits/kerriganportrait.png" alt="Kerrigan Portrait"></a>
+        <a href="../commanders/artanis.html"><img src="../images/commanderportraits/artanisportrait.png" alt="Artanis Portrait"></a>
+        <a href="../commanders/swann.html"><img src="../images/commanderportraits/swannportrait.png" alt="Swann Portrait"></a>
+        <a href="../commanders/zagara.html"><img src="../images/commanderportraits/zagaraportrait.png" alt="Zagara Portrait"></a>
+        <a href="../commanders/vorazun.html"><img src="../images/commanderportraits/vorazunportrait.png" alt="Vorazun Portrait"></a>
+        <a href="../commanders/karax.html"><img src="../images/commanderportraits/karaxportrait.png" alt="Karax Portrait"></a>
+        <a href="../commanders/abathur.html"><img src="../images/commanderportraits/abathurportrait.png" alt="Abathur Portrait"></a>
+        <a href="../commanders/alarak.html"><img src="../images/commanderportraits/alarakportrait.png" alt="Alarak Portrait"></a>
+        <a href="../commanders/nova.html"><img src="../images/commanderportraits/novaportrait.png" alt="Nova Portrait"></a>
+        <a href="../commanders/stukov.html"><img src="../images/commanderportraits/stukovportrait.png" alt="Stukov Portrait"></a>
+        <a href="../commanders/fenix.html"><img src="../images/commanderportraits/fenixportrait.png" alt="Fenix Portrait"></a>
+        <a href="../commanders/dehaka.html"><img src="../images/commanderportraits/dehakaportrait.png" alt="Dehaka Portrait"></a>
+        <a href="../commanders/horner.html"><img src="../images/commanderportraits/hornerportrait.png" alt="Han & Horner Portrait"></a>
+        <a href="../commanders/tychus.html"><img src="../images/commanderportraits/tychusportrait.png" alt="Tychus Portrait"></a>
+        <a href="../commanders/zeratul.html"><img src="../images/commanderportraits/zeratulportrait.png" alt="Zeratul Portrait"></a>
+        <a href="../commanders/stetmann.html"><img src="../images/commanderportraits/stetmannportrait.png" alt="Stetmann Portrait"></a>
+        <a href="../commanders/mengsk.html"><img src="../images/commanderportraits/mengskportrait.png" alt="Mengsk Portrait"></a>
+    </div>
+    <div id="missionList" class="submenu">
+        <a href="chainofascension.html"><img src="../images/missionthumbnails/chainofascension.png" alt="Chain of Ascension Thumbnail"></a>
+        <a href="cradleofdeath.html"><img src="../images/missionthumbnails/cradleofdeath.png" alt="Cradle of Death Thumbnail"></a>
+        <a href="deadofnight.html"><img src="../images/missionthumbnails/deadofnight.png" alt="Dead of Night Thumbnail"></a>
+        <a href="lockload.html"><img src="../images/missionthumbnails/lockload.png" alt="Lock & Load Thumbnail"></a>
+        <a href="malwarfare.html"><img src="../images/missionthumbnails/malwarfare.png" alt="Malwarfare Thumbnail"></a>
+        <a href="minerevacuation.html"><img src="../images/missionthumbnails/minerevacuation.png" alt="Miner Evacuation Thumbnail"></a>
+        <a href="mistopportunities.html"><img src="../images/missionthumbnails/mistopportunities.png" alt="Mist Opportunities Thumbnail"></a>
+        <a href="oblivionexpress.html"><img src="../images/missionthumbnails/oblivionexpress.png" alt="Oblivion Express Thumbnail"></a>
+        <a href="partparcel.html"><img src="../images/missionthumbnails/partparcel.png" alt="Part & Parcel Thumbnail"></a>
+        <a href="riftstokorhal.html"><img src="../images/missionthumbnails/riftstokorhal.png" alt="Rifts to Korhal Thumbnail"></a>
+        <a href="scytheofamon.html"><img src="../images/missionthumbnails/scytheofamon.png" alt="Scythe Of Amon Thumbnail"></a>
+        <a href="templeofthepast.html"><img src="../images/missionthumbnails/templeofthepast.png" alt="Temple of the Past Thumbnail"></a>
+        <a href="thevermillionproblem.html"><img src="../images/missionthumbnails/thevermillionproblem.png" alt="The Vermillion Problem Thumbnail"></a>
+        <a href="voidlaunch.html"><img src="../images/missionthumbnails/voidlaunch.png" alt="Void Launch Thumbnail"></a>
+        <a href="voidthrashing.html"><img src="../images/missionthumbnails/voidthrashing.png" alt="Void Thrashing Thumbnail"></a>
+    </div>
+    <div id="guideList" class="submenu">
+        <ul>
+            <li class="normal"><a href="../guides/buildordertheory.html">Build&nbsp;Order&nbsp;Theory</a></li>
+            <li class="normal"><a href="../guides/enemycomps.html">Enemy&nbsp;Compositions</a></li>
+            <li class="normal"><a href="../guides/generaltips.html">General&nbsp;Tips</a></li>
+            <li class="normal"><a href="../guides/newplayer.html">New&nbsp;Players&nbsp;</a></li>
+        </ul>
+    </div>
+    <div id="resources" class="submenu">
+        <ul>
+            <li class="normal"><a href="../resources/achievements.html">Achievements</a></li>
+            <li class="normal"><a href="../resources/ailogic.html">AI&nbsp;Logic</a></li>
+            <li class="normal"><a href="../resources/bugs.html">Bugs</a></li>
+            <li class="normal"><a href="../resources/brutal.html">Brutal+</a></li>
+            <li class="normal"><a href="../resources/deathprevention.html">Death&nbsp;Prevent&nbsp;Effects</a></li>
+            <li class="normal"><a href="../resources/eastereggs.html">Easter&nbsp;Eggs</a></li>
+            <li class="normal"><a href="../resources/levels.html">Levels</a></li>
+            <li class="normal"><a href="../resources/mutators.html">Mutators</a></li>
+            <li class="normal"><a href="../resources/patchdata.html">Patch&nbsp;Data</a></li>
+            <li class="normal"><a href="../resources/stats.html">Stats</a></li>
+            <li class="normal"><a href="../resources/weeklymutations.html">Weekly&nbsp;Mutations</a></li>
+            
+        </ul>
+    </div>
+    <div id="tools" class="submenu">
+        <ul>
+            <li class="normal"><a href="../tools/downloads.html">Downloads</a></li>
+            <li class="normal"><a href="../tools/masterybreakpoints.html">Mastery&nbsp;Breakpoints</a></li>
+            <li class="normal"><a href="../tools/replayanalyzer.html">Replay&nbsp;Analyzer</a></li>
+            <li class="normal"><a href="../tools/unitstats.html">Unit&nbsp;Stats</a></li>
+        </ul>
+    </div>
+    <div id="community" class="submenu">
+        <ul>
+            <li class="normal"><a href="../community/tournament/main.html">Co&#8209;op&nbsp;Tournament</a></li>
+            <li class="normal"><a href="../community/gamespotlight.html">Game&nbsp;Spotlight</a></li>
+            <li class="normal"><a href="../community/mythbusters.html">Mythbusters</a></li>
+            <li class="normal"><a href="../community/rockslappingchampions.html">Rockslapping&nbsp;Champions</a></li>
+            <li class="normal"><a href="../youtube.html">Youtube</a></li>
+        </ul>
+    </div>
+    <div id="about" class="submenu">
+        <ul>
+            <!--<li class="normal"><a href="/about/contact">Contact</a></li>-->
+            <li class="normal"><a href="../about/faq.html">FAQ</a></li>
+            <li class="normal"><a href="../about/links.html">Links</a></li>
+            <li class="normal"><a href="https://www.youtube.com/c/Starcraft2Coop" rel="nofollow">Youtube</a></li>
+        </ul>
+    </div>
+    <!--<div id="imgs">
+        <a href="https://www.youtube.com/c/Starcraft2Coop" rel="nofollow"><img src="/images/links/yt.png" alt="Youtube"></a>
+        <a href="https://www.patreon.com/starcraft2coop" rel="nofollow"><img src="/images/links/patreon.png" alt="Patreon"></a>
+        <a href="https://www.twitch.tv/aommaster" rel="nofollow"><img src="/images/links/twitch.png" alt="Twitch"></a>
+        <a href="https://discord.gg/AbFXRAB" rel="nofollow"><img src="/images/links/discord.png" alt="Discord"></a>
+    </div>-->
+</div>
+<script>
+    function openSubmenu(event, selection){
+        event.preventDefault();
+        
+        switch (selection){
+            case "commanders":
+                $(".submenu").not("#commanderList").hide();
+                $("#commanderList").fadeToggle();
+                break;
+            case "missions":
+                $(".submenu").not("#missionList").hide();
+                $("#missionList").fadeToggle();
+                break;
+            case "community":
+                $(".submenu").not("#community").hide();
+                $("#community").fadeToggle();
+                break;
+            case "guides":
+                $(".submenu").not("#guideList").hide();
+                $("#guideList").fadeToggle();
+                break;
+            case "resources":
+                $(".submenu").not("#resources").hide();
+                $("#resources").fadeToggle();
+                break;
+            case "tools":
+                $(".submenu").not("#tools").hide();
+                $("#tools").fadeToggle();
+                break;
+            case "about":
+                $(".submenu").not("#about").hide();
+                $("#about").fadeToggle();
+                break;
+        }
+    }
+</script></div>
+<div id="content">
+    <h1>Co-op Mission Guide: Miner Evacuation</h1>
+    <p id="missionPlace">Jarban</p>
+        <h2>Sections on this Page</h2>
+    <div id="links">
+        <p><a href="minerevacuation.html#misSum">Mission Summary</a></p>
+        <p><a href="minerevacuation.html#objectives">Objectives</a></p>
+        <p><a href="minerevacuation.html#evacShip">Evacuation Ship Locations and Order</a></p>
+        <p><a href="minerevacuation.html#bonus">Completing the Bonus Objective</a></p>
+        <p><a href="minerevacuation.html#timings">Timings</a></p>
+        <p><a href="minerevacuation.html#spawnPoints">Spawn Points</a></p>
+        <p><a href="minerevacuation.html#misTips">Mission Tips</a></p>
+        <p><a href="minerevacuation.html#comTips">Commander-Specific Tips</a></p>
+    </div>
+    <a id="misSum"></a><h2>Mission Summary</h2>
+    <p>Infestation runs rampant throughout one of Kel-Moria’s remote mining colonies. Debra Greene, leader of the local miner’s guild, is determined to get her people to safety. Fight off both Amon and the infested to aid the evacuation. </p>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="objectives"></a><h2>Objectives</h2>
+    <h3>Primary Objective</h3>
+        <ul>
+            <li>Protect Colony Ships while they take off (5)</li>
+            <li>Do not allow 2 ships to be destroyed</li>
+        </ul>
+    <h3>Secondary Objective</h3>
+        <ul>
+            <li>Kill the Blightbringer (1)</li>
+            <li>Destroy the Eradicators (2)</li>
+        </ul>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="evacShip"></a><h2>Evacuation Ship Locations and Order</h2>
+        <p>There are no enemy bases on this map, and so, base analysis is not required. However, ships launch in a semi-random order, which requires you to push into small enemy camps.</p>
+    <p>There are a total of 9 ships present on the map. The locations of these ships is shown below.</p>
+    <img src="../images/missiondata/minerevacuation/evacuationshiplocations.jpg" alt="Locations of Evacuation Ships">
+    <p>When playing on Brutal difficulty, Ship #1 is automatically destroyed at the start of the game.</p>
+    <p>Next, either ships 2, 3, or 6 are destroyed. There is a certain chance that certain ships will be destroyed. These chances are listed below.</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Ship</th>
+                <th>Chance to be Destroyed</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2</td>
+                <td>40%</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>20%</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>40%</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Next, either ships 4, 7, or 9 are destroyed. There is a certain chance that certain ships will be destroyed. These chances are listed below.</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Ship</th>
+                <th>Chance to be Destroyed</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>4</td>
+                <td>33%</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>33%</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>33%</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>At the start of the game, the ships are assigned to a launch priority. This is the order of beacons you will see on the map as you launch ships. The order is semi-randomized and is shown below. Note that if a ship is destroyed, it is skipped and the next one selected.</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Order</th>
+                <th>Ship(s)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>3,4,5</td>
+                <td>2,5,6<br>2,6,5<br>5,2,6<br>6,2,5</td>
+            </tr>
+            <tr>
+                <td>6,7</td>
+                <td>4,9<br>9,4</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>7</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="bonus"></a><h2>Completing the Bonus Objective</h2>
+    <div id="objectiveImages">
+        <img src="../images/missiondata/minerevacuation/blightbringer.jpg" alt="Blightbringer">
+        <img src="../images/missiondata/minerevacuation/eradicator.jpg" alt="Eradicator">
+        <img src="../images/missiondata/minerevacuation/eradicator.jpg" alt="Eradicator">
+    </div>
+    <p>There are two bonus objectives on the map. The first one requires you to kill Blightbringer. Blightbringer has a parasitic bomb attack, so you'll want to pay attention if you choose to engage him with an air army. Ground armies are vulnerable to his spray attack, your constant attention is important.</p>
+    <p>The Eradicators are much more dangerous. One Eradicator has an air attack, which it targets using many circular markers on the ground. The other Eradicator deals damage in a straight line and can decimate ground armies. It is best to engage the Eradicators with air units to prevent losing your army.</p>
+    <p>The locations for BlightBringer (in yellow) and the Eradicators (in green) are shown below.</p>
+    <img src="../images/missiondata/minerevacuation/bonusobjectivelocations.jpg" alt="Locations of the Bonus Objectives">
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="timings"></a><h2>Timings</h2>
+    <p>Note: Information on Tech and Strength levels can be found on the <a href="../guides/enemycomps.html">Enemy Compositions</a> page.</p>
+    <p>There are three types of timings that are of interest in this mission:</p>
+    <ul>
+        <li><b>Attack Waves:</b> These are attack waves that target your main and your expansion.</li>
+        <li><b>Panic Events:</b> If ships are not launched within a certain amount of time, they will panic and force-launch.</li>
+        <li><b>Claimer Waves:</b> These are attack waves that are sent to target specific ships.</li>
+    </ul>
+    <p>The timings, Strength and Tech levels for the attack waves is shown below.</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Wave</th>
+                <th>Time</th>
+                <th>Tech Level</th>
+                <th>Strength Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>6:30</td>
+                <td>2</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>13:00</td>
+                <td>3</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>17:30</td>
+                <td>4</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>23:00</td>
+                <td>5</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>26:30</td>
+                <td>4</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>28:00</td>
+                <td>6</td>
+                <td>6</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>32:00</td>
+                <td>6</td>
+                <td>6</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>If ships are not launched fast enough, a ship will start to panic and force a launch. This forces players to play more aggressively. Launching a ship early will cancel that panic time. This can be useful for avoiding harder ships. The panic times are shown below.</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Ship</th>
+                <th>Panic Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>3:45</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>12:00</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>16:30</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>23:30</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>27:00</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>29:00</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>29:30</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Claimer waves will target ships in an attempt to destroy them. The timings, Strength and Tech Levels of these waves is shown below.</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Wave</th>
+                <th>Time</th>
+                <th>Tech Level</th>
+                <th>Strength Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>8:00</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>15:12</td>
+                <td>2</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>19:18</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>19:24</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>26:00</td>
+                <td>4</td>
+                <td>4</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Bonus objectives will spawn at 9:00 and 15:00. There is a 66% chance that Blightbringer will spawn first.</p>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="spawnPoints"></a><h2>Spawn Points</h2>
+    <p>All Attack and Claimer Waves spawn from the edge of the map. Attack Waves have three spawn points and Claimer waves have nine spawn points. This makes it extremely impractical to spawn-camp the spawn points to take out the wave before they reach their target.</p>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="misTips"></a><h2>Mission Tips</h2>
+    <ul>
+        <li>Pay attention to the minimap for Claimer waves. They can destroy a ship without you noticing.</li>
+        <li>Do not engage the Eradicators with a full ground army. One of the Eradicators has a deadly ground attack.</li>
+        <li>All attack waves after the first wave will target your expansion, so ensure you have ample defenses there.</li>
+    </ul>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="comTips"></a><h2>Commander-specific Tips</h2>
+    <ul>
+        <li><a href="../commanders/kerrigan.html">Kerrigan</a>: Use Omega Worms to quickly reinforce your army as well as provide detection for Infested Banshees.</li>
+        <li><a href="../commanders/stukov.html">Stukov</a>: Once you have creep spread, move your Infested Colonist Compound to your expansion to minimize travel time of your infested.</li>
+        <li><a href="../commanders/vorazun.html">Vorazun</a>: Time-Stop will delay the launch sequence of the ship as well. Ie. while it does freeze everything on the map, the countdown timer for launch of the ships will also stop for the duration of Time-Stop.</li>
+        <li><a href="../commanders/zeratul.html">Zeratul</a>: Use Void Arrays to quickly reinforce your army.</li>
+    </ul>
+</div>
+<div id="footer">
+    <p>Note: All data generated on this site is based on Brutal difficulty. Timings, compositions and other elements may differ on easier difficulty levels.</p>
+    <p>© Blizzard Entertainment, Inc. All rights reserved. Wings of Liberty, Heart of the Swarm, Legacy of the Void, and StarCraft are trademarks or registered trademarks of Blizzard Entertainment, Inc. in the U.S. and/or other countries.</p>
+</div></body>
+</html>

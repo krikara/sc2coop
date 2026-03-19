@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+<link rel='shortcut icon' href='../images/favicon.ico' type='image/x-icon' />
+<link rel="stylesheet"  media="all" type="text/css" href="../styles/mainstyle.css%3Fv=1.28.css">
+<link href='https://fonts.googleapis.com/css?family=Convergence' rel='stylesheet' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-165288360-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-165288360-1');
+</script>
+<script>
+    grecaptcha.ready(function() {
+        $(".captchaForm").each(function(){
+            currentID = $(this).attr('id');
+            if(currentID=="reportForm"){
+                $(this).submit(function(event){
+                    $("#submitbtn").attr("disabled", true);
+                    grecaptcha.execute('6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd', { action: currentID }).then(function (token) {
+                        $("#reportFormRecaptchaResponse").val(token);
+                        var path = window.location.pathname;
+                        var page = path.split("/").pop();
+                        var x = document.forms["errorReport"]["comment"].value;
+            		    var y = document.forms["errorReport"]["url"].value;
+            			var z = $("#reportFormRecaptchaResponse").val();
+            			$.ajax({  
+                            type: 'POST',
+                            url: '/scripts/addreport.php', 
+                            data: { 
+                                comment: x,
+                                errorpage: page,
+                                url:y, 
+                                recaptcha_response:z},
+                            success: function(data) {
+                                $("#reportForm").hide();
+                                $("#errorReport").append(data);
+                                return false;
+                            }
+                        });
+                        return false;
+                        $("#submitbtn").attr("disabled", false);
+                    });
+                    
+                })
+            }
+            else{
+                $(this).submit(function(event){
+                    var currentID = $(this).attr('id');
+                    var currentForm = $(this);
+                    event.preventDefault();
+                    grecaptcha.execute('6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd', { action: currentID }).then(function (token) {
+                        $("#" + currentID + "RecaptchaResponse").val(token);
+                        currentForm.off("submit");
+                        currentForm.submit();
+                    });
+                })
+            }
+            
+        })
+    },false)
+</script>  <title>Starcraft 2 Co-op - Rockslapping Champions</title>
+  <meta name="description" content="Rockslapping Champions is starcraft2coop.com's flagship series, which is very similar to Bronze League Heroes.">
+  <meta name="keywords" content="Starcraft co-op rockslapping champions">
+  <link rel="canonical" href="rockslappingchampions.html">
+  <script>
+        function validate() {
+          var x = $('#rcForm [name=file]').val()
+          if (x == "") {
+              alert("File not selected");
+              return false;
+          }
+    	  var x = $('#rcForm [name=desc]').val()
+          if (x == "") {
+              alert("Description is blank");
+              return false;
+          }
+      }
+  </script>
+    <style>
+        #player{
+            position:fixed;
+            z-index: 3;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display:none;
+        }
+        #player iframe{
+            max-width:none;
+            width: 85vw;
+            height: 50vw;
+        }
+        #commanderSelection{
+            display:none;
+            text-align:center;
+        }
+        #commanderSelection img{
+            cursor: pointer;
+            margin-left:5px;
+            margin-right:5px;
+            border-radius:50%;
+        }
+        #rcList{
+            height: 500px;
+            overflow-y: scroll;
+            display:none;
+        }
+        .rcThumb{
+            width: 175px;
+            padding-left: 5px;
+            padding-right: 5px;
+            border-radius: 15%;
+            cursor:pointer;
+        }
+        .filtered{
+            opacity:0.33;
+        }
+    </style>
+  </head>
+<body>
+<div id="header"><img src="../images/mainpageheader.png" alt="Starcraft II Co-op Logo">
+</div>
+<div id="menu">
+<ul>
+    <li class="normal"><a href="../index.html">&#127968;</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'commanders');">Commanders</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'community');">Community</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'guides');">Guides</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'missions');">Missions</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'resources');">Resources</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'tools');">Tools</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'about');">About</a></li>
+    <li class="normal"><a href="../account.html">My&nbsp;Account</a></li>
+</ul>
+<div id="container">
+    <div id="commanderList" class="submenu">
+        <a href="../commanders/raynor.html"><img src="../images/commanderportraits/raynorportrait.png" alt="Raynor Portrait"></a>
+        <a href="../commanders/kerrigan.html"><img src="../images/commanderportraits/kerriganportrait.png" alt="Kerrigan Portrait"></a>
+        <a href="../commanders/artanis.html"><img src="../images/commanderportraits/artanisportrait.png" alt="Artanis Portrait"></a>
+        <a href="../commanders/swann.html"><img src="../images/commanderportraits/swannportrait.png" alt="Swann Portrait"></a>
+        <a href="../commanders/zagara.html"><img src="../images/commanderportraits/zagaraportrait.png" alt="Zagara Portrait"></a>
+        <a href="../commanders/vorazun.html"><img src="../images/commanderportraits/vorazunportrait.png" alt="Vorazun Portrait"></a>
+        <a href="../commanders/karax.html"><img src="../images/commanderportraits/karaxportrait.png" alt="Karax Portrait"></a>
+        <a href="../commanders/abathur.html"><img src="../images/commanderportraits/abathurportrait.png" alt="Abathur Portrait"></a>
+        <a href="../commanders/alarak.html"><img src="../images/commanderportraits/alarakportrait.png" alt="Alarak Portrait"></a>
+        <a href="../commanders/nova.html"><img src="../images/commanderportraits/novaportrait.png" alt="Nova Portrait"></a>
+        <a href="../commanders/stukov.html"><img src="../images/commanderportraits/stukovportrait.png" alt="Stukov Portrait"></a>
+        <a href="../commanders/fenix.html"><img src="../images/commanderportraits/fenixportrait.png" alt="Fenix Portrait"></a>
+        <a href="../commanders/dehaka.html"><img src="../images/commanderportraits/dehakaportrait.png" alt="Dehaka Portrait"></a>
+        <a href="../commanders/horner.html"><img src="../images/commanderportraits/hornerportrait.png" alt="Han & Horner Portrait"></a>
+        <a href="../commanders/tychus.html"><img src="../images/commanderportraits/tychusportrait.png" alt="Tychus Portrait"></a>
+        <a href="../commanders/zeratul.html"><img src="../images/commanderportraits/zeratulportrait.png" alt="Zeratul Portrait"></a>
+        <a href="../commanders/stetmann.html"><img src="../images/commanderportraits/stetmannportrait.png" alt="Stetmann Portrait"></a>
+        <a href="../commanders/mengsk.html"><img src="../images/commanderportraits/mengskportrait.png" alt="Mengsk Portrait"></a>
+    </div>
+    <div id="missionList" class="submenu">
+        <a href="../missions/chainofascension.html"><img src="../images/missionthumbnails/chainofascension.png" alt="Chain of Ascension Thumbnail"></a>
+        <a href="../missions/cradleofdeath.html"><img src="../images/missionthumbnails/cradleofdeath.png" alt="Cradle of Death Thumbnail"></a>
+        <a href="../missions/deadofnight.html"><img src="../images/missionthumbnails/deadofnight.png" alt="Dead of Night Thumbnail"></a>
+        <a href="../missions/lockload.html"><img src="../images/missionthumbnails/lockload.png" alt="Lock & Load Thumbnail"></a>
+        <a href="../missions/malwarfare.html"><img src="../images/missionthumbnails/malwarfare.png" alt="Malwarfare Thumbnail"></a>
+        <a href="../missions/minerevacuation.html"><img src="../images/missionthumbnails/minerevacuation.png" alt="Miner Evacuation Thumbnail"></a>
+        <a href="../missions/mistopportunities.html"><img src="../images/missionthumbnails/mistopportunities.png" alt="Mist Opportunities Thumbnail"></a>
+        <a href="../missions/oblivionexpress.html"><img src="../images/missionthumbnails/oblivionexpress.png" alt="Oblivion Express Thumbnail"></a>
+        <a href="../missions/partparcel.html"><img src="../images/missionthumbnails/partparcel.png" alt="Part & Parcel Thumbnail"></a>
+        <a href="../missions/riftstokorhal.html"><img src="../images/missionthumbnails/riftstokorhal.png" alt="Rifts to Korhal Thumbnail"></a>
+        <a href="../missions/scytheofamon.html"><img src="../images/missionthumbnails/scytheofamon.png" alt="Scythe Of Amon Thumbnail"></a>
+        <a href="../missions/templeofthepast.html"><img src="../images/missionthumbnails/templeofthepast.png" alt="Temple of the Past Thumbnail"></a>
+        <a href="../missions/thevermillionproblem.html"><img src="../images/missionthumbnails/thevermillionproblem.png" alt="The Vermillion Problem Thumbnail"></a>
+        <a href="../missions/voidlaunch.html"><img src="../images/missionthumbnails/voidlaunch.png" alt="Void Launch Thumbnail"></a>
+        <a href="../missions/voidthrashing.html"><img src="../images/missionthumbnails/voidthrashing.png" alt="Void Thrashing Thumbnail"></a>
+    </div>
+    <div id="guideList" class="submenu">
+        <ul>
+            <li class="normal"><a href="../guides/buildordertheory.html">Build&nbsp;Order&nbsp;Theory</a></li>
+            <li class="normal"><a href="../guides/enemycomps.html">Enemy&nbsp;Compositions</a></li>
+            <li class="normal"><a href="../guides/generaltips.html">General&nbsp;Tips</a></li>
+            <li class="normal"><a href="../guides/newplayer.html">New&nbsp;Players&nbsp;</a></li>
+        </ul>
+    </div>
+    <div id="resources" class="submenu">
+        <ul>
+            <li class="normal"><a href="../resources/achievements.html">Achievements</a></li>
+            <li class="normal"><a href="../resources/ailogic.html">AI&nbsp;Logic</a></li>
+            <li class="normal"><a href="../resources/bugs.html">Bugs</a></li>
+            <li class="normal"><a href="../resources/brutal.html">Brutal+</a></li>
+            <li class="normal"><a href="../resources/deathprevention.html">Death&nbsp;Prevent&nbsp;Effects</a></li>
+            <li class="normal"><a href="../resources/eastereggs.html">Easter&nbsp;Eggs</a></li>
+            <li class="normal"><a href="../resources/levels.html">Levels</a></li>
+            <li class="normal"><a href="../resources/mutators.html">Mutators</a></li>
+            <li class="normal"><a href="../resources/patchdata.html">Patch&nbsp;Data</a></li>
+            <li class="normal"><a href="../resources/stats.html">Stats</a></li>
+            <li class="normal"><a href="../resources/weeklymutations.html">Weekly&nbsp;Mutations</a></li>
+            
+        </ul>
+    </div>
+    <div id="tools" class="submenu">
+        <ul>
+            <li class="normal"><a href="../tools/downloads.html">Downloads</a></li>
+            <li class="normal"><a href="../tools/masterybreakpoints.html">Mastery&nbsp;Breakpoints</a></li>
+            <li class="normal"><a href="../tools/replayanalyzer.html">Replay&nbsp;Analyzer</a></li>
+            <li class="normal"><a href="../tools/unitstats.html">Unit&nbsp;Stats</a></li>
+        </ul>
+    </div>
+    <div id="community" class="submenu">
+        <ul>
+            <li class="normal"><a href="tournament/main.html">Co&#8209;op&nbsp;Tournament</a></li>
+            <li class="normal"><a href="gamespotlight.html">Game&nbsp;Spotlight</a></li>
+            <li class="normal"><a href="mythbusters.html">Mythbusters</a></li>
+            <li class="highlight"><a href="rockslappingchampions.html">Rockslapping&nbsp;Champions</a></li>
+            <li class="normal"><a href="../youtube.html">Youtube</a></li>
+        </ul>
+    </div>
+    <div id="about" class="submenu">
+        <ul>
+            <!--<li class="normal"><a href="/about/contact">Contact</a></li>-->
+            <li class="normal"><a href="../about/faq.html">FAQ</a></li>
+            <li class="normal"><a href="../about/links.html">Links</a></li>
+            <li class="normal"><a href="https://www.youtube.com/c/Starcraft2Coop" rel="nofollow">Youtube</a></li>
+        </ul>
+    </div>
+    <!--<div id="imgs">
+        <a href="https://www.youtube.com/c/Starcraft2Coop" rel="nofollow"><img src="/images/links/yt.png" alt="Youtube"></a>
+        <a href="https://www.patreon.com/starcraft2coop" rel="nofollow"><img src="/images/links/patreon.png" alt="Patreon"></a>
+        <a href="https://www.twitch.tv/aommaster" rel="nofollow"><img src="/images/links/twitch.png" alt="Twitch"></a>
+        <a href="https://discord.gg/AbFXRAB" rel="nofollow"><img src="/images/links/discord.png" alt="Discord"></a>
+    </div>-->
+</div>
+<script>
+    function openSubmenu(event, selection){
+        event.preventDefault();
+        
+        switch (selection){
+            case "commanders":
+                $(".submenu").not("#commanderList").hide();
+                $("#commanderList").fadeToggle();
+                break;
+            case "missions":
+                $(".submenu").not("#missionList").hide();
+                $("#missionList").fadeToggle();
+                break;
+            case "community":
+                $(".submenu").not("#community").hide();
+                $("#community").fadeToggle();
+                break;
+            case "guides":
+                $(".submenu").not("#guideList").hide();
+                $("#guideList").fadeToggle();
+                break;
+            case "resources":
+                $(".submenu").not("#resources").hide();
+                $("#resources").fadeToggle();
+                break;
+            case "tools":
+                $(".submenu").not("#tools").hide();
+                $("#tools").fadeToggle();
+                break;
+            case "about":
+                $(".submenu").not("#about").hide();
+                $("#about").fadeToggle();
+                break;
+        }
+    }
+</script></div>
+<div id="content">
+    <h1>Rockslapping Champions</h1>
+    <h2>The Series</h2>
+    <p>Rockslapping Champions is a comedy series of co-op games casted where a player has demonstrated poor decision-making and strategic-thinking ability.  It is named after <a href="../commanders/dehaka.html">Dehaka's Rockslapping</a> (a highly inefficient opening with Dehaka). The games are casted with a one-of-a-kind Co-op Observer UI, with "Did You Know" facts scattered throughout the video.</p>
+    <p>The Co-op Observer Interface used during these casts is an exclusive interface used for starcraft2coop.com's content. It contains information that you'd expect from any observer interface (such as resource counts, supplies and upgrades). However, in addition to this, it also contains calldown information such as charges available, cooldown and unlock status.</p>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <h2>Full Playlist</h2>
+    <iframe width="480" height="270" src="https://www.youtube.com/embed/videoseries?list=PL-U97hco2Fu543NyDyGNox2VGtz6BkbWl" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <!--
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="/images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+-->
+    <h2>Submit Your Replays for Casting</h2>
+    <!--
+    <p>You are welcome to submit replays for casting. Before submitting a replay, please consider the following:</p>
+    <ul>
+        <li>Gameplay must show exceptionally poor strategy. Mistakes happen in co-op. The series is focused on poor core understanding of the co-op mode and not mechanical ability.<br>
+            Additionally, it is quite common to see players take a very passive role in a game (building defenses and not pushing objectives). While they definitely fit the bill for this series, the games are not particularly interesting to cast, unless their strategy backfires.
+        </li>
+        <li>Games should feature two players working towards completion of the mission and not one player harassing another (e.g. TK'ing) and be played to victory for both players.</li>
+        <li>Due to limitations with Blizzard's UI functionality, the following information will not be available for viewing:
+            <ul>
+                <li>Dehaka's Essence</li>
+            </ul>
+            Please take the above limitations into consideration when submitting a replay.
+        </li>
+        <li>Be a game on Brutal difficulty. Players use easier difficulty levels to experiment and practice with commanders and may take away from the spirit of the series.</li>
+        <li>If you believe you might have also been a Rockslapper during a game, please mention in your description if you would be okay if the episode is casted as a double-Rockslapping Champion episode.</li>
+        <li>If you would like either or both of the player's names to be anonymized, please mention so in your description. Do note that only names on the interface will be anonymized. Accidental hovers over units will still show player's names (although every effort to avoid doing so will be taken).</li>
+    </ul>
+    <p>If you would like to see statistics about the series, please check out the <a href="/resources/stats">Statistics Page</a>. It shows statistics such as top submitters and commanders most featured as the Rockslapper in the series.</p>
+        
+    <form action="rockslappingchampions.php" name="submissionform" id="rcForm" class="captchaForm" onsubmit="return validate()" method="post" enctype="multipart/form-data">
+        <p>Replay File: <input type="file" name="file" accept=".SC2Replay"></p>
+        <p>Brief Description: <input name="desc" type="text" size="30"></p>
+        <p style="display:none">Leave this empty: <input type="text" name="url"></p>
+        <input type="hidden" name="recaptcha_response" id="rcFormRecaptchaResponse">
+        <p><input type="submit" id="submitbtn" value="Submit"></p>
+        <p id="captchaTOS">This site is protected by reCAPTCHA and the Google
+    <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+    <a href="https://policies.google.com/terms">Terms of Service</a> apply.</p>
+    </form>-->
+    <p>Submissions are now closed. Thank you.</p>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <h2>Filter By Commander</h2>
+    <p>If you would like to filter previous Rockslapping Champions episode by the Rockslapping Commander, you may click the link below to generate a full list of episodes. Click on the Commander Portraits to remove the commander from the list.</p>
+    <p>Compilation episodes take into consideration all commanders featured in that episode. As long as a single commander is unfiltered out, compilation episodes will continue to appear in the list.</p>
+    <div id="player">
+        <iframe id="video" width="640" height="360" src="about:blank" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+    <p id="showList"><a href="rockslappingchampions.html#">Show List</a></p>
+    <div id="commanderSelection">
+    </div>
+    <div id="rcList">
+    </div>
+    <script>
+        $(document).on('click','#commanderSelection img',function(){
+            $(this).toggleClass("filtered");
+            refilter();
+        });
+        $(document).on('click','#select',function(){
+            $("#commanderSelection img.filtered").each(function(){
+                $(this).removeClass("filtered");
+            });
+            refilter();
+        });
+        $(document).on('click','#unselect',function(){
+            $("#commanderSelection img:not(.filtered)").each(function(){
+                $(this).addClass("filtered");
+            });
+            refilter();
+        });
+        function refilter(){
+            var commanders = [];
+            $("#commanderSelection img:not(.filtered)").each(function(){
+                commanders.push("." + $(this).attr("alt"));
+            });
+            var collection = $('#rcList a');
+            
+            $("#rcList a").hide();
+            if(commanders.length!==0){
+                collection = collection.filter(commanders.join());
+            }
+            else{
+                return true;
+            }
+            collection.show();
+        }
+        $(document).click(function(e) {
+            if (e.srcElement !== $("#player")){
+                $("#video").attr("src",$("#video").attr("src"));
+                $("#player").fadeOut();
+            }
+        });
+        $(document).on('click','.rcThumb',function(){
+            $("#video").attr("src",$(this).parent().attr("href"));
+            $("#player").fadeIn();
+            return false;
+        });
+        $("#showList").click(function(e){
+            e.preventDefault();
+            $("#showList").hide();
+            $("#commanderSelection").show();
+            $("#rcList").show();
+            $.ajax({  
+                type: 'GET',
+                url: '../scripts/generaterclist.php', 
+                success: function(data) {
+                    var stringArray=JSON.parse(data);
+                    $("#commanderSelection").html(stringArray[0]);
+                    $("#rcList").html(stringArray[1]);
+                }
+            });
+            return true;
+        })
+    </script>
+</div>
+<div id="footer">
+    <p>Note: All data generated on this site is based on Brutal difficulty. Timings, compositions and other elements may differ on easier difficulty levels.</p>
+    <p>© Blizzard Entertainment, Inc. All rights reserved. Wings of Liberty, Heart of the Swarm, Legacy of the Void, and StarCraft are trademarks or registered trademarks of Blizzard Entertainment, Inc. in the U.S. and/or other countries.</p>
+</div></body>
+</html>

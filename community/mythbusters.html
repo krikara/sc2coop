@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+<link rel='shortcut icon' href='../images/favicon.ico' type='image/x-icon' />
+<link rel="stylesheet"  media="all" type="text/css" href="../styles/mainstyle.css%3Fv=1.28.css">
+<link href='https://fonts.googleapis.com/css?family=Convergence' rel='stylesheet' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-165288360-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-165288360-1');
+</script>
+<script>
+    grecaptcha.ready(function() {
+        $(".captchaForm").each(function(){
+            currentID = $(this).attr('id');
+            if(currentID=="reportForm"){
+                $(this).submit(function(event){
+                    $("#submitbtn").attr("disabled", true);
+                    grecaptcha.execute('6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd', { action: currentID }).then(function (token) {
+                        $("#reportFormRecaptchaResponse").val(token);
+                        var path = window.location.pathname;
+                        var page = path.split("/").pop();
+                        var x = document.forms["errorReport"]["comment"].value;
+            		    var y = document.forms["errorReport"]["url"].value;
+            			var z = $("#reportFormRecaptchaResponse").val();
+            			$.ajax({  
+                            type: 'POST',
+                            url: '/scripts/addreport.php', 
+                            data: { 
+                                comment: x,
+                                errorpage: page,
+                                url:y, 
+                                recaptcha_response:z},
+                            success: function(data) {
+                                $("#reportForm").hide();
+                                $("#errorReport").append(data);
+                                return false;
+                            }
+                        });
+                        return false;
+                        $("#submitbtn").attr("disabled", false);
+                    });
+                    
+                })
+            }
+            else{
+                $(this).submit(function(event){
+                    var currentID = $(this).attr('id');
+                    var currentForm = $(this);
+                    event.preventDefault();
+                    grecaptcha.execute('6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd', { action: currentID }).then(function (token) {
+                        $("#" + currentID + "RecaptchaResponse").val(token);
+                        currentForm.off("submit");
+                        currentForm.submit();
+                    });
+                })
+            }
+            
+        })
+    },false)
+</script>  <title>Starcraft 2 Co-op - Mythbusters</title>
+  <meta name="description" content="This is the page which lists all the episodes of Mythbusters.">
+  <meta name="keywords" content="Starcraft co-op mythbusters community tests myths">
+  <link rel="canonical" href="mythbusters.html">
+  </head>
+<body>
+<div id="header"><img src="../images/mainpageheader.png" alt="Starcraft II Co-op Logo">
+</div>
+<div id="menu">
+<ul>
+    <li class="normal"><a href="../index.html">&#127968;</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'commanders');">Commanders</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'community');">Community</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'guides');">Guides</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'missions');">Missions</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'resources');">Resources</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'tools');">Tools</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'about');">About</a></li>
+    <li class="normal"><a href="../account.html">My&nbsp;Account</a></li>
+</ul>
+<div id="container">
+    <div id="commanderList" class="submenu">
+        <a href="../commanders/raynor.html"><img src="../images/commanderportraits/raynorportrait.png" alt="Raynor Portrait"></a>
+        <a href="../commanders/kerrigan.html"><img src="../images/commanderportraits/kerriganportrait.png" alt="Kerrigan Portrait"></a>
+        <a href="../commanders/artanis.html"><img src="../images/commanderportraits/artanisportrait.png" alt="Artanis Portrait"></a>
+        <a href="../commanders/swann.html"><img src="../images/commanderportraits/swannportrait.png" alt="Swann Portrait"></a>
+        <a href="../commanders/zagara.html"><img src="../images/commanderportraits/zagaraportrait.png" alt="Zagara Portrait"></a>
+        <a href="../commanders/vorazun.html"><img src="../images/commanderportraits/vorazunportrait.png" alt="Vorazun Portrait"></a>
+        <a href="../commanders/karax.html"><img src="../images/commanderportraits/karaxportrait.png" alt="Karax Portrait"></a>
+        <a href="../commanders/abathur.html"><img src="../images/commanderportraits/abathurportrait.png" alt="Abathur Portrait"></a>
+        <a href="../commanders/alarak.html"><img src="../images/commanderportraits/alarakportrait.png" alt="Alarak Portrait"></a>
+        <a href="../commanders/nova.html"><img src="../images/commanderportraits/novaportrait.png" alt="Nova Portrait"></a>
+        <a href="../commanders/stukov.html"><img src="../images/commanderportraits/stukovportrait.png" alt="Stukov Portrait"></a>
+        <a href="../commanders/fenix.html"><img src="../images/commanderportraits/fenixportrait.png" alt="Fenix Portrait"></a>
+        <a href="../commanders/dehaka.html"><img src="../images/commanderportraits/dehakaportrait.png" alt="Dehaka Portrait"></a>
+        <a href="../commanders/horner.html"><img src="../images/commanderportraits/hornerportrait.png" alt="Han & Horner Portrait"></a>
+        <a href="../commanders/tychus.html"><img src="../images/commanderportraits/tychusportrait.png" alt="Tychus Portrait"></a>
+        <a href="../commanders/zeratul.html"><img src="../images/commanderportraits/zeratulportrait.png" alt="Zeratul Portrait"></a>
+        <a href="../commanders/stetmann.html"><img src="../images/commanderportraits/stetmannportrait.png" alt="Stetmann Portrait"></a>
+        <a href="../commanders/mengsk.html"><img src="../images/commanderportraits/mengskportrait.png" alt="Mengsk Portrait"></a>
+    </div>
+    <div id="missionList" class="submenu">
+        <a href="../missions/chainofascension.html"><img src="../images/missionthumbnails/chainofascension.png" alt="Chain of Ascension Thumbnail"></a>
+        <a href="../missions/cradleofdeath.html"><img src="../images/missionthumbnails/cradleofdeath.png" alt="Cradle of Death Thumbnail"></a>
+        <a href="../missions/deadofnight.html"><img src="../images/missionthumbnails/deadofnight.png" alt="Dead of Night Thumbnail"></a>
+        <a href="../missions/lockload.html"><img src="../images/missionthumbnails/lockload.png" alt="Lock & Load Thumbnail"></a>
+        <a href="../missions/malwarfare.html"><img src="../images/missionthumbnails/malwarfare.png" alt="Malwarfare Thumbnail"></a>
+        <a href="../missions/minerevacuation.html"><img src="../images/missionthumbnails/minerevacuation.png" alt="Miner Evacuation Thumbnail"></a>
+        <a href="../missions/mistopportunities.html"><img src="../images/missionthumbnails/mistopportunities.png" alt="Mist Opportunities Thumbnail"></a>
+        <a href="../missions/oblivionexpress.html"><img src="../images/missionthumbnails/oblivionexpress.png" alt="Oblivion Express Thumbnail"></a>
+        <a href="../missions/partparcel.html"><img src="../images/missionthumbnails/partparcel.png" alt="Part & Parcel Thumbnail"></a>
+        <a href="../missions/riftstokorhal.html"><img src="../images/missionthumbnails/riftstokorhal.png" alt="Rifts to Korhal Thumbnail"></a>
+        <a href="../missions/scytheofamon.html"><img src="../images/missionthumbnails/scytheofamon.png" alt="Scythe Of Amon Thumbnail"></a>
+        <a href="../missions/templeofthepast.html"><img src="../images/missionthumbnails/templeofthepast.png" alt="Temple of the Past Thumbnail"></a>
+        <a href="../missions/thevermillionproblem.html"><img src="../images/missionthumbnails/thevermillionproblem.png" alt="The Vermillion Problem Thumbnail"></a>
+        <a href="../missions/voidlaunch.html"><img src="../images/missionthumbnails/voidlaunch.png" alt="Void Launch Thumbnail"></a>
+        <a href="../missions/voidthrashing.html"><img src="../images/missionthumbnails/voidthrashing.png" alt="Void Thrashing Thumbnail"></a>
+    </div>
+    <div id="guideList" class="submenu">
+        <ul>
+            <li class="normal"><a href="../guides/buildordertheory.html">Build&nbsp;Order&nbsp;Theory</a></li>
+            <li class="normal"><a href="../guides/enemycomps.html">Enemy&nbsp;Compositions</a></li>
+            <li class="normal"><a href="../guides/generaltips.html">General&nbsp;Tips</a></li>
+            <li class="normal"><a href="../guides/newplayer.html">New&nbsp;Players&nbsp;</a></li>
+        </ul>
+    </div>
+    <div id="resources" class="submenu">
+        <ul>
+            <li class="normal"><a href="../resources/achievements.html">Achievements</a></li>
+            <li class="normal"><a href="../resources/ailogic.html">AI&nbsp;Logic</a></li>
+            <li class="normal"><a href="../resources/bugs.html">Bugs</a></li>
+            <li class="normal"><a href="../resources/brutal.html">Brutal+</a></li>
+            <li class="normal"><a href="../resources/deathprevention.html">Death&nbsp;Prevent&nbsp;Effects</a></li>
+            <li class="normal"><a href="../resources/eastereggs.html">Easter&nbsp;Eggs</a></li>
+            <li class="normal"><a href="../resources/levels.html">Levels</a></li>
+            <li class="normal"><a href="../resources/mutators.html">Mutators</a></li>
+            <li class="normal"><a href="../resources/patchdata.html">Patch&nbsp;Data</a></li>
+            <li class="normal"><a href="../resources/stats.html">Stats</a></li>
+            <li class="normal"><a href="../resources/weeklymutations.html">Weekly&nbsp;Mutations</a></li>
+            
+        </ul>
+    </div>
+    <div id="tools" class="submenu">
+        <ul>
+            <li class="normal"><a href="../tools/downloads.html">Downloads</a></li>
+            <li class="normal"><a href="../tools/masterybreakpoints.html">Mastery&nbsp;Breakpoints</a></li>
+            <li class="normal"><a href="../tools/replayanalyzer.html">Replay&nbsp;Analyzer</a></li>
+            <li class="normal"><a href="../tools/unitstats.html">Unit&nbsp;Stats</a></li>
+        </ul>
+    </div>
+    <div id="community" class="submenu">
+        <ul>
+            <li class="normal"><a href="tournament/main.html">Co&#8209;op&nbsp;Tournament</a></li>
+            <li class="normal"><a href="gamespotlight.html">Game&nbsp;Spotlight</a></li>
+            <li class="highlight"><a href="mythbusters.html">Mythbusters</a></li>
+            <li class="normal"><a href="rockslappingchampions.html">Rockslapping&nbsp;Champions</a></li>
+            <li class="normal"><a href="../youtube.html">Youtube</a></li>
+        </ul>
+    </div>
+    <div id="about" class="submenu">
+        <ul>
+            <!--<li class="normal"><a href="/about/contact">Contact</a></li>-->
+            <li class="normal"><a href="../about/faq.html">FAQ</a></li>
+            <li class="normal"><a href="../about/links.html">Links</a></li>
+            <li class="normal"><a href="https://www.youtube.com/c/Starcraft2Coop" rel="nofollow">Youtube</a></li>
+        </ul>
+    </div>
+    <!--<div id="imgs">
+        <a href="https://www.youtube.com/c/Starcraft2Coop" rel="nofollow"><img src="/images/links/yt.png" alt="Youtube"></a>
+        <a href="https://www.patreon.com/starcraft2coop" rel="nofollow"><img src="/images/links/patreon.png" alt="Patreon"></a>
+        <a href="https://www.twitch.tv/aommaster" rel="nofollow"><img src="/images/links/twitch.png" alt="Twitch"></a>
+        <a href="https://discord.gg/AbFXRAB" rel="nofollow"><img src="/images/links/discord.png" alt="Discord"></a>
+    </div>-->
+</div>
+<script>
+    function openSubmenu(event, selection){
+        event.preventDefault();
+        
+        switch (selection){
+            case "commanders":
+                $(".submenu").not("#commanderList").hide();
+                $("#commanderList").fadeToggle();
+                break;
+            case "missions":
+                $(".submenu").not("#missionList").hide();
+                $("#missionList").fadeToggle();
+                break;
+            case "community":
+                $(".submenu").not("#community").hide();
+                $("#community").fadeToggle();
+                break;
+            case "guides":
+                $(".submenu").not("#guideList").hide();
+                $("#guideList").fadeToggle();
+                break;
+            case "resources":
+                $(".submenu").not("#resources").hide();
+                $("#resources").fadeToggle();
+                break;
+            case "tools":
+                $(".submenu").not("#tools").hide();
+                $("#tools").fadeToggle();
+                break;
+            case "about":
+                $(".submenu").not("#about").hide();
+                $("#about").fadeToggle();
+                break;
+        }
+    }
+</script></div>
+<div id="content">
+    <h1>Mythbusters</h1>
+    <p>Mythbusters takes theories and myths from the co-op community and puts them to the test. A full playlist is below:</p>
+    <iframe width="480" height="270" src="https://www.youtube.com/embed/videoseries?list=PL-U97hco2Fu6RZILcYqKk3FZRSK4htwIB" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <p>A list of all the myths tested is below. Each video is time-stamped to quickly find the relevant section:</p>
+    <a href='https://www.youtube.com/watch?v=-HnMQCsklfE' rel='nofollow'>Episode 1</a><br>A Stank can beat an Apocalisk in a 1v1 fight
+    <br>Raynor's Drop Pod Mastery affects Spider Mine production
+    <br>Hangar Bays count as Horner-supply units
+    <br>Raynor's Mech Attack Speed Mastery stacks with the Drop Speed Increase Mastery
+    <br>Zeratul's Shieldguard Reflection Shield is unaffected by the Double-Edged Mutator
+    <br><br><br><a href='https://www.youtube.com/watch?v=nTUZkzGOFWo' rel='nofollow'>Episode 2</a><br>Avenging Protocol affects Clolarion's Interceptors
+    <br>Kerrigan's Carapace can be recharged by Shield Batteries
+    <br>Brutalisk's Shell can be recharged by Shield Batteries
+    <br>Artanis' Ability Speed Mastery affects Reaver Scarab production
+    <br>Concussive Attacks affects Structure movement speed
+    <br><br><br><a href='https://www.youtube.com/watch?v=aUZzteWm_JQ' rel='nofollow'>Episode 3</a><br>Mag-Mines cannot be Tactical Airlifted
+    <br>Karax's Chrono abilities affect Zagara's Baneling Nest
+    <br>Energizer's Reclamation resets ability cooldowns
+    <br>Psi Storms do not stack
+    <br>Amon's Battlecruisers cannot attack while moving
+    <br><br><br><a href='https://www.youtube.com/watch?v=5La3thJpzeM' rel='nofollow'>Episode 4</a><br>Karax's Chrono abilities affect Stukov's Infested Colonist Compound
+    <br>Stetzones affect Stukov's Infested Colonist Compound Movement
+    <br>Abathur gets Omega Worms when paired with Kerrigan
+    <br>Kerrigan's Malignant Creep heals Mechanical units
+    <br>Kerrigan's Malignant Creep affects Zerg static defense attack speed
+    <br><br><br><a href='https://www.youtube.com/watch?v=hHrYnS5RpLc' rel='nofollow'>Episode 5</a><br>Infested Bunkers produce Infested for Amon when captured by Eminent Domain
+    <br>Dark Templars are immune to Fatal Attraction when using Shadow Fury
+    <br>Mind-controlled/Dominated workers can build structures of their races
+    <br>Doubled Edged prevents Mutalisks from triggering their regen
+    <br>Diffusion prevents Mutalisks from triggering their regen
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <br><br><br><a href='https://www.youtube.com/watch?v=rEcb3LSOxSo' rel='nofollow'>Episode 6</a><br>Earthsplitters are affected by Energizers
+    <br>Swann's Laser Drill is affected by Energizers
+    <br>Stetmann's Speed Zones do not give ally MULEs an extra trip
+    <br>Dehaka's damage reflect can destroy Amon's Laser Drill
+    <br>Dakrun's damage reflect can destroy Amon's Laser Drill
+    <br><br><br><a href='https://www.youtube.com/watch?v=TFOQaIMO1So' rel='nofollow'>Episode 7</a><br>Mind-controlled Arbiters apply Vorazun's Strike from the Shadows Passive
+    <br>Mind-controlled Arbiters apply Vorazun's Veil of Shadows Passive
+    <br>Nux's Ultrasonic Pulses Stack
+    <br>Banelings can damage air units if lifted by Phoenixes
+    <br>Mecha Infestor's Tentacles can reduce Nova's Nuke Cooldown
+    <br><br><br><a href='https://www.youtube.com/watch?v=Bp2cYMuxoPo' rel='nofollow'>Episode 8</a><br>Dehaka's Structures gain buffs from Malignant Creep
+    <br>Nikara buffs Blaze's Oil Spill Damage-Over-Time
+    <br>Zeratul gets Vorazun's Veil of Shadows passive
+    <br>Alarak can trigger Death Prevent Effects with Supplicants near him
+    <br>The Hyperion deals more damage while moving than when not
+    <br><br><br><a href='https://www.youtube.com/watch?v=VaeeFOTS8sY' rel='nofollow'>Episode 9</a><br>Nikara can buff Spider Mine damage
+    <br>Energizers can buff the Purifier Beam
+    <br>Alarak's Photon Overcharge benefits from Attack Upgrades
+    <br>Alarak's Photon Overcharge benefits from Shield Upgrades
+    <br>Medic damage reduction stacks with the Lone Wolf Prestige buff
+    <br><br><br><a href='https://www.youtube.com/watch?v=e5PsYtA2d6o' rel='nofollow'>Episode 10</a><br>Weapon explosions from Merchant of Death benefit from Attack Upgrades
+    <br>Alarak's Overcharge benefits from the Unit Attack Speed Mastery
+    <br>Stetellite Overcharge and Defensive Drone Barriers stack
+    <br>Defensive Matrix and Defensive Drone Barriers stack
+    <br>Units in stasis do not get Avenger stacks
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <br><br><br><a href='https://www.youtube.com/watch?v=H73SqMNmKcA' rel='nofollow'>Episode 11</a><br>Withering Siphon Vorazun can take damage through Double Edged
+    <br>Alarak's Overcharge benefits from Architect of War Chrono
+    <br>Supercloak triggers Vorazun's Regeneration + Attack passives
+    <br>Abathur gets Omega Worms with a Malevolent Matriarch ally
+    <br>A mind-controlled unit with Plague does not spread the debuff on death
+    <br><br><br><a href='https://www.youtube.com/watch?v=B2_5U4LV0nI' rel='nofollow'>Episode 12</a><br>Zagara's Baneling upgrades affect her Baneling Barrage ability
+    <br>Intimidating Roar disables abilities with Power Overwhelming active
+    <br>Stetzones can heal Uprooted Stukov Bunkers
+    <br>Feedback affects units with the Power Overwhelming mutator
+    <br>EMP affects units with the Power Overwhelming mutator
+    <br><br><br><a href='https://www.youtube.com/watch?v=EeNtBNtzGlU' rel='nofollow'>Episode 13</a><br>Architect of War Karax buffs affect Laser Drill DPS
+    <br>Negative armor gets reset to 0 under Black Hole
+    <br>Mind-controlled units do not get Kerrigan's creep buffs
+    <br>Emperor's Shadows Shield Drain first, then Feedback
+    <br>Emperor's Shadows can drain energy of units with Power Overwhelming
+    <br><br><br><a href='https://www.youtube.com/watch?v=hqSSy3PQGGo' rel='nofollow'>Episode 14</a><br>Lone Wolf stacks with Conservator Damage Reduction
+    <br>Units in Fenix Stasis do not get Avenger stacks
+    <br>Tyrannozors with Healing Adaptation do not get healing from Stetzones
+    <br>SCV's can repair units inside Hercules
+    <br>Contaminated Strike damages Earthsplitters with Double-Edged
+    <br><br><br><a href='https://www.youtube.com/watch?v=M4Q0pKZRfqE' rel='nofollow'>Episode 15</a><br>Lone Wolf buffs Cannonball's Redline Power Cells Upgrade
+    <br>Regenerative Biosteel works inside Hercules
+    <br>Mengsk Ghost's EMP can stun static defense
+    <br>Shieldguards can reflect Mag-mines
+    <br>Time Warp extends the lifespan of timed units
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <br><br><br><a href='https://www.youtube.com/watch?v=PJsJSocNiXM' rel='nofollow'>Episode 16</a><br>Havocs increase the range of Alarak's Photon Overload
+    <br>Mind-controlled Immortals get Zeratul's Enforcers' Eternity Barrier
+    <br>Phasing Armor works while units are warping in
+    <br>Xel'Naga Enforcers can punt units lifted by Phoenixes
+    <br>Shieldguards can reflect Broodlings from Brood Lords
+    <br><br><br><a href='https://www.youtube.com/watch?v=xHwHXRJl4vs' rel='nofollow'>Episode 17</a><br>Bio-Steel Regeneration works inside Nydus Worms
+    <br>Zeratul Herald of the Void tornadoes damage Zeratul with Double-Edged
+    <br>When all Nydus Worms die, all units inside them die
+    <br>When all Void Arrays die, all units inside them die
+    <br>Dehaka Broodbrother Healing Auras stack with each other
+    <br><br><br><a href='https://www.youtube.com/watch?v=IgXwUtQ-amE' rel='nofollow'>Episode 18</a><br>Pack Leaders can get Stetmann’s Stetellite HUGS Overcharge buff
+    <br>Herald of the Void tornadoes target units outside vision with Shortsighted
+    <br>Adept Shades do not trigger Oracle Stasis Wards
+    <br>Network Administrator Fenix affects Disruptor Purification Nova damage
+    <br>Malignant Creep buffs Stukov’s Uprooted Bunker Attack Speed
+    <br><br><br><a href='https://www.youtube.com/watch?v=_reqXrX4HdU' rel='nofollow'>Episode 19</a><br>Talis can reset the Adept Shade/Stasis Ward bug
+    <br>Artificer of Souls stacks can be lost if Supplicants die too quickly
+    <br>Alarak can survive the explosion on Cradle of Death with Supplicants
+    <br>Confused units can still Transmutate up if they deal damage
+    <br>Symbiotes can attack while Ultimate Evolutions are in Overlords
+    <br><br><br><a href='https://www.youtube.com/watch?v=Q7BDCaQb6rs' rel='nofollow'>Episode 20</a><br>Moment of Silence stops Merchant of Death weapons from damaging units
+    <br>(Revisited) Artificer of Souls stacks can be lost if Supplicants die too quickly
+    <br>Symbiotes remain outside Nydus worms when worms are killed
+    <br>Confused hybrids deal nuke damage to Amon's units if M.A.D is enabled
+    <br>Nydus/Omega worms die if the base network is destroyed
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <br><br><br><a href='https://www.youtube.com/watch?v=d5ZipEgzRec' rel='nofollow'>Episode 21</a><br>Shock Divisions deal damage to Intercessors with Double-Edged
+    <br>Sentry Guardian Shield reduces Heavy Weapons Specialist Drill splash damage
+    <br>Minesweeper Widow Mines can attack while unburrowed
+    <br>Confused units heal if Life Leech is enabled
+    <br>Mech Zerglings can outrun Reaver Scarabs
+    <br><br><br><a href='https://www.youtube.com/watch?v=LiV3M5Imc0Q' rel='nofollow'>Episode 22</a><br>Lone Wolf reduces damage dealt by Black Death
+    <br>The Aleksander will always crash on pathable terrain
+    <br>Time Warp can lengthen the duration of Kerrigan's Assimilation Aura
+    <br>Fear prevents Widow Mines from attacking
+    <br>Vengeance of the Void damage reaches 50% with 100+ Artifacts
+    <br><br><br><a href='https://www.youtube.com/watch?v=wFkv6Rqa6Kg' rel='nofollow'>Episode 23</a><br>Units in Graviton Prison do not get Mend healing
+    <br>Units in Graviton Prison do not get the Shield Overcharge buff
+    <br>Overcharged Stetellites are invulnerable
+    <br>Amon's units are immune to the Slayn Elemental
+    <br>Irradiate damage ticks can stack
+    <br><br><br><a href='https://www.youtube.com/watch?v=6Xij6WSYCHU' rel='nofollow'>Episode 24</a><br>Devouring a snared air unit gives Dehaka the ranged attack buff
+    <br>The Slayn Elemental can kill itself with Confusion with Withering Siphon
+    <br>Widow Mines take damage from Splitter Missiles
+    <br>The Dehaka Brothers share the Deadly Reach upgrade
+    <br>Irradiated units inside transports can damage units outside
+    <br><br><br><a href='https://www.youtube.com/watch?v=KwFEl1DN0Vc' rel='nofollow'>Episode 25</a><br>Devouring a lifted ground unit gives Dehaka the ranged attack buff
+    <br>Unbound Fanatics have longer timers inside Time Warps
+    <br>Virulent Spores deals its splash damage to the primary target
+    <br>Stanks can attack and kill fully-completed Toxic Nests
+    <br>Immortal’s Barrier prevents Fear from triggering
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <br><br><br><a href='https://www.youtube.com/watch?v=D8Di1uVl4l8' rel='nofollow'>Episode 26</a><br>Battlecruisers can avoid damage from Double-Edged by Tactical Jumps
+    <br>The Xel’Naga Construct can damage units inside transports
+    <br>Fatal Attraction and Mutually Assured Destruction can stack
+    <br>Alarak’s Attack Damage mastery compounds with Empower Me
+    <br>Boom Bots can pick up resource drops from Slim Pickings
+    <br><br><br><a href='https://www.youtube.com/watch?v=za7dKB3MqCo' rel='nofollow'>Episode 27</a><br>Primal Contender Dehaka’s Healing Aura still applies while he’s off-map
+    <br>Supply Bunker drops can pick up dropped trooper weapons
+    <br>Alarak’s Life Essence is immune from Point Defense Drones
+    <br>Interceptors are immune to Black Death once back inside a Carrier
+    <br>Pulse Cannon deals full damage to units with Evasive Maneuvers active
+    <br><br><br><a href='https://www.youtube.com/watch?v=lhWYJ1-hLUM' rel='nofollow'>Episode 28</a><br>Nikara cannot heal Archons without the Procyon Twin Heal Beam Gauntlet
+    <br>Dehaka’s Leap and Scorching Breath benefit from bonus to Armored
+    <br>Primal Contender Dehaka provides detection while he’s off-map
+    <br>Toxic Nests can be captured by Amon with Eminent Domain active
+    <br>Dark Pylon Recall will be cancelled if the Dark Pylon is destroyed
+    <br><br><br><a href='https://www.youtube.com/watch?v=0QYYPhWb6-c' rel='nofollow'>Episode 29</a><br>Infiltration Specialist Nova loses Supercloak if cloaked by a Dark Pylon
+    <br>Primal Contender Dehaka can be hit by splash damage while off-map
+    <br>Primal Contender Dehaka loses the Plague debuff when off-map
+    <br>Earthsplitters that attack Amon’s Laser Drill give it vision to attack back
+    <br>Lift and Snare effects can be stacked repeatedly
+    <br><br><br><a href='https://www.youtube.com/watch?v=JUfNlLG4lxk' rel='nofollow'>Episode 30</a><br>Dehaka Pack Leaders have their timers paused while inside Nydus Worms
+    <br>Time Stop can extend Void Stasis Withering Siphon damage
+    <br>Assault Galleons in construction can get the Thorns from Devouring One
+    <br>Ji’nara provides allied units with a passive Shield Regeneration buff
+    <br>Void Stasis gets auto-casted on snared Observers
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <br><br><br><a href='https://www.youtube.com/watch?v=UmYc5RkLQe4' rel='nofollow'>Episode 31</a><br>Dehaka Pack Leaders get Super Cloak from Anakh Su'n Zeratul
+    <br>Burning structures cause Diffusion damage
+    <br>Splitter Banes killed by Propagators do not spawn Baneling Spawns
+    <br>Infested Banshees mind-controlled by Plague Warden can load Infested units
+    <br>Dehaka Thorns can be blocked by Point Defense Drones
+    <br><br><br><a href='https://www.youtube.com/watch?v=A6xUHc26LZI' rel='nofollow'>Episode 32</a><br>Point Defense Drones can burn down
+    <br>Point Defense Drones prevent Dakrun from instantly dying with Double Edge
+    <br>Stetmann’s JUICED Payload is affected by Attack upgrades
+    <br>Void Shard attacks can be reflected by Xel’Naga Shieldguards
+    <br>Point Defense Drones can block Vanguard attacks
+    <br><br><br><a href='https://www.youtube.com/watch?v=IB34_eZoFGg' rel='nofollow'>Episode 33</a><br>Dehaka can Devour units with Hardened Will
+    <br>Artificer of Souls can buff War Prism Overcharge damage
+    <br>Strike Fighters are unaffected by Black Holes
+    <br>Zeratul’s Xel’Naga Enforcers can punt flying structures
+    <br>Toxic Nests do not respawn when hit by Mutually Assured Destruction nukes
+    <br><br><br><a href='https://www.youtube.com/watch?v=b-Gk30-koG8' rel='nofollow'>Episode 34</a><br>Dehaka can deal more than 10 damage with Devour through Hardened Will
+    <br>Xel’Naga Enforcers can punt Point Defense Drones
+    <br>Xel’Naga Enforcers can punt Assault Galleons
+    <br>Moment of Silence stops warp-ins while it is active
+    <br>Sieged Siege Tanks can be loaded into Nydus Worms
+    <br><br><br><a href='https://www.youtube.com/watch?v=bV77eEkDSZE' rel='nofollow'>Episode 35</a><br>Point Defense Missiles can cast abilities with Power Overwhelming
+    <br>Dehaka’s Intimidating Roar can stack from different levels
+    <br>Destroyers cannot trigger Mag-mines with their attack bounces
+    <br>Tempests cannot trigger Mag-mines with their attacks or Disintegrate
+    <br>Zeratul and his army can be lost with a Kerrigan ally
+    <br><br><br><a href='https://www.youtube.com/watch?v=euc7qO6NabY' rel='nofollow'>Episode 36</a><br>Battlecruisers tentacled by Aleksander retain control after Tactical Jump
+    <br>Stetmann’s Stetellites get permanently destroyed with Eminent Domain
+    <br>Desolate Queen Kerrigan’s Kinetic Blast can trigger Mag-Mines
+    <br>Missiles from Missile Command are immune to Mind-Control
+    <br>Swann can convert Tech Labs and Reactors to Tech Reactors
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+</div>
+<div id="footer">
+    <p>Note: All data generated on this site is based on Brutal difficulty. Timings, compositions and other elements may differ on easier difficulty levels.</p>
+    <p>© Blizzard Entertainment, Inc. All rights reserved. Wings of Liberty, Heart of the Swarm, Legacy of the Void, and StarCraft are trademarks or registered trademarks of Blizzard Entertainment, Inc. in the U.S. and/or other countries.</p>
+</div></body>
+</html>

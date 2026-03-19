@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+<link rel='shortcut icon' href='../images/favicon.ico' type='image/x-icon' />
+<link rel="stylesheet"  media="all" type="text/css" href="../styles/mainstyle.css%3Fv=1.28.css">
+<link href='https://fonts.googleapis.com/css?family=Convergence' rel='stylesheet' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-165288360-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-165288360-1');
+</script>
+<script>
+    grecaptcha.ready(function() {
+        $(".captchaForm").each(function(){
+            currentID = $(this).attr('id');
+            if(currentID=="reportForm"){
+                $(this).submit(function(event){
+                    $("#submitbtn").attr("disabled", true);
+                    grecaptcha.execute('6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd', { action: currentID }).then(function (token) {
+                        $("#reportFormRecaptchaResponse").val(token);
+                        var path = window.location.pathname;
+                        var page = path.split("/").pop();
+                        var x = document.forms["errorReport"]["comment"].value;
+            		    var y = document.forms["errorReport"]["url"].value;
+            			var z = $("#reportFormRecaptchaResponse").val();
+            			$.ajax({  
+                            type: 'POST',
+                            url: '/scripts/addreport.php', 
+                            data: { 
+                                comment: x,
+                                errorpage: page,
+                                url:y, 
+                                recaptcha_response:z},
+                            success: function(data) {
+                                $("#reportForm").hide();
+                                $("#errorReport").append(data);
+                                return false;
+                            }
+                        });
+                        return false;
+                        $("#submitbtn").attr("disabled", false);
+                    });
+                    
+                })
+            }
+            else{
+                $(this).submit(function(event){
+                    var currentID = $(this).attr('id');
+                    var currentForm = $(this);
+                    event.preventDefault();
+                    grecaptcha.execute('6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd', { action: currentID }).then(function (token) {
+                        $("#" + currentID + "RecaptchaResponse").val(token);
+                        currentForm.off("submit");
+                        currentForm.submit();
+                    });
+                })
+            }
+            
+        })
+    },false)
+</script>  <title>Starcraft 2 Co-op - General Tips for Co-op Players</title>
+  <meta name="description" content="Improve your Co-op gameplay with these simple tips, made for players of all skill levels. Beginners and Veterans can all benefit.">
+  <meta name="keywords" content="Starcraft Co-op General Tips ">
+  <link rel="canonical" href="generaltips.html">
+  <style>
+        .hotkeysFile{
+            font-family:"Courier New", Courier, monospace;
+            background-color:steelblue;
+            display:inline-block;
+            padding:10px;
+        }
+        .subgroup{
+            text-indent:10px;
+        }
+  </style>
+  </head>
+<body>
+<div id="header"><img src="../images/mainpageheader.png" alt="Starcraft II Co-op Logo">
+</div>
+<div id="menu">
+<ul>
+    <li class="normal"><a href="../index.html">&#127968;</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'commanders');">Commanders</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'community');">Community</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'guides');">Guides</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'missions');">Missions</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'resources');">Resources</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'tools');">Tools</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'about');">About</a></li>
+    <li class="normal"><a href="../account.html">My&nbsp;Account</a></li>
+</ul>
+<div id="container">
+    <div id="commanderList" class="submenu">
+        <a href="../commanders/raynor.html"><img src="../images/commanderportraits/raynorportrait.png" alt="Raynor Portrait"></a>
+        <a href="../commanders/kerrigan.html"><img src="../images/commanderportraits/kerriganportrait.png" alt="Kerrigan Portrait"></a>
+        <a href="../commanders/artanis.html"><img src="../images/commanderportraits/artanisportrait.png" alt="Artanis Portrait"></a>
+        <a href="../commanders/swann.html"><img src="../images/commanderportraits/swannportrait.png" alt="Swann Portrait"></a>
+        <a href="../commanders/zagara.html"><img src="../images/commanderportraits/zagaraportrait.png" alt="Zagara Portrait"></a>
+        <a href="../commanders/vorazun.html"><img src="../images/commanderportraits/vorazunportrait.png" alt="Vorazun Portrait"></a>
+        <a href="../commanders/karax.html"><img src="../images/commanderportraits/karaxportrait.png" alt="Karax Portrait"></a>
+        <a href="../commanders/abathur.html"><img src="../images/commanderportraits/abathurportrait.png" alt="Abathur Portrait"></a>
+        <a href="../commanders/alarak.html"><img src="../images/commanderportraits/alarakportrait.png" alt="Alarak Portrait"></a>
+        <a href="../commanders/nova.html"><img src="../images/commanderportraits/novaportrait.png" alt="Nova Portrait"></a>
+        <a href="../commanders/stukov.html"><img src="../images/commanderportraits/stukovportrait.png" alt="Stukov Portrait"></a>
+        <a href="../commanders/fenix.html"><img src="../images/commanderportraits/fenixportrait.png" alt="Fenix Portrait"></a>
+        <a href="../commanders/dehaka.html"><img src="../images/commanderportraits/dehakaportrait.png" alt="Dehaka Portrait"></a>
+        <a href="../commanders/horner.html"><img src="../images/commanderportraits/hornerportrait.png" alt="Han & Horner Portrait"></a>
+        <a href="../commanders/tychus.html"><img src="../images/commanderportraits/tychusportrait.png" alt="Tychus Portrait"></a>
+        <a href="../commanders/zeratul.html"><img src="../images/commanderportraits/zeratulportrait.png" alt="Zeratul Portrait"></a>
+        <a href="../commanders/stetmann.html"><img src="../images/commanderportraits/stetmannportrait.png" alt="Stetmann Portrait"></a>
+        <a href="../commanders/mengsk.html"><img src="../images/commanderportraits/mengskportrait.png" alt="Mengsk Portrait"></a>
+    </div>
+    <div id="missionList" class="submenu">
+        <a href="../missions/chainofascension.html"><img src="../images/missionthumbnails/chainofascension.png" alt="Chain of Ascension Thumbnail"></a>
+        <a href="../missions/cradleofdeath.html"><img src="../images/missionthumbnails/cradleofdeath.png" alt="Cradle of Death Thumbnail"></a>
+        <a href="../missions/deadofnight.html"><img src="../images/missionthumbnails/deadofnight.png" alt="Dead of Night Thumbnail"></a>
+        <a href="../missions/lockload.html"><img src="../images/missionthumbnails/lockload.png" alt="Lock & Load Thumbnail"></a>
+        <a href="../missions/malwarfare.html"><img src="../images/missionthumbnails/malwarfare.png" alt="Malwarfare Thumbnail"></a>
+        <a href="../missions/minerevacuation.html"><img src="../images/missionthumbnails/minerevacuation.png" alt="Miner Evacuation Thumbnail"></a>
+        <a href="../missions/mistopportunities.html"><img src="../images/missionthumbnails/mistopportunities.png" alt="Mist Opportunities Thumbnail"></a>
+        <a href="../missions/oblivionexpress.html"><img src="../images/missionthumbnails/oblivionexpress.png" alt="Oblivion Express Thumbnail"></a>
+        <a href="../missions/partparcel.html"><img src="../images/missionthumbnails/partparcel.png" alt="Part & Parcel Thumbnail"></a>
+        <a href="../missions/riftstokorhal.html"><img src="../images/missionthumbnails/riftstokorhal.png" alt="Rifts to Korhal Thumbnail"></a>
+        <a href="../missions/scytheofamon.html"><img src="../images/missionthumbnails/scytheofamon.png" alt="Scythe Of Amon Thumbnail"></a>
+        <a href="../missions/templeofthepast.html"><img src="../images/missionthumbnails/templeofthepast.png" alt="Temple of the Past Thumbnail"></a>
+        <a href="../missions/thevermillionproblem.html"><img src="../images/missionthumbnails/thevermillionproblem.png" alt="The Vermillion Problem Thumbnail"></a>
+        <a href="../missions/voidlaunch.html"><img src="../images/missionthumbnails/voidlaunch.png" alt="Void Launch Thumbnail"></a>
+        <a href="../missions/voidthrashing.html"><img src="../images/missionthumbnails/voidthrashing.png" alt="Void Thrashing Thumbnail"></a>
+    </div>
+    <div id="guideList" class="submenu">
+        <ul>
+            <li class="normal"><a href="buildordertheory.html">Build&nbsp;Order&nbsp;Theory</a></li>
+            <li class="normal"><a href="enemycomps.html">Enemy&nbsp;Compositions</a></li>
+            <li class="highlight"><a href="generaltips.html">General&nbsp;Tips</a></li>
+            <li class="normal"><a href="newplayer.html">New&nbsp;Players&nbsp;</a></li>
+        </ul>
+    </div>
+    <div id="resources" class="submenu">
+        <ul>
+            <li class="normal"><a href="../resources/achievements.html">Achievements</a></li>
+            <li class="normal"><a href="../resources/ailogic.html">AI&nbsp;Logic</a></li>
+            <li class="normal"><a href="../resources/bugs.html">Bugs</a></li>
+            <li class="normal"><a href="../resources/brutal.html">Brutal+</a></li>
+            <li class="normal"><a href="../resources/deathprevention.html">Death&nbsp;Prevent&nbsp;Effects</a></li>
+            <li class="normal"><a href="../resources/eastereggs.html">Easter&nbsp;Eggs</a></li>
+            <li class="normal"><a href="../resources/levels.html">Levels</a></li>
+            <li class="normal"><a href="../resources/mutators.html">Mutators</a></li>
+            <li class="normal"><a href="../resources/patchdata.html">Patch&nbsp;Data</a></li>
+            <li class="normal"><a href="../resources/stats.html">Stats</a></li>
+            <li class="normal"><a href="../resources/weeklymutations.html">Weekly&nbsp;Mutations</a></li>
+            
+        </ul>
+    </div>
+    <div id="tools" class="submenu">
+        <ul>
+            <li class="normal"><a href="../tools/downloads.html">Downloads</a></li>
+            <li class="normal"><a href="../tools/masterybreakpoints.html">Mastery&nbsp;Breakpoints</a></li>
+            <li class="normal"><a href="../tools/replayanalyzer.html">Replay&nbsp;Analyzer</a></li>
+            <li class="normal"><a href="../tools/unitstats.html">Unit&nbsp;Stats</a></li>
+        </ul>
+    </div>
+    <div id="community" class="submenu">
+        <ul>
+            <li class="normal"><a href="../community/tournament/main.html">Co&#8209;op&nbsp;Tournament</a></li>
+            <li class="normal"><a href="../community/gamespotlight.html">Game&nbsp;Spotlight</a></li>
+            <li class="normal"><a href="../community/mythbusters.html">Mythbusters</a></li>
+            <li class="normal"><a href="../community/rockslappingchampions.html">Rockslapping&nbsp;Champions</a></li>
+            <li class="normal"><a href="../youtube.html">Youtube</a></li>
+        </ul>
+    </div>
+    <div id="about" class="submenu">
+        <ul>
+            <!--<li class="normal"><a href="/about/contact">Contact</a></li>-->
+            <li class="normal"><a href="../about/faq.html">FAQ</a></li>
+            <li class="normal"><a href="../about/links.html">Links</a></li>
+            <li class="normal"><a href="https://www.youtube.com/c/Starcraft2Coop" rel="nofollow">Youtube</a></li>
+        </ul>
+    </div>
+    <!--<div id="imgs">
+        <a href="https://www.youtube.com/c/Starcraft2Coop" rel="nofollow"><img src="/images/links/yt.png" alt="Youtube"></a>
+        <a href="https://www.patreon.com/starcraft2coop" rel="nofollow"><img src="/images/links/patreon.png" alt="Patreon"></a>
+        <a href="https://www.twitch.tv/aommaster" rel="nofollow"><img src="/images/links/twitch.png" alt="Twitch"></a>
+        <a href="https://discord.gg/AbFXRAB" rel="nofollow"><img src="/images/links/discord.png" alt="Discord"></a>
+    </div>-->
+</div>
+<script>
+    function openSubmenu(event, selection){
+        event.preventDefault();
+        
+        switch (selection){
+            case "commanders":
+                $(".submenu").not("#commanderList").hide();
+                $("#commanderList").fadeToggle();
+                break;
+            case "missions":
+                $(".submenu").not("#missionList").hide();
+                $("#missionList").fadeToggle();
+                break;
+            case "community":
+                $(".submenu").not("#community").hide();
+                $("#community").fadeToggle();
+                break;
+            case "guides":
+                $(".submenu").not("#guideList").hide();
+                $("#guideList").fadeToggle();
+                break;
+            case "resources":
+                $(".submenu").not("#resources").hide();
+                $("#resources").fadeToggle();
+                break;
+            case "tools":
+                $(".submenu").not("#tools").hide();
+                $("#tools").fadeToggle();
+                break;
+            case "about":
+                $(".submenu").not("#about").hide();
+                $("#about").fadeToggle();
+                break;
+        }
+    }
+</script></div>
+<div id="content">
+    <h1>General Tips For Co-op Players</h1>
+        <h2>Sections on this Page</h2>
+    <div id="links">
+        <p><a href="generaltips.html#tips1">Tips for Beginners</a></p>
+        <p class="subgroup"><a href="generaltips.html#overproduction">Avoid Overproduction</a></p>
+        <p class="subgroup"><a href="generaltips.html#minimap">Learn the Minimap Icons</a></p>
+        <p class="subgroup"><a href="generaltips.html#usehero">Use Your Hero Unit</a></p>
+        <p class="subgroup"><a href="generaltips.html#usetopbar">Use Your Topbar Abilities</a></p>
+        
+        <p><a href="generaltips.html#tips2">Tips for Intermediate Players</a></p>
+        <p class="subgroup"><a href="generaltips.html#adapt">Adapt to the Enemy Composition and Map</a></p>
+        <p class="subgroup"><a href="generaltips.html#aggressive">Aggressive Play is Rewarded</a></p>
+        <p class="subgroup"><a href="generaltips.html#bindrapidfire">Bind Rapidfire</a></p>
+        <p class="subgroup"><a href="generaltips.html#expand">Expand As Fast As Possible</a></p>
+        
+        <p><a href="generaltips.html#tips3">Tips for Veterans</a></p>
+        <p class="subgroup"><a href="generaltips.html#armor">Armor Upgrades</a></p>
+        <p class="subgroup"><a href="generaltips.html#checkingcreep">Checking Creep</a></p>
+        <p class="subgroup"><a href="generaltips.html#knowledge">Knowledge is Power</a></p>
+        <p class="subgroup"><a href="generaltips.html#attacktypes">Note the Different Attack Types</a></p>
+        <p class="subgroup"><a href="generaltips.html#workercounts">Worker Counts</a></p>
+        
+    </div>
+    <a id="tips1"></a><h2>Tips for Beginners</h2>
+    <a id="overproduction"></a><h3>Avoid Overproduction</h3>
+    <p>Queueing up several units/structures, and overproducing structures can tie up vital resources you need, especially during the early stage of the game. For example:</p>
+    <img src="../images/newplayer/overproduction.jpg" alt="Overproduction">
+    <p>In the image above, the six queued up Laborers account for 240 minerals spent that isn't being used. Additionally, the 11 queued up Supply Bunkers costed 1100 minerals, but none are being built. Most of all, the player will be unable to use all that extra supply. In total, the 12 Supply Bunkers account for 144 Supply - too much supply to be utilized. Build only what you need, and spend the rest of your resources teching up and making your army larger.</p>
+    <p>Additionally, make sure you will have adequate resources to spend once the structure is complete. For example, don't build Tech structures if you do not have the gas to spend to use it.</p>
+    <a id="minimap"></a><h3>Learn the Minimap Icons</h3>
+    <p>Your minimap provides you with critical information throughout the course of the mission. Use it to evaluate your position and what is going on around the map.</p>
+    <img src="../images/newplayer/minimapicons.jpg" alt="Minimap Icons">
+    <a id="usehero"></a><h3>Use Your Hero Unit</h3>
+    <p>Certain commanders (such as <a href="../commanders/kerrigan.html">Kerrigan</a>) spawn a Hero unit. These Hero units are extremely powerful and should be used as much as possible, especially during the early game. They provide the player with early-game power to allow them to push and complete objectives, while macro'ing up at the back to tech up and gain access to high-tier units.</p>
+    <a id="usetopbar"></a><h3>Use Your Topbar Abilities</h3>
+    <p>Topbar Abilities provide players with a large amount of power throughout the course of the game. Use these Topbars to help you push and take engagements. They should be used as soon as they are off cooldown, as frequently as possible. You can time your pushes to line up with when powerful Topbar abilities come off cooldown.</p>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="tips2"></a><h2>Tips for Intermediate Players</h2>
+    <a id="adapt"></a><h3>Adapt to the Enemy Composition and Map</h3>
+    <p>It is important to learn the units that make up various Attack Waves that will attack players. Check the <a href="enemycomps.html">Enemy Compositions</a> page to learn about the various enemy compositions in the game. Use that knowledge to build an army that directly counters that composition while allowing you to push and complete the objectives in the game.</p>
+    <a id="aggressive"></a><h3>Aggressive Play is Rewarded</h3>
+    <p>Enemy bases can seem very intimidating, discouraging players from pushing in when they're not required to do so. However, playing aggressively can make missions easier by providing players with access to enemy wave spawn points. Players can then use Topbar abilities (such as <a href="../commanders/abathur.html">Abathur's</a> Toxic Nests) to spawn-camp attack waves.</p>
+    <a id="bindrapidfire"></a><h3>Bind Rapidfire</h3>
+    <p>Rapidfire binds the selection of a skill (through its hotkey) and its targeting to the same hotkey. This means in order to cast a skill, you need to press its hotkey once (to select it) and then once more to target it at your cursor's current position.</p>
+    <p>Rapidfire has its advantages, because it allows you to cast skills in quick succession. This is very important for commanders like <a href="../commanders/alarak.html">Alarak</a>, who depends on Rapidfire for his Ascendant abilities. Without Rapidfire, skills like Mind Blast would be ineffective due to the high amount of clicking required.</p>
+    <p>Rapidfire is also used for Protoss warp-ins. In order to warp in units quickly, you'd want to bind Rapidfire to your warp in units hotkeys.</p>
+    <p>Rapidfire cannot be bound in-game. You will need to manually edit the hotkey settings file in order to do so. This is because the game can only bind one key to Rapidfire. Generally, you'll want a lot more to make it effective.</p>
+    <p>To find the hotkey settings file, navigate to: My Documents\Starcraft II\Accounts\[Random Number]\Hotkeys</p>
+    <p>You will see a [Your Username].SC2Hotkeys file. Open it in Notepad. If you do not see the file, make sure you have created a custom hotkey profile in-game first.</p>
+    <p>That file will look something like this:</p>
+    <p class="hotkeysFile">[Settings]<br><br>[Hotkeys]<br><br>[Commands]<br>HHBomberAreaBomb/HHBomberPlatform=</p>
+    <p>Under the [Hotkeys] section, add the following line:</p>
+    <p class="hotkeysFile">TargetChoose=LeftMouseButton,Z</p>
+    <p>Your hotkeys file should look like this now:</p>
+    <p class="hotkeysFile">[Settings]<br><br>[Hotkeys]<br>TargetChoose=LeftMouseButton,Z<br><br>[Commands]<br>HHBomberAreaBomb/HHBomberPlatform=</p>
+    <p>Once you save the file, you would have bound the "Z" key to rapidfire. To test it, play Protoss, and warp in a Zealot (assuming other hotkeys are default). But instead of clicking the location you'd like to warp the Zealot in, just press the Z key again. The Zealot will be warped in.</p>
+    <p>You may add as many keys as you'd like, separated by commas to the "TargetChoose" setting to bind additional keys to Rapidfire.</p>
+    <p>A video on Rapidfire is below:</p>
+    <iframe width="475" height="268" src="https://www.youtube.com/embed/SxXmfRhY6m8" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <a id="expand"></a><h3>Expand As Fast As Possible</h3>
+    <p>Some missions in co-op have uncontested expansions, while others might be guarded. Regardless, you should always aim to take your expansion as quickly as possible. Certain commanders (like <a href="../commanders/mengsk.html">Mengsk</a>) have ways of capturing expansions unusually early in the game (these are called "Fast-Expand Techniques"). Learn them to strengthen your early-game economy. If you are playing Terran, pre-build your Expansion Commander Center and float it over once you clear the defenders/rocks.</p>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="tips3"></a><h2>Tips for Veterans</h2>
+    <a id="armor"></a><h3>Armor Upgrades</h3>
+    <p>In Versus games, armor is a critical part of a player's macro, as without it, they end up taking much less efficient trades in battle. However, due to the unique nature of Co-op, armor upgrades are not that important because:</p>
+    <ul>
+        <li>Calldowns reduce the damage an army takes by eliminating high-threat targets, protecting the army or debuffing enemies</li>
+        <li>Most enemy units that deal damage to a player's army are spellcasters</li>
+        <li>Player armies become large deathballs in the lategame, killing enemy units before they take significant damage</li>
+    </ul>
+    <p>There are some cases where a player should invest in armor upgrades, such as:</p>
+    <ul>
+        <li>They are cheap (<a href="../commanders/kerrigan.html">Kerrigan</a>)</li>
+        <li>They provide additional bonuses such as extra HP (<a href="../commanders/raynor.html">Raynor</a>, <a href="../commanders/tychus.html">Tychus</a>)</li>
+    </ul>
+    <p>A video that explains this in more detail is below:</p>
+    <iframe width="475" height="268" src="https://www.youtube.com/embed/IsPSXlj8Nh8" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    
+    <a id="checkingcreep"></a><h3>Checking Creep</h3>
+    <p>Checking creep for the presence of Zerg can allow you to adjust your opening to better counter the potential attack waves you will face at the start of the mission. Press Alt+T. This changes the minimap to a Terrain view. If you see creep, you'll be facing a Zerg composition. If you don't see creep, you'll be facing a Protoss or a Terran composition. The below image shows you an example:</p>
+    <img src="../images/newplayer/creepminimap.jpg" alt="Creep on Minimap">
+    <p>Note that for <a href="../missions/scytheofamon.html">Scythe of Amon</a>, creep will <i>always</i> be present. However, the <i>positions</i> of the creep will allow you to uniquely identify which enemy race you'll be playing against.</p>
+    <a id="knowledge"></a><h3>Knowledge is Power</h3>
+    <p>In Co-op, knowledge of the game mode can significantly reduce the challenges that new players face. While some interactions between Co-op mechanics are rare, good Co-op players should at least be aware of:</p>
+    <ul>
+        <li>Mission Timings (most importantly, the first attack wave)</li>
+        <li><a href="enemycomps.html">Enemy Compositions</a></li>
+        <li><a href="enemycomps.html">Hybrid Types</a>, their abilities and their start locations on the map</li>
+        <li>Attack Wave Spawn points</li>
+        <li>Commander Fast-Expand techniques (like <a href="../commanders/zeratul.html">Zeratul</a>)</li>
+        <li>Commander Topbars</li>
+        <li>Commander Passives</li>
+    </ul>
+    <a id="attacktypes"></a><h3>Note the Different Attack Types</h3>
+    <p>In Co-op, Point Defense Drones and Point Defense Missiles frequently appear, which can affect your effectiveness in a mission, especially when dealing with <a href="../resources/mutators.html">Mutators</a>. It is important to be aware of what Hitscan and Projectile attacks are and what the difference between them is.</p>
+    <p>These terms refer to the types of attack a unit has and may be a factor in unit selection against certain <a href="../resources/mutators.html">mutators</a> such as Missile Command.</p>
+    <p>In short, a Hitscan attack deals damage as soon as it is fired. A Projectile attack has a physcial projectile that must travel to its target to deal damage. For more details on the differences, you can watch the video below:</p>
+    <iframe width="475" height="268" src="https://www.youtube.com/embed/OKg_hJ-ldD8" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <a id="workercounts"></a><h3>Worker Counts</h3>
+    <p>In Versus games, the worker count displayed at the top of the Primary Structure denotes the worker count that corresponds to the Optimal mining rate. However, in Co-op, the value denotes the Maximum mining rate. More information on these mining rates can be found in the <a href="buildordertheory.html">Build Order Theory</a> Guide.</p>
+    <img src="../images/newplayer/workercounts.jpg" alt="Worker Counts">
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+</div>
+<div id="footer">
+    <p>Note: All data generated on this site is based on Brutal difficulty. Timings, compositions and other elements may differ on easier difficulty levels.</p>
+    <p>© Blizzard Entertainment, Inc. All rights reserved. Wings of Liberty, Heart of the Swarm, Legacy of the Void, and StarCraft are trademarks or registered trademarks of Blizzard Entertainment, Inc. in the U.S. and/or other countries.</p>
+</div></body>
+</html>

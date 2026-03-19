@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+<link rel='shortcut icon' href='../images/favicon.ico' type='image/x-icon' />
+<link rel="stylesheet"  media="all" type="text/css" href="../styles/mainstyle.css%3Fv=1.28.css">
+<link href='https://fonts.googleapis.com/css?family=Convergence' rel='stylesheet' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-165288360-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-165288360-1');
+</script>
+<script>
+    grecaptcha.ready(function() {
+        $(".captchaForm").each(function(){
+            currentID = $(this).attr('id');
+            if(currentID=="reportForm"){
+                $(this).submit(function(event){
+                    $("#submitbtn").attr("disabled", true);
+                    grecaptcha.execute('6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd', { action: currentID }).then(function (token) {
+                        $("#reportFormRecaptchaResponse").val(token);
+                        var path = window.location.pathname;
+                        var page = path.split("/").pop();
+                        var x = document.forms["errorReport"]["comment"].value;
+            		    var y = document.forms["errorReport"]["url"].value;
+            			var z = $("#reportFormRecaptchaResponse").val();
+            			$.ajax({  
+                            type: 'POST',
+                            url: '/scripts/addreport.php', 
+                            data: { 
+                                comment: x,
+                                errorpage: page,
+                                url:y, 
+                                recaptcha_response:z},
+                            success: function(data) {
+                                $("#reportForm").hide();
+                                $("#errorReport").append(data);
+                                return false;
+                            }
+                        });
+                        return false;
+                        $("#submitbtn").attr("disabled", false);
+                    });
+                    
+                })
+            }
+            else{
+                $(this).submit(function(event){
+                    var currentID = $(this).attr('id');
+                    var currentForm = $(this);
+                    event.preventDefault();
+                    grecaptcha.execute('6LcWQfEUAAAAAKrJ7sgdGyROvE7wuzopdDeAV0qd', { action: currentID }).then(function (token) {
+                        $("#" + currentID + "RecaptchaResponse").val(token);
+                        currentForm.off("submit");
+                        currentForm.submit();
+                    });
+                })
+            }
+            
+        })
+    },false)
+</script>  <title>Starcraft 2 Co-op - Mission Guide - Scythe of Amon</title>
+  <meta name="description" content="Starcraft 2 Co-op Mission Guide Scythe of Amon">
+  <meta name="keywords" content="Starcraft co-op guides scythe amon mission">
+  <link rel="stylesheet"  media="all" type="text/css" href="../styles/missionstyle.css%3Fv=1.00.css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link rel="canonical" href="scytheofamon.html">
+  <script src="../scripts/preload.js"></script>
+  <style>
+    .sliver{
+        margin-bottom:50px;
+    }
+    .sliverDiv{
+        display:inline-block;
+        margin-right:25px;
+        width:400px;
+        height:400px;
+    }
+    .sliverDiv img{
+        position:absolute;
+    }
+    .sliverMinimap{
+        display:inline-block;
+    }
+  </style>
+  </head>
+<body>
+<div id="header"><img src="../images/mainpageheader.png" alt="Starcraft II Co-op Logo">
+</div>
+<div id="menu">
+<ul>
+    <li class="normal"><a href="../index.html">&#127968;</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'commanders');">Commanders</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'community');">Community</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'guides');">Guides</a></li>
+    <li class="highlight"><a href="../index.html" onclick="javascript:openSubmenu(event,'missions');">Missions</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'resources');">Resources</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'tools');">Tools</a></li>
+    <li class="normal"><a href="../index.html" onclick="javascript:openSubmenu(event,'about');">About</a></li>
+    <li class="normal"><a href="../account.html">My&nbsp;Account</a></li>
+</ul>
+<div id="container">
+    <div id="commanderList" class="submenu">
+        <a href="../commanders/raynor.html"><img src="../images/commanderportraits/raynorportrait.png" alt="Raynor Portrait"></a>
+        <a href="../commanders/kerrigan.html"><img src="../images/commanderportraits/kerriganportrait.png" alt="Kerrigan Portrait"></a>
+        <a href="../commanders/artanis.html"><img src="../images/commanderportraits/artanisportrait.png" alt="Artanis Portrait"></a>
+        <a href="../commanders/swann.html"><img src="../images/commanderportraits/swannportrait.png" alt="Swann Portrait"></a>
+        <a href="../commanders/zagara.html"><img src="../images/commanderportraits/zagaraportrait.png" alt="Zagara Portrait"></a>
+        <a href="../commanders/vorazun.html"><img src="../images/commanderportraits/vorazunportrait.png" alt="Vorazun Portrait"></a>
+        <a href="../commanders/karax.html"><img src="../images/commanderportraits/karaxportrait.png" alt="Karax Portrait"></a>
+        <a href="../commanders/abathur.html"><img src="../images/commanderportraits/abathurportrait.png" alt="Abathur Portrait"></a>
+        <a href="../commanders/alarak.html"><img src="../images/commanderportraits/alarakportrait.png" alt="Alarak Portrait"></a>
+        <a href="../commanders/nova.html"><img src="../images/commanderportraits/novaportrait.png" alt="Nova Portrait"></a>
+        <a href="../commanders/stukov.html"><img src="../images/commanderportraits/stukovportrait.png" alt="Stukov Portrait"></a>
+        <a href="../commanders/fenix.html"><img src="../images/commanderportraits/fenixportrait.png" alt="Fenix Portrait"></a>
+        <a href="../commanders/dehaka.html"><img src="../images/commanderportraits/dehakaportrait.png" alt="Dehaka Portrait"></a>
+        <a href="../commanders/horner.html"><img src="../images/commanderportraits/hornerportrait.png" alt="Han & Horner Portrait"></a>
+        <a href="../commanders/tychus.html"><img src="../images/commanderportraits/tychusportrait.png" alt="Tychus Portrait"></a>
+        <a href="../commanders/zeratul.html"><img src="../images/commanderportraits/zeratulportrait.png" alt="Zeratul Portrait"></a>
+        <a href="../commanders/stetmann.html"><img src="../images/commanderportraits/stetmannportrait.png" alt="Stetmann Portrait"></a>
+        <a href="../commanders/mengsk.html"><img src="../images/commanderportraits/mengskportrait.png" alt="Mengsk Portrait"></a>
+    </div>
+    <div id="missionList" class="submenu">
+        <a href="chainofascension.html"><img src="../images/missionthumbnails/chainofascension.png" alt="Chain of Ascension Thumbnail"></a>
+        <a href="cradleofdeath.html"><img src="../images/missionthumbnails/cradleofdeath.png" alt="Cradle of Death Thumbnail"></a>
+        <a href="deadofnight.html"><img src="../images/missionthumbnails/deadofnight.png" alt="Dead of Night Thumbnail"></a>
+        <a href="lockload.html"><img src="../images/missionthumbnails/lockload.png" alt="Lock & Load Thumbnail"></a>
+        <a href="malwarfare.html"><img src="../images/missionthumbnails/malwarfare.png" alt="Malwarfare Thumbnail"></a>
+        <a href="minerevacuation.html"><img src="../images/missionthumbnails/minerevacuation.png" alt="Miner Evacuation Thumbnail"></a>
+        <a href="mistopportunities.html"><img src="../images/missionthumbnails/mistopportunities.png" alt="Mist Opportunities Thumbnail"></a>
+        <a href="oblivionexpress.html"><img src="../images/missionthumbnails/oblivionexpress.png" alt="Oblivion Express Thumbnail"></a>
+        <a href="partparcel.html"><img src="../images/missionthumbnails/partparcel.png" alt="Part & Parcel Thumbnail"></a>
+        <a href="riftstokorhal.html"><img src="../images/missionthumbnails/riftstokorhal.png" alt="Rifts to Korhal Thumbnail"></a>
+        <a href="scytheofamon.html"><img src="../images/missionthumbnails/scytheofamon.png" alt="Scythe Of Amon Thumbnail"></a>
+        <a href="templeofthepast.html"><img src="../images/missionthumbnails/templeofthepast.png" alt="Temple of the Past Thumbnail"></a>
+        <a href="thevermillionproblem.html"><img src="../images/missionthumbnails/thevermillionproblem.png" alt="The Vermillion Problem Thumbnail"></a>
+        <a href="voidlaunch.html"><img src="../images/missionthumbnails/voidlaunch.png" alt="Void Launch Thumbnail"></a>
+        <a href="voidthrashing.html"><img src="../images/missionthumbnails/voidthrashing.png" alt="Void Thrashing Thumbnail"></a>
+    </div>
+    <div id="guideList" class="submenu">
+        <ul>
+            <li class="normal"><a href="../guides/buildordertheory.html">Build&nbsp;Order&nbsp;Theory</a></li>
+            <li class="normal"><a href="../guides/enemycomps.html">Enemy&nbsp;Compositions</a></li>
+            <li class="normal"><a href="../guides/generaltips.html">General&nbsp;Tips</a></li>
+            <li class="normal"><a href="../guides/newplayer.html">New&nbsp;Players&nbsp;</a></li>
+        </ul>
+    </div>
+    <div id="resources" class="submenu">
+        <ul>
+            <li class="normal"><a href="../resources/achievements.html">Achievements</a></li>
+            <li class="normal"><a href="../resources/ailogic.html">AI&nbsp;Logic</a></li>
+            <li class="normal"><a href="../resources/bugs.html">Bugs</a></li>
+            <li class="normal"><a href="../resources/brutal.html">Brutal+</a></li>
+            <li class="normal"><a href="../resources/deathprevention.html">Death&nbsp;Prevent&nbsp;Effects</a></li>
+            <li class="normal"><a href="../resources/eastereggs.html">Easter&nbsp;Eggs</a></li>
+            <li class="normal"><a href="../resources/levels.html">Levels</a></li>
+            <li class="normal"><a href="../resources/mutators.html">Mutators</a></li>
+            <li class="normal"><a href="../resources/patchdata.html">Patch&nbsp;Data</a></li>
+            <li class="normal"><a href="../resources/stats.html">Stats</a></li>
+            <li class="normal"><a href="../resources/weeklymutations.html">Weekly&nbsp;Mutations</a></li>
+            
+        </ul>
+    </div>
+    <div id="tools" class="submenu">
+        <ul>
+            <li class="normal"><a href="../tools/downloads.html">Downloads</a></li>
+            <li class="normal"><a href="../tools/masterybreakpoints.html">Mastery&nbsp;Breakpoints</a></li>
+            <li class="normal"><a href="../tools/replayanalyzer.html">Replay&nbsp;Analyzer</a></li>
+            <li class="normal"><a href="../tools/unitstats.html">Unit&nbsp;Stats</a></li>
+        </ul>
+    </div>
+    <div id="community" class="submenu">
+        <ul>
+            <li class="normal"><a href="../community/tournament/main.html">Co&#8209;op&nbsp;Tournament</a></li>
+            <li class="normal"><a href="../community/gamespotlight.html">Game&nbsp;Spotlight</a></li>
+            <li class="normal"><a href="../community/mythbusters.html">Mythbusters</a></li>
+            <li class="normal"><a href="../community/rockslappingchampions.html">Rockslapping&nbsp;Champions</a></li>
+            <li class="normal"><a href="../youtube.html">Youtube</a></li>
+        </ul>
+    </div>
+    <div id="about" class="submenu">
+        <ul>
+            <!--<li class="normal"><a href="/about/contact">Contact</a></li>-->
+            <li class="normal"><a href="../about/faq.html">FAQ</a></li>
+            <li class="normal"><a href="../about/links.html">Links</a></li>
+            <li class="normal"><a href="https://www.youtube.com/c/Starcraft2Coop" rel="nofollow">Youtube</a></li>
+        </ul>
+    </div>
+    <!--<div id="imgs">
+        <a href="https://www.youtube.com/c/Starcraft2Coop" rel="nofollow"><img src="/images/links/yt.png" alt="Youtube"></a>
+        <a href="https://www.patreon.com/starcraft2coop" rel="nofollow"><img src="/images/links/patreon.png" alt="Patreon"></a>
+        <a href="https://www.twitch.tv/aommaster" rel="nofollow"><img src="/images/links/twitch.png" alt="Twitch"></a>
+        <a href="https://discord.gg/AbFXRAB" rel="nofollow"><img src="/images/links/discord.png" alt="Discord"></a>
+    </div>-->
+</div>
+<script>
+    function openSubmenu(event, selection){
+        event.preventDefault();
+        
+        switch (selection){
+            case "commanders":
+                $(".submenu").not("#commanderList").hide();
+                $("#commanderList").fadeToggle();
+                break;
+            case "missions":
+                $(".submenu").not("#missionList").hide();
+                $("#missionList").fadeToggle();
+                break;
+            case "community":
+                $(".submenu").not("#community").hide();
+                $("#community").fadeToggle();
+                break;
+            case "guides":
+                $(".submenu").not("#guideList").hide();
+                $("#guideList").fadeToggle();
+                break;
+            case "resources":
+                $(".submenu").not("#resources").hide();
+                $("#resources").fadeToggle();
+                break;
+            case "tools":
+                $(".submenu").not("#tools").hide();
+                $("#tools").fadeToggle();
+                break;
+            case "about":
+                $(".submenu").not("#about").hide();
+                $("#about").fadeToggle();
+                break;
+        }
+    }
+</script></div>
+<div id="content">
+    <h1>Co-op Mission Guide: Scythe of Amon</h1>
+    <p id="missionPlace">Xel'Naga Temple</p>
+        <h2>Sections on this Page</h2>
+    <div id="links">
+        <p><a href="scytheofamon.html#misSum">Mission Summary</a></p>
+        <p><a href="scytheofamon.html#objectives">Objectives</a></p>
+        <p><a href="scytheofamon.html#idRace">Identifying the Enemy Race</a></p>
+        <p><a href="scytheofamon.html#sliverGrowth">Void Sliver Growth</a></p>
+        <p><a href="scytheofamon.html#sliverAbilities">Void Sliver Abilities</a></p>
+        <p><a href="scytheofamon.html#bonus">Completing the Bonus Objective</a></p>
+        <p><a href="scytheofamon.html#timings">Timings</a></p>
+        <p><a href="scytheofamon.html#spawnPoints">Spawn Points</a></p>
+        <p><a href="scytheofamon.html#misTips">Mission Tips</a></p>
+        <p><a href="scytheofamon.html#comTips">Commander-Specific Tips</a></p>
+    </div>
+    <a id="misSum"></a><h2>Mission Summary</h2>
+    <p>Nerazim scout Lyrak has made a startling discovery: Amon’s forces have invaded a xel’naga temple and are using its energies to awaken one of the Dark God’s most powerful creations. Put a stop to their plans by destroying the void slivers while there’s still time.</p>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="objectives"></a><h2>Objectives</h2>
+    <h3>Primary Objective</h3>
+        <ul>
+            <li>Destroy Void Slivers (5)</li>
+            <li>Do not let the Voidshade Hybrid awaken.</li>
+        </ul>
+    <h3>Secondary Objective</h3>
+        <ul>
+            <li>Escort Evacuation Ships (3)</li>
+        </ul>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="idRace"></a><h2>Identifying the Enemy Race</h2>
+    <p>An important part in Starcraft II co-op is identifying the enemy race, and then the enemy composition. This allows you to effectively counter the attack waves on missions. In other missions, the presence of creep would point towards a Zerg race, while the absence of creep would point towards either Protoss or Terran. Scythe of Amon is the only mission in the game where you can uniquely identify the enemy race by checking creep spread. Press Alt + T to view the creep spread pattern. You'll get one of the following three patterns.</p>
+    <p>Protoss Creep Spread:</p>
+    <img src="../images/missiondata/scytheofamon/creepspread_protoss.jpg" alt="Protoss Creep Spread">
+    <p>Terran Creep Spread:</p>
+    <img src="../images/missiondata/scytheofamon/creepspread_terran.jpg" alt="Terran Creep Spread">
+    <p>Zerg Creep Spread:</p>
+    <img src="../images/missiondata/scytheofamon/creepspread_zerg.jpg" alt="Zerg Creep Spread">
+    <p>A video is below:</p>
+    <iframe width="475" height="268" src="https://www.youtube.com/embed/9g-vLQou8-w" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="sliverGrowth"></a><h2>Void Sliver Growth</h2>
+        <p>Every time a Void Sliver is destroyed, further reinforcements are added to the remaining Void Slivers. Additionally, all other remaining Void Slivers gain 2000 max shields, and their shields refreshed to full. This makes the other slivers more difficult to destroy. The reinforcement growth of each Sliver is shown below.</p>
+    <p>All units present will be Void units and will spawn from the Void Rifts around the Sliver before moving into position. These units can be Dominated and Reclaimed, but cannot be Mind-Controlled by Dark Archons.</p>
+    <p>Sliver 1:</p>
+    <div class='sliver'>
+        <div id="sliver1Div" class='sliverDiv'><img id ='sliver1Pic' src='../images/missiondata/scytheofamon/sliver1-0.jpg' alt='Sliver 1'></div>
+            <div class = 'sliverMinimap'>
+                <form action='scytheofamon.html#'>
+                    <label><input type='radio' name='sliver1States' value='0' checked>0 Slivers Destroyed</label><br>
+                    <label><input type='radio' name='sliver1States' value='1'>1 Sliver Destroyed</label><br>
+                    <label><input type='radio' name='sliver1States' value='2'>2 Slivers Destroyed</label><br>
+                    <label><input type='radio' name='sliver1States' value='3'>3 Slivers Destroyed</label><br>
+                    <label><input type='radio' name='sliver1States' value='4'>4 Slivers Destroyed</label><br>
+                </form>
+                <br><br>
+                <div><img src='../images/missiondata/scytheofamon/sliver1minimap.jpg' alt='Base Minimap'></div>
+            </div>
+    </div>
+    <p>Sliver 2:</p>
+    <div class='sliver'>
+        <div id="sliver2Div"  class='sliverDiv'><img id ='sliver2Pic' src='../images/missiondata/scytheofamon/sliver2-0.jpg' alt='Sliver 2'></div>
+            <div class = 'sliverMinimap'>
+                <form action='scytheofamon.html#'>
+                    <label><input type='radio' name='sliver2States' value='0' checked>0 Slivers Destroyed</label><br>
+                    <label><input type='radio' name='sliver2States' value='1'>1 Sliver Destroyed</label><br>
+                    <label><input type='radio' name='sliver2States' value='2'>2 Slivers Destroyed</label><br>
+                    <label><input type='radio' name='sliver2States' value='3'>3 Slivers Destroyed</label><br>
+                    <label><input type='radio' name='sliver2States' value='4'>4 Slivers Destroyed</label><br>
+                </form>
+                <br><br>
+                <div><img src='../images/missiondata/scytheofamon/sliver2minimap.jpg' alt='Base Minimap'></div>
+            </div>
+    </div>
+    <p>Sliver 3:</p>
+    <div class='sliver'>
+        <div id="sliver3Div"  class='sliverDiv'><img id ='sliver3Pic' src='../images/missiondata/scytheofamon/sliver3-0.jpg' alt='Sliver 3'></div>
+            <div class = 'sliverMinimap'>
+                <form action='scytheofamon.html#'>
+                    <label><input type='radio' name='sliver3States' value='0' checked>0 Slivers Destroyed</label><br>
+                    <label><input type='radio' name='sliver3States' value='1'>1 Sliver Destroyed</label><br>
+                    <label><input type='radio' name='sliver3States' value='2'>2 Slivers Destroyed</label><br>
+                    <label><input type='radio' name='sliver3States' value='3'>3 Slivers Destroyed</label><br>
+                    <label><input type='radio' name='sliver3States' value='4'>4 Slivers Destroyed</label><br>
+                </form>
+                <br><br>
+                <div><img src='../images/missiondata/scytheofamon/sliver3minimap.jpg' alt='Base Minimap'></div>
+            </div>
+    </div>
+    <p>Sliver 4:</p>
+    <div class='sliver'>
+        <div id="sliver4Div"  class='sliverDiv'><img id ='sliver4Pic' src='../images/missiondata/scytheofamon/sliver4-0.jpg' alt='Sliver 4'></div>
+            <div class = 'sliverMinimap'>
+                <form action='scytheofamon.html#'>
+                    <label><input type='radio' name='sliver4States' value='0' checked>0 Slivers Destroyed</label><br>
+                    <label><input type='radio' name='sliver4States' value='1'>1 Sliver Destroyed</label><br>
+                    <label><input type='radio' name='sliver4States' value='2'>2 Slivers Destroyed</label><br>
+                    <label><input type='radio' name='sliver4States' value='3'>3 Slivers Destroyed</label><br>
+                    <label><input type='radio' name='sliver4States' value='4'>4 Slivers Destroyed</label><br>
+                </form>
+                <br><br>
+                <div><img src='../images/missiondata/scytheofamon/sliver4minimap.jpg' alt='Base Minimap'></div>
+            </div>
+    </div>
+    <p>Sliver 5:</p>
+    <div class='sliver'>
+        <div id="sliver5Div"  class='sliverDiv'><img id ='sliver5Pic' src='../images/missiondata/scytheofamon/sliver5-0.jpg' alt='Sliver 5'></div>
+            <div class = 'sliverMinimap'>
+                <form action='scytheofamon.html#'>
+                    <label><input type='radio' name='sliver5States' value='0' checked>0 Slivers Destroyed</label><br>
+                    <label><input type='radio' name='sliver5States' value='1'>1 Sliver Destroyed</label><br>
+                    <label><input type='radio' name='sliver5States' value='2'>2 Slivers Destroyed</label><br>
+                    <label><input type='radio' name='sliver5States' value='3'>3 Slivers Destroyed</label><br>
+                    <label><input type='radio' name='sliver5States' value='4'>4 Slivers Destroyed</label><br>
+                </form>
+                <br><br>
+                <div><img src='../images/missiondata/scytheofamon/sliver5minimap.jpg' alt='Base Minimap'></div>
+            </div>
+    </div>
+    <script>
+        var imgList=[];
+        for (var i=1;i<6;i++){
+            for (var j=0; j<5; j++){
+                imgList.push('/images/missiondata/scytheofamon/sliver' + i +'-'+ j + '.jpg');
+            }
+        }
+        preload(imgList);
+        $("input[name='sliver1States']").change(function(){
+            var state= $(this).val();
+            var oldImg = $('#sliver1Pic');
+            var img = new Image();
+            img.src = '/images/missiondata/scytheofamon/sliver1-'+ state + '.jpg';
+            var newImg = $(img).hide();
+            $('#sliver1Div').append(img);
+            oldImg.stop(true).fadeOut(500, function() {
+                $(this).remove();
+            });
+            newImg.fadeIn(500);
+            newImg.attr('id', 'sliver1Pic');
+        })
+        $("input[name='sliver2States']").change(function(){
+            var state= $(this).val();
+            var oldImg = $('#sliver2Pic');
+            var img = new Image();
+            img.src = '/images/missiondata/scytheofamon/sliver2-'+ state + '.jpg';
+            var newImg = $(img).hide();
+            $('#sliver2Div').append(img);
+            oldImg.stop(true).fadeOut(500, function() {
+                $(this).remove();
+            });
+            newImg.fadeIn(500);
+            newImg.attr('id', 'sliver2Pic');
+        })
+        $("input[name='sliver3States']").change(function(){
+            var state= $(this).val();
+            var oldImg = $('#sliver3Pic');
+            var img = new Image();
+            img.src = '/images/missiondata/scytheofamon/sliver3-'+ state + '.jpg';
+            var newImg = $(img).hide();
+            $('#sliver3Div').append(img);
+            oldImg.stop(true).fadeOut(500, function() {
+                $(this).remove();
+            });
+            newImg.fadeIn(500);
+            newImg.attr('id', 'sliver3Pic');
+        })
+        $("input[name='sliver4States']").change(function(){
+            var state= $(this).val();
+            var oldImg = $('#sliver4Pic');
+            var img = new Image();
+            img.src = '/images/missiondata/scytheofamon/sliver4-'+ state + '.jpg';
+            var newImg = $(img).hide();
+            $('#sliver4Div').append(img);
+            oldImg.stop(true).fadeOut(500, function() {
+                $(this).remove();
+            });
+            newImg.fadeIn(500);
+            newImg.attr('id', 'sliver4Pic');
+        })
+        $("input[name='sliver5States']").change(function(){
+            var state= $(this).val();
+            var oldImg = $('#sliver5Pic');
+            var img = new Image();
+            img.src = '/images/missiondata/scytheofamon/sliver5-'+ state + '.jpg';
+            var newImg = $(img).hide();
+            $('#sliver5Div').append(img);
+            oldImg.stop(true).fadeOut(500, function() {
+                $(this).remove();
+            });
+            newImg.fadeIn(500);
+            newImg.attr('id', 'sliver5Pic');
+        })
+    </script>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="sliverAbilities"></a><h2>Void Sliver Abilities</h2>
+    <p>The Void Slivers will cast various abilities as they are attacked. The first Void Sliver will have no abilities. Subsequent Void Slivers will each have a random ability added from the list below. Therefore, Slivers #4 and #5 will have all abilities.</p>
+    <p>The list of abilities are below:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Ability</th>
+                <th>Description</th>
+                <th>Cooldown</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Shockwave</td>
+                <td>Casts an Area of Effect within 11 range of the Void Sliver with a chargeup time of 3 seconds, stunning all units within its range for 2 seconds.</td>
+                <td>14 seconds</td>
+            </tr>
+            <tr>
+                <td>Death Grip</td>
+                <td>Creates a Death Grip Crystal within 16 range of the Void Sliver. Void Slivers #4 and #5 will spawn 2 Death Grip Crystals instead of 1 if they have the ability.  Death Grip Crystals disable a set of units whose HP + Shields are less than 800*, and destroys them after 10 seconds unless the crystal is destroyed.</td>
+                <td>60 seconds</td>
+            </tr>
+            <tr>
+                <td>Unstable Energy</td>
+                <td>Deals 100 damage in an area within 18 range of the Void Sliver after 4 seconds.</td>
+                <td>20 seconds</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>* The Death Grip Crystal target selection code picks a unit and adds its vitality to a pool for counting. If the total vitality in the pool is less than 800, the Death Grip Crystal will pick another target, repeating until the pool goes above 800 vitality. Therefore, it is possible for Death Grip Crystals to capture units that are greater than 800 HP.</p>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="bonus"></a><h2>Completing the Bonus Objective</h2>
+    <div id="objectiveImages">
+        <img src="../images/missiondata/scytheofamon/warpprism.jpg" alt="Warp Prism">
+        <img src="../images/missiondata/scytheofamon/warpprism.jpg" alt="Warp Prism">
+        <img src="../images/missiondata/scytheofamon/warpprism.jpg" alt="Warp Prism">
+    </div>
+    <div id="globalRaceSelect">
+        <p>Change all base analysis pictures to race:</p>
+        <form action="scytheofamon.html#">
+            <input type="radio" name="globalRace" value="protoss" checked>Protoss<br>
+            <input type="radio" name="globalRace" value="terran">Terran<br>
+            <input type="radio" name="globalRace" value="zerg">Zerg<br>
+        </form>
+        <script>
+            $("input[name='globalRace']").change(function(){
+                var race= $(this).val();
+                $('input:radio[value="' + race + '"]').each(function () {
+                    if($(this).attr('name')!=="globalRace"){
+                        $(this).prop('checked', true).trigger('change');
+                    }
+                })
+                return false;
+            })
+        </script>
+    </div>
+    <p>The bonus objective requires you to escort a Warp Prism as it attempts to evacuate people. The stopping points of these prisms are within enemy bases. The bases that will be encountered, in the order of the stopping points (assuming the objective doesn't get shot down) is shown below.</p>
+    <p>Stop Point 1:</p>
+    <div class='switcher'><div class='long' id='bonusbase1longdiv'><img id ='bonusbase1long' src='../images/missiondata/scytheofamon/bonusbase1long_protoss.jpg' alt='bonusbase1long Picture'></div><div class = 'baseMinimap'><form action='scytheofamon.html#'><label><input type='radio' name='bonusbase1long' value='protoss' checked>Protoss</label><br><label><input type='radio' name='bonusbase1long' value='terran'>Terran</label><br><label><input type='radio' name='bonusbase1long' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/scytheofamon/bonusbase1longminimap.jpg' alt='bonusbase1long Minimap'></div></div></div><script>$("input[name='bonusbase1long']").change(function(){var race= $(this).val();var oldImg = $('#bonusbase1long');var img = new Image();img.src = '/images/missiondata/scytheofamon/bonusbase1long_'+ race + '.jpg';var newImg = $(img).hide();$('#bonusbase1longdiv').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'bonusbase1long');return false;});var imgList=[];imgList.push('/images/missiondata/scytheofamon/bonusbase1long_protoss.jpg');imgList.push('/images/missiondata/scytheofamon/bonusbase1long_terran.jpg');imgList.push('/images/missiondata/scytheofamon/bonusbase1long_zerg.jpg');preload(imgList);</script>    <p>Stop Point 2:</p>
+    <div class='switcher'><div class='basePic' id='bonusbase2div'><img id ='bonusbase2' src='../images/missiondata/scytheofamon/bonusbase2_protoss.jpg' alt='bonusbase2 Picture'></div><div class = 'baseMinimap'><form action='scytheofamon.html#'><label><input type='radio' name='bonusbase2' value='protoss' checked>Protoss</label><br><label><input type='radio' name='bonusbase2' value='terran'>Terran</label><br><label><input type='radio' name='bonusbase2' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/scytheofamon/bonusbase2minimap.jpg' alt='bonusbase2 Minimap'></div></div></div><script>$("input[name='bonusbase2']").change(function(){var race= $(this).val();var oldImg = $('#bonusbase2');var img = new Image();img.src = '/images/missiondata/scytheofamon/bonusbase2_'+ race + '.jpg';var newImg = $(img).hide();$('#bonusbase2div').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'bonusbase2');return false;});var imgList=[];imgList.push('/images/missiondata/scytheofamon/bonusbase2_protoss.jpg');imgList.push('/images/missiondata/scytheofamon/bonusbase2_terran.jpg');imgList.push('/images/missiondata/scytheofamon/bonusbase2_zerg.jpg');preload(imgList);</script>    <p>Stop Point 3:</p>
+    <div class='switcher'><div class='long' id='bonusbase3longdiv'><img id ='bonusbase3long' src='../images/missiondata/scytheofamon/bonusbase3long_protoss.jpg' alt='bonusbase3long Picture'></div><div class = 'baseMinimap'><form action='scytheofamon.html#'><label><input type='radio' name='bonusbase3long' value='protoss' checked>Protoss</label><br><label><input type='radio' name='bonusbase3long' value='terran'>Terran</label><br><label><input type='radio' name='bonusbase3long' value='zerg'>Zerg</label><br></form><br><br><div><img src='../images/missiondata/scytheofamon/bonusbase3longminimap.jpg' alt='bonusbase3long Minimap'></div></div></div><script>$("input[name='bonusbase3long']").change(function(){var race= $(this).val();var oldImg = $('#bonusbase3long');var img = new Image();img.src = '/images/missiondata/scytheofamon/bonusbase3long_'+ race + '.jpg';var newImg = $(img).hide();$('#bonusbase3longdiv').append(img);oldImg.stop(true).fadeOut(500, function() {   $(this).remove();});newImg.fadeIn(500);newImg.attr('id', 'bonusbase3long');return false;});var imgList=[];imgList.push('/images/missiondata/scytheofamon/bonusbase3long_protoss.jpg');imgList.push('/images/missiondata/scytheofamon/bonusbase3long_terran.jpg');imgList.push('/images/missiondata/scytheofamon/bonusbase3long_zerg.jpg');preload(imgList);</script>    <p>It is also important to note that each stopping point will feature a difference race of enemy units. The race will not match the race of the Attack Waves on this map. However, based on the race of the Attack Waves, you can tell what race of enemy units will be present in each of the three Stopping Points above as follows:</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Race of attack wave</th>
+                <th>Stop Point 1 Race</th>
+                <th>Stop Point 2 Race</th>
+                <th>Stop Point 3 Race</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Protoss</td>
+                <td>Zerg</td>
+                <td>Terran</td>
+                <td>Protoss</td>
+            </tr>
+            <tr>
+                <td>Terran</td>
+                <td>Protoss</td>
+                <td>Zerg</td>
+                <td>Terran</td>
+            </tr>
+            <tr>
+                <td>Zerg</td>
+                <td>Terran</td>
+                <td>Protoss</td>
+                <td>Zerg</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The first Stopping Point will always be the same area. However, Stopping Points 2 and 3 will be switched, if you destroy Sliver 3 (above) before the objective leaves the first stopping point.</p>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="timings"></a><h2>Timings</h2>
+    <p>Note: Information on Tech and Strength levels can be found on the <a href="../guides/enemycomps.html">Enemy Compositions</a> page.</p>
+    <p>The Attack Wave Timings for this mission are:</p>
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>Wave</th>
+                <th>Time</th>
+                <th>Tech Level</th>
+                <th>Strength Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>2:48</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>7:00</td>
+                <td>2</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>9:00</td>
+                <td>3</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>12:30</td>
+                <td>4</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>16:00</td>
+                <td>5</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>19:00</td>
+                <td>6</td>
+                <td>6</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>22:00</td>
+                <td>5</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>24:00</td>
+                <td>6</td>
+                <td>6</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>26:00</td>
+                <td>6</td>
+                <td>6</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Additionally, some attack waves will also have Hybrids in them. These attack waves, and the number of Hybrids in them is shown below:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Wave</th>
+                <th>Minor Hybrid</th>
+                <th>Major Hybrid</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>1</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>1</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>2</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>2</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>2</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>2</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>2</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>2</td>
+                <td>1</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The types of these Hybrids will depend on the enemy race, as follows:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Race</th>
+                <th>Minor Hybrid</th>
+                <th>Major Hybrid</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Protoss</td>
+                <td>Hybrid Destroyer</td>
+                <td>Hybrid Behemoth</td>
+            </tr>
+            <tr>
+                <td>Terran</td>
+                <td>Hybrid Reaver</td>
+                <td>Hybrid Dominator</td>
+            </tr>
+            <tr>
+                <td>Zerg</td>
+                <td>Hybrid Nemesis</td>
+                <td>Hybrid Dominator</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The Bonus Objective will move towards a Stopping Point at the following times:</p>
+    <ul>
+        <li>7:00</li>
+        <li>13:00</li>
+        <li>16:00</li>
+    </ul>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="spawnPoints"></a><h2>Spawn Points</h2>
+    <p>Attack Waves spawn from two different sides of the map, each with their own spawn point. Unfortunately, these points are not pathable, and hence, cannot be spawn-camped. However, all attack waves will rally to a Hybrid spawn point. This point <i>can</i> be spawn camped. These spawn points are shown below.</p>
+    <p>Northern Attack Wave:</p>
+    <img src="../images/missiondata/scytheofamon/northernspawnpoint.jpg" alt="Northern Spawn Point">
+    <p>Southern Attack Wave:</p>
+    <img src="../images/missiondata/scytheofamon/southernspawnpoint.jpg" alt="Southern Spawn Point">
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="misTips"></a><h2>Mission Tips</h2>
+    <ul>
+        <li>Ensure you have adequate troops for later Slivers. Death Grip Crystals can destroy a tiny army instantly.</li>
+        <li>Death Grip Crystals cannot target Heroic units.</li>
+        <li>Death Grip Crystals are considered units, which means they can be targeted by abilities like Snipe and Mind Blast.</li>
+        <li>More skilled players can reverse-clear the mission, starting with the farthest Slivers from the base. This removes those difficult Slivers from play early while they are still weak.</li>
+        <li>It is usually better to clear Sliver 2 and to get access to your expansion early. This is especially useful for commanders that require a strong economy.</li>
+    </ul>
+    <div class="bannerContainer">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle adsense"
+         style="display:block;margin:0 auto;"
+         data-ad-client="ca-pub-7996810282362501"
+         data-ad-slot="6631000147"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <div class="banner">
+        <img src="../images/banner.png" alt="Support the site">
+    </div>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+    <a id="comTips"></a><h2>Commander-specific Tips</h2>
+    <ul>
+        <li><a href="../commanders/abathur.html">Abathur</a>: Place Toxic Nests on hybrid spawn locations to weaken the attack waves.</li>
+        <li><a href="../commanders/abathur.html">Abathur</a>: When farming for biomass at the start of the mission, place Toxic Nests near Void Rifts to quickly collect Biomass from Void Rift units.</li>
+        <li><a href="../commanders/alarak.html">Alarak</a>: Clear the Expansion Sliver first with two photon overcharges.</li>
+        <li><a href="../commanders/artanis.html">Artanis</a>: Clear the Expansion Sliver first with one Solar Bombardment.</li>
+        <li><a href="../commanders/horner.html">Han & Horner</a>: Place Mag Mines on hybrid spawn locations to weaken the attack waves.</li>
+        <li><a href="../commanders/karax.html">Karax</a>: Sneak a probe into the Expansion Sliver location and use photon cannons to destroy it.</li>
+        <li><a href="../commanders/mengsk.html">Mengsk</a>: Mengsk can speedrun this mission relatively easily by using Bunkers to clear Sliver 4, Nukes to clear Slivers 3 and 5, and Earthsplitters to clear Slivers 1 and 2.</li>
+        <li><a href="../commanders/nova.html">Nova</a>: The gas at the left of the top expansion can be taken without drawing enemy aggro at the start of the game.</li>
+        <li><a href="../commanders/nova.html">Nova</a>: If you use Siege Tanks, place Spider Mines on hybrid spawn locations to weaken the attack waves.</li>
+        <li><a href="../commanders/raynor.html">Raynor</a>: If you use Vultures, place Spider Mines on hybrid spawn locations to weaken the attack waves.</li>
+        <li><a href="../commanders/vorazun.html">Vorazun</a>: The gas at the left of the top expansion can be taken without drawing enemy aggro at the start of the game.</li>
+        <li><a href="../commanders/vorazun.html">Vorazun</a>: Place Dark Pylons on each side of the map so you can intercept Attack Waves.</li>
+        <li><a href="../commanders/zeratul.html">Zeratul</a>: The Void Suppression Crystal can be used to interrupt and disable all Void Sliver abilities.</li>
+    </ul>
+</div>
+<div id="footer">
+    <p>Note: All data generated on this site is based on Brutal difficulty. Timings, compositions and other elements may differ on easier difficulty levels.</p>
+    <p>© Blizzard Entertainment, Inc. All rights reserved. Wings of Liberty, Heart of the Swarm, Legacy of the Void, and StarCraft are trademarks or registered trademarks of Blizzard Entertainment, Inc. in the U.S. and/or other countries.</p>
+</div></body>
+</html>
